@@ -7,5 +7,5 @@ RUN npm install
 COPY . .
 # Compila el proyecto (usa el script "build" definido en package.json)
 RUN npm run build
-EXPOSE 5000
+EXPOSE 3000
 CMD ["node", "dist/server.js"]

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "dev": "bun src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js"
   },
@@ -13,11 +13,18 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "@types/helmet": "^4.0.0",
+    "@types/morgan": "^1.9.9",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "mongoose": "^8.10.2"
+    "helmet": "^8.0.0",
+    "mongoose": "^8.10.2",
+    "morgan": "^1.10.0",
+    "resend": "^4.1.2"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/express": "^4.17.17",
     "@types/node": "^22.13.5",
     "ts-node-dev": "^2.0.0",
