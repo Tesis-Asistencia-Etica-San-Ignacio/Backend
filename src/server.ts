@@ -1,9 +1,10 @@
+// /src/server.ts
 import express from 'express';
 import dotenv from 'dotenv';
-import configureMiddlewares from './middleware';
+import configureMiddlewares from './presentation/middleware';
 import createEmailRoutes from './presentation/routes/emailRoutes';
-import { ResendService } from './infrastructure/email/resendService.ts';
-import { connectDB } from './infrastructure/database/mongo';
+import { SmtpService } from './infrastructure/email/SmtpService'; // <-- Importa SmtpService
+// import { connectDB } from './infrastructure/database/mongo';
 // import createUserRoutes from './presentation/routes/userRoutes';
 
 dotenv.config();
@@ -14,11 +15,11 @@ const app = express();
 configureMiddlewares(app);
 
 // 2. Inyectar servicios
-const resendService = new ResendService();
+const smtpService = new SmtpService(); // <-- Usar SMTP
 // const userService = new UserService(); // ejemplo, si tuvieras un userService
 
 // 3. Registrar rutas
-app.use('/api', createEmailRoutes(resendService));
+app.use('/api', createEmailRoutes(smtpService));
 // app.use('/api/users', createUserRoutes(userService));
 
 const PORT = process.env.PORT || 3000;
@@ -27,7 +28,8 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`🚀 Servidor corriendo en el puerto ${PORT}`);
 });
-/* connectDB()
+/*
+connectDB()
   .then(() => {
     app.listen(PORT, () => {
       console.log(`🚀 Servidor corriendo en el puerto ${PORT}`);
@@ -35,4 +37,5 @@ app.listen(PORT, () => {
   })
   .catch((error) => {
     console.error('❌ No se pudo conectar a MongoDB:', error);
-  }); */
+  });
+*/

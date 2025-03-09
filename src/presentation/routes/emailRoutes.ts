@@ -1,32 +1,14 @@
-import { Router } from 'express';
-import { ResendService } from '../../infrastructure/email/resendService.ts';
+// /src/presentation/routes/emailRoutes.ts
+import { Router } from "express";
+import { EmailController } from "../controllers/EmailController";
+import { SmtpService } from "../../infrastructure/email/SmtpService";
 
-const createEmailRoutes = (resendService: ResendService) => {
+export default function createEmailRoutes() {
     const router = Router();
+    const smtpService = new SmtpService();
+    const emailController = new EmailController(smtpService);
 
-    router.post('/send-email', async (req, res) => {
-        try {
-            if (!req.body || typeof req.body !== 'object') {
-                return res.status(400).json({ error: 'Cuerpo de la solicitud inválido' });
-            }
-
-            const { to, subject, html } = req.body;
-
-            if (!to || !subject || !html) {
-                return res.status(400).json({ error: 'Faltan parámetros requeridos' });
-            }
-
-            await resendService.sendEmail(to, subject, html);
-            res.json({ message: 'Email enviado con éxito' });
-
-        } catch (error) {
-            console.error('Error enviando email:', error);
-            const errorMessage = error instanceof Error ? error.message : 'Error desconocido';
-            res.status(500).json({ error: `Error enviando email: ${errorMessage}` });
-        }
-    });
+    router.post("/send-email", (req, res) => emailController.sendEmail(req, res));
 
     return router;
-};
-
-export default createEmailRoutes;
+}

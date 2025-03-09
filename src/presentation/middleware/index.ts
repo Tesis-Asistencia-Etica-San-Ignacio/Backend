@@ -14,7 +14,6 @@ const configureMiddlewares = (app: express.Application) => {
     app.use(helmet());  
     app.use(morgan('dev'));
 
-    // Middleware para manejar timeout (opcional)
     app.use((req, res, next) => {
         req.setTimeout(5000, () => {
             console.log('⏳ Tiempo de espera agotado en la solicitud.');
