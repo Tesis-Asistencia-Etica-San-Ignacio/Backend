@@ -1,7 +1,7 @@
 // /src/presentation/routes/emailRoutes.ts
 import { Router } from "express";
-import { EmailController } from "../controllers/EmailController";
-import { SmtpService } from "../../infrastructure/email/SmtpService";
+import { EmailController } from "../controllers/email.controller";
+import { SmtpService } from "../../infrastructure";
 
 export default function createEmailRoutes() {
     const router = Router();

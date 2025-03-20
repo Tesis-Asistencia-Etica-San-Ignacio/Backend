@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { SmtpService } from "../../infrastructure/email/SmtpService";
+import { SmtpService } from "../../infrastructure/";
 
 export class EmailController {
     constructor(private smtpService: SmtpService) { }

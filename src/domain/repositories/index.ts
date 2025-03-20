@@ -1,1 +1,1 @@
-//Interfaces de repositorios (sin implementación)
+export * from './user.repository';

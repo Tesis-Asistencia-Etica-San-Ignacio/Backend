@@ -1,41 +1,45 @@
-// /src/server.ts
 import express from 'express';
-import dotenv from 'dotenv';
-import configureMiddlewares from './presentation/middleware';
-import createEmailRoutes from './presentation/routes/emailRoutes';
-import { SmtpService } from './infrastructure/email/SmtpService'; // <-- Importa SmtpService
-// import { connectDB } from './infrastructure/database/mongo';
-// import createUserRoutes from './presentation/routes/userRoutes';
+import {
+  configureMiddlewares,
+  errorHandlerMiddleware,
+} from './presentation/middleware';
+import config from './infrastructure/config';
+import { database } from './infrastructure';
+import {
+  userRouter,
+} from './presentation/routes';
 
-dotenv.config();
-
+// Crear la aplicación Express
 const app = express();
 
 // 1. Aplicar middlewares
 configureMiddlewares(app);
 
-// 2. Inyectar servicios
-const smtpService = new SmtpService(); // <-- Usar SMTP
-// const userService = new UserService(); // ejemplo, si tuvieras un userService
+// 2. Routes
+app.use(`${config.api.conventionApi}/user`, userRouter);
 
-// 3. Registrar rutas
-app.use('/api', createEmailRoutes(smtpService));
-// app.use('/api/users', createUserRoutes(userService));
 
-const PORT = process.env.PORT || 3000;
 
-// 4. Conectar a MongoDB y levantar servidor
-app.listen(PORT, () => {
-  console.log(`🚀 Servidor corriendo en el puerto ${PORT}`);
+// Ruta de prueba
+app.get('/', (req, res) => {
+  res.send('Servidor Express funcionando correctamente');
 });
-/*
-connectDB()
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`🚀 Servidor corriendo en el puerto ${PORT}`);
+
+// 3. Middleware para manejo de errores
+app.use(errorHandlerMiddleware);
+
+// Conectar la base de datos antes de iniciar el servidor
+const startServer = async () => {
+  try {
+    await database.connect(); // Ensure DB is connected before starting the server
+    app.listen(config.server.port, () => {
+      console.log(`🚀 Servidor corriendo en el puerto ${config.server.port}`);
     });
-  })
-  .catch((error) => {
-    console.error('❌ No se pudo conectar a MongoDB:', error);
-  });
-*/
+  } catch (error) {
+    console.error('❌ Error al iniciar la aplicación:', error);
+    process.exit(1);
+  }
+};
+
+// Iniciar la aplicación
+startServer();

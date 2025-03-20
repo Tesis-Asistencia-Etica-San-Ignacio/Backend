@@ -1,1 +1,1 @@
-//Entidades de negocio puras
+export * from './user.entity';
