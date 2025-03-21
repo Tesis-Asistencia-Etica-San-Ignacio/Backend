@@ -3,3 +3,4 @@ export * from './contIntro.dto';
 export * from './contInfoGeneral.dto';
 export * from './evaluacion.dto';
 export * from './prompt.dto';
+export * from './auth.dto';

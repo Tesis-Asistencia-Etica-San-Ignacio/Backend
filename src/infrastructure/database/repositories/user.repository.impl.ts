@@ -32,17 +32,17 @@ export class UserRepository implements IUserRepository {
   }
 
   public async findByEmail(email: string): Promise<User | null> {
-    const doc = await UserModel.findOne({ email: email });
-    if (!doc) return null;
+    const user = await UserModel.findOne({ email: email });
+    if (!user) return null;
     return {
-      id: doc._id.toString(),
-      name: doc.name,
-      last_name: doc.last_name,
-      email: doc.email,
-      password: doc.password,
-      type: doc.type,
-      createdAt: doc.createdAt,
-      updatedAt: doc.updatedAt,
+      id: user._id.toString(),
+      name: user.name,
+      last_name: user.last_name,
+      email: user.email,
+      password: user.password,
+      type: user.type,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
     };
   }
 

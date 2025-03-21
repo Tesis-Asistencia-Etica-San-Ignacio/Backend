@@ -18,7 +18,7 @@ export class AuthService {
         // Verificar el usuario por email
         const user = await this.userRepository.findByEmail(email);
         if (!user) {
-            throw new Error('Invalid credentials');
+            throw new Error('User not found');
         }
 
         // Verificar la contraseña

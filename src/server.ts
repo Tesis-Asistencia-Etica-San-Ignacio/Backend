@@ -40,8 +40,6 @@ app.use('/api/investigador', validateRoleMiddleware, validateRoleMiddleware(['IN
 
 
 
-
-
 // Ruta de prueba
 app.get('/', (req, res) => {
   res.send('Servidor Express funcionando correctamente');
@@ -53,14 +51,13 @@ app.use(errorHandlerMiddleware);
 
 const bcrypt = require('bcryptjs');
 
-/* async function encryptPassword() {
+async function encryptPassword() {
     const password = "123456";
     const saltRounds = 10; 
     const hashedPassword = await bcrypt.hash(password, saltRounds);
     console.log("Contraseña encriptada:", hashedPassword);
 }
 
-encryptPassword(); */
 
 
 // Conectar la base de datos antes de iniciar el servidor
@@ -70,8 +67,8 @@ const startServer = async () => {
     await database.connect(); // Ensure DB is connected before starting the server
     app.listen(config.server.port, () => {
       console.log(`🚀 Servidor corriendo en el puerto ${config.server.port}`);
-/*       encryptPassword()
- */    });
+      encryptPassword()
+    });
   } catch (error) {
     console.error('❌ Error al iniciar la aplicación:', error);
     process.exit(1);
