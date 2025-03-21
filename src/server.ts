@@ -11,6 +11,8 @@ import {
 } from './presentation/routes';
 import { contIntroRouter } from './presentation'; 
 import contInfoGeneralRouter from './presentation/routes/contInfoGeneral.router';
+import evaluacionRouter from './presentation/routes/evaluacion.router';
+import promptRouter from './presentation/routes/prompt.router';
 
 import authRouter from './presentation/routes/auth.router';
 import { validateRoleMiddleware } from './presentation/middleware/jwtMiddleware';
@@ -26,7 +28,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(`${config.api.conventionApi}/user`, userRouter);
 app.use(`${config.api.conventionApi}/contIntro`, contIntroRouter);
 app.use(`${config.api.conventionApi}/contInfoGeneral`, contInfoGeneralRouter);
+app.use(`${config.api.conventionApi}/evaluacion`, evaluacionRouter);
 app.use(`${config.api.conventionApi}/cases`, caseRouter);
+app.use(`${config.api.conventionApi}/prompt`, promptRouter);
 app.use('/auth', authRouter);
 
 // En alguna ruta protegida

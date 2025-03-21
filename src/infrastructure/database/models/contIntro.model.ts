@@ -15,4 +15,4 @@ const ContIntroSchema = new Schema<ContIntroDocument>({
   timestamps: true, // Esto automáticamente agrega createdAt y updatedAt
 });
 
-export const ContIntroModel = model<ContIntroDocument>('ContIntro', ContIntroSchema);
+export const ContIntroModel = model<ContIntroDocument>('ContIntros', ContIntroSchema);
