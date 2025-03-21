@@ -1,9 +1,9 @@
 import dotenv from 'dotenv';
-import { validateEnv } from '../../shared/utils/index';
+import { validateEnv } from '../../shared/utils';
 
 dotenv.config();
 
-const requiredEnvVars = ['MONGO_URI', 'CONVENTION_API'];
+const requiredEnvVars = ['MONGO_URI', 'CONVENTION_API', 'JWT_SECRET'];
 validateEnv(requiredEnvVars);
 
 const config = {
@@ -11,11 +11,12 @@ const config = {
     mongoUri: process.env.MONGO_URI as string,
   },
   server: {
-    port: parseInt(process.env.PORT ?? ('3000' as string), 10),
+    port: parseInt(process.env.PORT ?? '3000', 10),
   },
   jwt: {
     secret: process.env.JWT_SECRET as string,
-    expiresIn: process.env.JWT_EXPIRES_IN ?? '1h',
+    tokenExpiresIn: process.env.JWT_EXPIRES_IN ?? '15m',
+    refreshExpiresTokenIn: process.env.JWT_REFRESH_EXPIRES_IN ?? '7d',
   },
   logging: {
     level: process.env.LOG_LEVEL ?? 'info',
