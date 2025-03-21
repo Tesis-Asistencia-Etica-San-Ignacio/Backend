@@ -6,7 +6,6 @@ import {
   UpdateUserUseCase,
   DeleteUserUseCase,
   CreateUserDto, 
-  UpdateUserDto
 } from '../../application';
 import { User } from '../../domain';
 

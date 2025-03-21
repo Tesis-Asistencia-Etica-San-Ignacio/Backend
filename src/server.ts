@@ -12,6 +12,7 @@ import {
 import { contIntroRouter } from './presentation'; 
 import contInfoGeneralRouter from './presentation/routes/contInfoGeneral.router';
 import evaluacionRouter from './presentation/routes/evaluacion.router';
+import promptRouter from './presentation/routes/prompt.router';
 
 
 // Crear la aplicación Express
@@ -28,6 +29,7 @@ app.use(`${config.api.conventionApi}/contIntro`, contIntroRouter);
 app.use(`${config.api.conventionApi}/contInfoGeneral`, contInfoGeneralRouter);
 app.use(`${config.api.conventionApi}/evaluacion`, evaluacionRouter);
 app.use(`${config.api.conventionApi}/cases`, caseRouter);
+app.use(`${config.api.conventionApi}/prompt`, promptRouter);
 
 
 
