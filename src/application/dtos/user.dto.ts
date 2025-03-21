@@ -11,6 +11,8 @@ export const CreateUserSchema = Type.Object({
   email: Type.String({ format: 'email' }),
   password: Type.String(),
   type: UserTypeEnum,
+  createdAt: Type.Optional(Type.Date()),
+  updatedAt: Type.Optional(Type.Date()),
 });
 export type CreateUserDto = Static<typeof CreateUserSchema>;
 
@@ -25,8 +27,8 @@ export const UserResponseSchema = Type.Object({
   last_name: Type.String(),
   email: Type.String({ format: 'email' }),
   type: UserTypeEnum,
-  createdAt: Type.String({ format: 'date-time' }),
-  updatedAt: Type.String({ format: 'date-time' }),
+  createdAt: Type.Date(),
+  updatedAt: Type.Date(),
 });
 export type UserResponseDto = Static<typeof UserResponseSchema>;
 

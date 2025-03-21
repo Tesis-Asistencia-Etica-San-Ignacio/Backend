@@ -12,17 +12,14 @@ import {
 
 const router = Router();
 
-// Instanciamos el repositorio
 const userRepository = new UserRepository();
 
-// Instanciamos los casos de uso
 const createUserUseCase = new CreateUserUseCase(userRepository);
 const getAllUsersUseCase = new GetAllUsersUseCase(userRepository);
 const getUserByIdUseCase = new GetUserByIdUseCase(userRepository);
 const updateUserUseCase = new UpdateUserUseCase(userRepository);
 const deleteUserUseCase = new DeleteUserUseCase(userRepository);
 
-// Instanciamos el controlador con los casos de uso inyectados
 const userController = new UserController(
   createUserUseCase,
   getAllUsersUseCase,
@@ -31,7 +28,6 @@ const userController = new UserController(
   deleteUserUseCase,
 );
 
-// Definimos las rutas y asignamos los métodos del controlador
 router.get('/', userController.getAll);
 router.get('/:id', userController.getById);
 router.post('/', userController.create);

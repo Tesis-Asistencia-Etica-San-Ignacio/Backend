@@ -1,4 +1,3 @@
-import { UserRepository } from './user.repository.impl';
-export {
-  UserRepository,
-};
+export * from './user.repository.impl';
+export * from './contIntro.repository.impl';
+export * from './contInfoGeneral.repository.impl';
