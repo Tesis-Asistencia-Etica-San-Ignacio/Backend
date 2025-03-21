@@ -6,23 +6,28 @@ import {
 import config from './infrastructure/config';
 import { database } from './infrastructure';
 import {
+  caseRouter,
   userRouter,
 } from './presentation/routes';
 import { contIntroRouter } from './presentation'; 
 import contInfoGeneralRouter from './presentation/routes/contInfoGeneral.router';
 import evaluacionRouter from './presentation/routes/evaluacion.router';
 
+
 // Crear la aplicación Express
 const app = express();
 
 // 1. Aplicar middlewares
 configureMiddlewares(app);
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // 2. Routes
 app.use(`${config.api.conventionApi}/user`, userRouter);
 app.use(`${config.api.conventionApi}/contIntro`, contIntroRouter);
 app.use(`${config.api.conventionApi}/contInfoGeneral`, contInfoGeneralRouter);
 app.use(`${config.api.conventionApi}/evaluacion`, evaluacionRouter);
+app.use(`${config.api.conventionApi}/cases`, caseRouter);
 
 
 

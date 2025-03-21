@@ -17,6 +17,7 @@
     "@types/helmet": "^4.0.0",
     "@types/morgan": "^1.9.9",
     "@types/nodemailer": "^6.4.17",
+    "backend": "file:",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
