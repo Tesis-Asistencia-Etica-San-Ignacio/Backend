@@ -31,4 +31,4 @@ const UserSchema = new Schema<UserDocument>(
   }
 );
 
-export const User = model<UserDocument>("User", UserSchema);
+export const User = model<UserDocument>("Usuarios", UserSchema);

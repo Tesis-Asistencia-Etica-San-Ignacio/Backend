@@ -49,4 +49,4 @@ const ContInfoGeneralSchema = new Schema<ContInfoGeneralDocument>({
   timestamps: true, // Para manejar createdAt y updatedAt automáticamente
 });
 
-export const ContInfoGeneralModel = model<ContInfoGeneralDocument>('ContInfoGeneral', ContInfoGeneralSchema);
+export const ContInfoGeneralModel = model<ContInfoGeneralDocument>('ContInfoGenerales', ContInfoGeneralSchema);

@@ -42,7 +42,7 @@ export class UserRepository implements IUserRepository {
     };
   }
 
-  public async update(id: string, data: Partial<Omit<User, 'id'>>): Promise<UpdateUserDto | null> {
+  public async update(id: string, data: Partial<Omit<UpdateUserDto, 'id'>>): Promise<UserResponseDto | null> {
     const user = await UserModel.findByIdAndUpdate(id, data, { new: true });
     if (!user) return null;
     return {
@@ -51,10 +51,9 @@ export class UserRepository implements IUserRepository {
       last_name: user.last_name,
       email: user.email,
       type: user.type,
-      password: user.password,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
-    } as UpdateUserDto;
+    } as UserResponseDto;
   }
 
   public async delete(id: string): Promise<boolean> {
