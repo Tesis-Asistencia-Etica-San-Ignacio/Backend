@@ -6,3 +6,9 @@ export {
   userRouter,
   caseRouter,
 };
+
+import contIntroRouter from './contIntro.router';
+
+export {
+  contIntroRouter,
+};

@@ -9,6 +9,8 @@ import {
   caseRouter,
   userRouter,
 } from './presentation/routes';
+import { contIntroRouter } from './presentation'; 
+import contInfoGeneralRouter from './presentation/routes/contInfoGeneral.router';
 
 
 // Crear la aplicación Express
@@ -21,6 +23,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // 2. Routes
 app.use(`${config.api.conventionApi}/user`, userRouter);
+app.use(`${config.api.conventionApi}/contIntro`, contIntroRouter);
+app.use(`${config.api.conventionApi}/contInfoGeneral`, contInfoGeneralRouter);
 console.log("📌 Registrando ruta:", `${config.api.conventionApi}/cases`);
 app.use(`${config.api.conventionApi}/cases`, caseRouter);
 
