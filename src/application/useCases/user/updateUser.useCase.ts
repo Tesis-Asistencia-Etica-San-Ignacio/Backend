@@ -1,12 +1,10 @@
-import { IUserRepository, User } from '../../../domain';
+import { User, IUserRepository } from '../../../domain';
+import { UpdateUserDto } from '../../../application';
 
 export class UpdateUserUseCase {
   constructor(private readonly userRepository: IUserRepository) {}
 
-  public async execute(
-    id: string,
-    data: Partial<Omit<User, 'id'>>,
-  ): Promise<User | null> {
+  public async execute(id: string, data: UpdateUserDto): Promise<User | null> {
     return this.userRepository.update(id, data);
   }
 }

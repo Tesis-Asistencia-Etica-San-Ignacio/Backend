@@ -8,6 +8,8 @@ import { database } from './infrastructure';
 import {
   userRouter,
 } from './presentation/routes';
+import { contIntroRouter } from './presentation'; 
+import contInfoGeneralRouter from './presentation/routes/contInfoGeneral.router';
 
 // Crear la aplicación Express
 const app = express();
@@ -17,6 +19,8 @@ configureMiddlewares(app);
 
 // 2. Routes
 app.use(`${config.api.conventionApi}/user`, userRouter);
+app.use(`${config.api.conventionApi}/contIntro`, contIntroRouter);
+app.use(`${config.api.conventionApi}/contInfoGeneral`, contInfoGeneralRouter);
 
 
 

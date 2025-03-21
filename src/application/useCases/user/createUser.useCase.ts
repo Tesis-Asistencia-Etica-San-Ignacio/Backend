@@ -1,10 +1,10 @@
-import { IUserRepository, User } from '../../../domain';
+import { User, IUserRepository } from '../../../domain';
+import { CreateUserDto } from '../../../application';
 
 export class CreateUserUseCase {
   constructor(private readonly userRepository: IUserRepository) {}
 
-  public async execute(data: Omit<User, 'id'>): Promise<User> {
-    // Lógica adicional, como encriptación de contraseña, se puede agregar aquí.
+  public async execute(data: CreateUserDto): Promise<User> {
     return this.userRepository.create(data);
   }
 }
