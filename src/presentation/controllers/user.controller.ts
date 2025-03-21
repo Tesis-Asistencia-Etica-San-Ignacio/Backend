@@ -8,6 +8,7 @@ import {
   CreateUserDto, 
   UpdateUserDto
 } from '../../application';
+import { User } from '../../domain';
 
 export class UserController {
   constructor(
@@ -53,7 +54,7 @@ export class UserController {
   public update = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { id } = req.params;
-      const updatedUser = await this.updateUserUseCase.execute(id, req.body as UpdateUserDto);
+      const updatedUser = await this.updateUserUseCase.execute(id, req.body as User);
       if (!updatedUser) {
         res.status(404).json({ message: 'User not found' });
       } else {

@@ -1,6 +1,6 @@
 import { User as UserModel } from '../../../infrastructure';
 import { User, IUserRepository } from '../../../domain';
-import { UserResponseDto } from '../../../application';
+import { UpdateUserDto, UserResponseDto } from '../../../application';
 
 
 export class UserRepository implements IUserRepository {
@@ -42,7 +42,7 @@ export class UserRepository implements IUserRepository {
     };
   }
 
-  public async update(id: string, data: Partial<Omit<User, 'id'>>): Promise<UserResponseDto | null> {
+  public async update(id: string, data: Partial<Omit<User, 'id'>>): Promise<UpdateUserDto | null> {
     const user = await UserModel.findByIdAndUpdate(id, data, { new: true });
     if (!user) return null;
     return {
@@ -51,9 +51,10 @@ export class UserRepository implements IUserRepository {
       last_name: user.last_name,
       email: user.email,
       type: user.type,
+      password: user.password,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
-    } as UserResponseDto;
+    } as UpdateUserDto;
   }
 
   public async delete(id: string): Promise<boolean> {
