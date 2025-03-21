@@ -25,7 +25,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(`${config.api.conventionApi}/user`, userRouter);
 app.use(`${config.api.conventionApi}/contIntro`, contIntroRouter);
 app.use(`${config.api.conventionApi}/contInfoGeneral`, contInfoGeneralRouter);
-console.log("📌 Registrando ruta:", `${config.api.conventionApi}/cases`);
 app.use(`${config.api.conventionApi}/cases`, caseRouter);
 
 
