@@ -14,24 +14,17 @@ export class AuthService {
     // Login - Solo devuelve access token
     public async login(loginDto: LoginDto): Promise<JwtTokensDto> {
         const { email, password } = loginDto;
-
-        // Verificar el usuario por email
         const user = await this.userRepository.findByEmail(email);
         if (!user) {
-            throw new Error('User not found');
+            throw new Error('Usuario no encontrado');
         }
-
-        // Verificar la contraseña
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
-            throw new Error('Invalid credentials');
+            throw new Error('Credenciales inválidas');
         }
-
-        // Crear el JWT (access token)
         const payload = { id: user.id, type: user.type };
         const accessToken = jwt.sign(payload, config.jwt.secret, { expiresIn: config.jwt.tokenExpiresIn });
-        const refreshToken = jwt.sign(payload, config.jwt.secret, { expiresIn: config.jwt.refreshExpiresTokenIn });
-
+        const refreshToken = jwt.sign(payload, config.jwt.secretRefresh, { expiresIn: config.jwt.refreshExpiresTokenIn });
         return {
             accessToken,
             refreshToken,
@@ -42,34 +35,36 @@ export class AuthService {
     // Refresh Token - Solo devuelve refresh token
     public async refreshToken(refreshTokenDto: RefreshTokenDto): Promise<JwtTokensDto> {
         const { refreshToken } = refreshTokenDto;
-
         try {
-            // Verificar el refresh token
-            const decoded: any = jwt.verify(refreshToken, config.jwt.secret);
+            // Verifica el token
+            const decoded: any = jwt.verify(refreshToken, config.jwt.secretRefresh);
 
-            // Crear un nuevo Access Token
-            const newAccessToken = jwt.sign(decoded, config.jwt.secret, { expiresIn: config.jwt.tokenExpiresIn });
-            // Crear un nuevo refresh token
-            const newRefreshToken = jwt.sign(decoded, config.jwt.secret, { expiresIn: config.jwt.refreshExpiresTokenIn });
+            // Quita exp y iat del token decodificado (o extrae manualmente solo los datos relevantes)
+            const { iat, exp, ...payload } = decoded;
 
-            // Devolver solo el refresh token
+            // Vuelve a firmar, asignándole un nuevo exp/iat
+            const newAccessToken = jwt.sign(payload, config.jwt.secret, {
+                expiresIn: config.jwt.tokenExpiresIn
+            });
+            
+
             return {
                 accessToken: newAccessToken,
-                refreshToken: newRefreshToken,
-                userType: decoded.type,
+                refreshToken,
+                userType: decoded.type,  
             };
         } catch (error) {
-            throw new Error('Invalid refresh token');
+            throw new Error((error as Error).message);
         }
     }
 
+
     public async getSession(token: string): Promise<{ userType: string }> {
         try {
-            // Verifica el token y extrae el payload
             const decoded: any = jwt.verify(token, config.jwt.secret);
             return { userType: decoded.type };
         } catch (error) {
-            throw new Error('Invalid or expired token');
+            throw new Error('Token inválido o expirado');
         }
     }
 }
