@@ -3,13 +3,20 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export const configureMiddlewares = (app: express.Application) => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   app.use(cookieParser());
-  
-  app.use(cors());
+
+  app.use(cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true
+  }));
+
   app.use(helmet());
   app.use(morgan('dev'));
 
