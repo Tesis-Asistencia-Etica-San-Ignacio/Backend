@@ -1,5 +1,5 @@
 import { AuthService } from '../../services/auth.service';
-import { RefreshTokenDto, JwtRefreshTokenDto } from '../../dtos/auth.dto';
+import { RefreshTokenDto, JwtTokensDto } from '../../dtos/auth.dto';
 
 export class RefreshTokenUseCase {
     private authService: AuthService;
@@ -8,7 +8,7 @@ export class RefreshTokenUseCase {
         this.authService = authService;
     }
 
-    public async execute(refreshTokenDto: RefreshTokenDto): Promise<JwtRefreshTokenDto> {
+    public async execute(refreshTokenDto: RefreshTokenDto): Promise<JwtTokensDto> {
         return this.authService.refreshToken(refreshTokenDto);
     }
 }

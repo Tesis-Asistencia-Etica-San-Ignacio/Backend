@@ -6,6 +6,29 @@ dotenv.config();
 const requiredEnvVars = ['MONGO_URI', 'CONVENTION_API', 'JWT_SECRET'];
 validateEnv(requiredEnvVars);
 
+function parseTime(timeStr: string): number {
+  if (timeStr.includes('*')) {
+    return timeStr.split('*').reduce((acc, cur) => acc * parseFloat(cur), 1);
+  }
+  if (timeStr.endsWith('s')) {
+    return parseFloat(timeStr.slice(0, -1));
+  }
+  if (timeStr.endsWith('m')) {
+    return parseFloat(timeStr.slice(0, -1)) * 60;
+  }
+  if (timeStr.endsWith('h')) {
+    return parseFloat(timeStr.slice(0, -1)) * 3600;
+  }
+  if (timeStr.endsWith('d')) {
+    return parseFloat(timeStr.slice(0, -1)) * 86400;
+  }
+  return parseFloat(timeStr);
+}
+
+// Se leen las variables de entorno o se asignan los valores por defecto
+const jwtExpiresInEnv = process.env.JWT_EXPIRES_IN ?? '60*15';
+const jwtRefreshExpiresInEnv = process.env.JWT_REFRESH_EXPIRES_IN ?? '7d';
+
 const config = {
   database: {
     mongoUri: process.env.MONGO_URI as string,
@@ -15,8 +38,10 @@ const config = {
   },
   jwt: {
     secret: process.env.JWT_SECRET as string,
-    tokenExpiresIn: process.env.JWT_EXPIRES_IN ?? '15m',
-    refreshExpiresTokenIn: process.env.JWT_REFRESH_EXPIRES_IN ?? '7d',
+    // Se convierten a segundos
+    tokenExpiresIn: parseTime(jwtExpiresInEnv),
+    refreshExpiresTokenIn: parseTime(jwtRefreshExpiresInEnv),
+    saltRounds: parseInt(process.env.JWT_SALT_ROUNDS ?? '10', 10),
   },
   logging: {
     level: process.env.LOG_LEVEL ?? 'info',

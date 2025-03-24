@@ -10,6 +10,7 @@ import {
   DeleteUserUseCase,
 } from '../../application';
 
+
 const router = Router();
 
 const userRepository = new UserRepository();

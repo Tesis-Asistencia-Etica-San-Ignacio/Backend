@@ -8,6 +8,7 @@ import {
   UpdateContIntroUseCase,
   DeleteContIntroUseCase,
 } from '../../application';
+import { validateRoleMiddleware } from '../middleware/jwtMiddleware';
 
 const router = Router();
 
@@ -26,10 +27,10 @@ const contIntroController = new ContIntroController(
   deleteContIntroUseCase
 );
 
-router.get('/', contIntroController.getAll);
-router.get('/:id', contIntroController.getById);
-router.post('/', contIntroController.create);
-router.patch('/:id', contIntroController.update);
-router.delete('/:id', contIntroController.delete);
+router.get('/', validateRoleMiddleware(['EVALUADOR']), contIntroController.getAll);
+router.get('/:id', validateRoleMiddleware(['EVALUADOR']), contIntroController.getById);
+router.post('/', validateRoleMiddleware(['EVALUADOR']), contIntroController.create);
+router.patch('/:id', validateRoleMiddleware(['EVALUADOR']), contIntroController.update);
+router.delete('/:id', validateRoleMiddleware(['EVALUADOR']), contIntroController.delete);
 
 export default router;

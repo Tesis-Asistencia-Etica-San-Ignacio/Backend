@@ -1,5 +1,5 @@
 import { AuthService } from '../../services/auth.service';
-import { LoginDto, JwtAccessTokenDto } from '../../dtos/auth.dto';
+import { LoginDto, JwtTokensDto } from '../../dtos/auth.dto';
 
 export class LoginUseCase {
     private authService: AuthService;
@@ -8,7 +8,7 @@ export class LoginUseCase {
         this.authService = authService;
     }
 
-    public async execute(loginDto: LoginDto): Promise<JwtAccessTokenDto> {
+    public async execute(loginDto: LoginDto): Promise<JwtTokensDto> {
         return this.authService.login(loginDto);
     }
 }

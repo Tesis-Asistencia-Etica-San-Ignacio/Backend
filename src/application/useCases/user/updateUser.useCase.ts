@@ -1,5 +1,5 @@
 import { User, IUserRepository } from '../../../domain';
-import { UpdateUserDto } from '../../../application';
+import { UpdateUserDto } from '../..';
 
 export class UpdateUserUseCase {
   constructor(private readonly userRepository: IUserRepository) {}

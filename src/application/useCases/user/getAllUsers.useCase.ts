@@ -1,5 +1,5 @@
 import { IUserRepository, User } from '../../../domain';
-import { UserResponseDto } from '../../../application';
+import { UserResponseDto } from '../..';
 
 export class GetAllUsersUseCase {
   constructor(private readonly userRepository: IUserRepository) {}

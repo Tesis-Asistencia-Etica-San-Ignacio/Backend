@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { PromtController } from '../../presentation';
 import { PromtRepository } from '../../infrastructure/database/repositories';
 import { CreatePromtUseCase, GetAllPromtsUseCase, GetPromtByIdUseCase, UpdatePromtUseCase, DeletePromtUseCase } from '../../application';
+import { validateRoleMiddleware } from '../middleware/jwtMiddleware';
 
 const router = Router();
 
@@ -21,10 +22,10 @@ const promtController = new PromtController(
   deletePromtUseCase
 );
 
-router.get('/', promtController.getAll);
-router.get('/:id', promtController.getById);
-router.post('/', promtController.create);
-router.patch('/:id', promtController.update);
-router.delete('/:id', promtController.delete);
+router.get('/', validateRoleMiddleware(['EVALUADOR']), promtController.getAll);
+router.get('/:id', validateRoleMiddleware(['EVALUADOR']), promtController.getById);
+router.post('/', validateRoleMiddleware(['EVALUADOR']), promtController.create);
+router.patch('/:id', validateRoleMiddleware(['EVALUADOR']), promtController.update);
+router.delete('/:id', validateRoleMiddleware(['EVALUADOR']), promtController.delete);
 
 export default router;

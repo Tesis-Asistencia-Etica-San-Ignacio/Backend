@@ -10,6 +10,8 @@ import {
   DeleteEvaluacionUseCase,
 } from '../../application';
 
+import {validateRoleMiddleware } from '../../presentation/middleware/jwtMiddleware';
+
 const router = Router();
 
 // Instanciamos el repositorio
@@ -32,10 +34,10 @@ const evaluacionController = new EvaluacionController(
 );
 
 // Definimos las rutas
-router.get('/', evaluacionController.getAll);
-router.get('/:id', evaluacionController.getById);
-router.post('/', evaluacionController.create);
-router.patch('/:id', evaluacionController.update);
-router.delete('/:id', evaluacionController.delete);
+router.get('/', validateRoleMiddleware(['INVESTIGADOR']), evaluacionController.getAll);
+router.get('/:id', validateRoleMiddleware(['INVESTIGADOR']), evaluacionController.getById);
+router.post('/', validateRoleMiddleware(['INVESTIGADOR']), evaluacionController.create);
+router.patch('/:id', validateRoleMiddleware(['INVESTIGADOR']), evaluacionController.update);
+router.delete('/:id', validateRoleMiddleware(['INVESTIGADOR']), evaluacionController.delete);
 
 export default router;

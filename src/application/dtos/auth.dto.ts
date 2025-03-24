@@ -13,8 +13,6 @@ export const RefreshTokenSchema = Type.Object({
 });
 export type RefreshTokenDto = Static<typeof RefreshTokenSchema>;
 
-
-
 // DTO para el acceso de tokens
 export const JwtAccessTokenSchema = Type.Object({
   accessToken: Type.String(),
@@ -26,3 +24,11 @@ export const JwtRefreshTokenSchema = Type.Object({
   refreshToken: Type.String(),
 });
 export type JwtRefreshTokenDto = Static<typeof JwtRefreshTokenSchema>;
+
+//devolver ambos tokens en la misma respuesta
+export const JwtTokensSchema = Type.Object({
+  accessToken: Type.String(),
+  refreshToken: Type.String(),
+  userType: Type.String(),
+});
+export type JwtTokensDto = Static<typeof JwtTokensSchema>;
