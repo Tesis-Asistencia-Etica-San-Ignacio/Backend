@@ -73,12 +73,6 @@ export class AuthController {
         }
     }
 
-    public async logout(req: Request, res: Response): Promise<void> {
-        res.clearCookie('accessToken');
-        res.clearCookie('refreshToken');
-        res.status(200).json({ message: 'Sesión cerrada correctamente' });
-    }
-
     public async getSession(req: Request, res: Response): Promise<void> {
         try {
             const token = req.cookies.accessToken;
@@ -95,5 +89,10 @@ export class AuthController {
                 res.status(500).json({ message: 'Error desconocido' });
             }
         }
+    }
+    public async logout(req: Request, res: Response): Promise<void> {
+        res.clearCookie('accessToken');
+        res.clearCookie('refreshToken');
+        res.status(200).json({ message: 'Sesión cerrada correctamente' });
     }
 }
