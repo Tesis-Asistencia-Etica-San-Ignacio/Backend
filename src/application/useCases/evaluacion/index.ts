@@ -1,5 +1,0 @@
-export * from './createEvaluacion.useCase'
-export * from './deleteEvaluacion.useCase'
-export * from './getAllEvaluaciones.useCase'
-export * from './getEvaluacionById.useCase'
-export * from './updateEvaluacion.useCase'

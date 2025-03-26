@@ -1,5 +1,5 @@
 import { Evaluacion, IEvaluacionRepository } from '../../../domain';
-import { CreateEvaluacionDto } from '../../../application';
+import { CreateEvaluacionDto } from '../..';
 
 export class CreateEvaluacionUseCase {
   constructor(private readonly evaluacionRepository: IEvaluacionRepository) {}
