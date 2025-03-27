@@ -6,6 +6,7 @@ import evaluacionRouter from './evaluation.router';
 import contInfoGeneralRouter from './contInfoGeneral.router';
 import promptRouter from './prompt.router';
 import authRouter from './auth.router';
+import fileRouter from './file.router';
 
 export {
   userRouter,
@@ -14,6 +15,6 @@ export {
   contInfoGeneralRouter,
   evaluacionRouter,
   promptRouter,
-  authRouter
-
+  authRouter,
+  fileRouter,
 };

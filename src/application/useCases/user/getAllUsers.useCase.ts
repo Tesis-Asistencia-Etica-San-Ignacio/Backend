@@ -1,4 +1,4 @@
-import { IUserRepository, User } from '../../../domain';
+import { IUserRepository } from '../../../domain';
 import { UserResponseDto } from '../..';
 
 export class GetAllUsersUseCase {

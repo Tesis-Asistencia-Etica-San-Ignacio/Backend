@@ -5,6 +5,8 @@ import {
 } from './presentation/middleware';
 import config from './infrastructure/config';
 import { database } from './infrastructure';
+import { initMinioBucket } from './infrastructure/config/initMinio';
+
 import {
   caseRouter,
   userRouter,
@@ -12,7 +14,8 @@ import {
   contInfoGeneralRouter,
   evaluacionRouter,
   promptRouter,
-  authRouter
+  authRouter,
+  fileRouter,
 } from './presentation/routes';
 
 // 1 Crear la aplicación Express
@@ -29,6 +32,7 @@ app.use(`${config.api.conventionApi}/evaluacion`, evaluacionRouter);
 app.use(`${config.api.conventionApi}/cases`, caseRouter);
 app.use(`${config.api.conventionApi}/prompt`, promptRouter);
 app.use(`${config.api.conventionApi}/auth`, authRouter);
+app.use(`${config.api.conventionApi}/files`, fileRouter);
 
 // Ruta de prueba
 app.get('/', (req, res) => {
@@ -45,6 +49,7 @@ const startServer = async () => {
 
   try {
     await database.connect(); // Ensure DB is connected before starting the server
+    await initMinioBucket('uploads');
     app.listen(config.server.port, () => {
       console.log(`🚀 Servidor corriendo en el puerto ${config.server.port}`);
     });
