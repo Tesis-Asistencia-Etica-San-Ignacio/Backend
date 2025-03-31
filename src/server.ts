@@ -16,6 +16,7 @@ import {
   promptRouter,
   authRouter,
   fileRouter,
+  pdfRouter,
 } from './presentation/routes';
 
 // 1 Crear la aplicación Express
@@ -25,6 +26,7 @@ configureMiddlewares(app);
 
 
 // 2 Definición de rutas protegidas para cada rol
+app.use(`${config.api.conventionApi}/pdf`, pdfRouter);
 app.use(`${config.api.conventionApi}/user`, userRouter);
 app.use(`${config.api.conventionApi}/contIntro`, contIntroRouter);
 app.use(`${config.api.conventionApi}/contInfoGeneral`, contInfoGeneralRouter);

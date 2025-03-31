@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Reporte PDF</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Reporte PDF</h1>
+        <p>
+            <%= date %>
+        </p>
+    </div>
+    <div>
+        <p>Hola, <%= userName %>!</p>
+        <p>Tu rol es: <%= userType %>
+        </p>
+    </div>
+</body>
+
+</html>
