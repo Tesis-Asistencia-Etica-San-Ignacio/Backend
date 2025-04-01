@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { LoginUseCase, RefreshTokenUseCase, GetSessionUseCase } from '../../application/useCases/auth';
-import { LoginDto, RefreshTokenDto } from '../../application/dtos/auth.dto';
+import { LoginDto } from '../../application/dtos/auth.dto';
 import { AuthService } from '../../application/services/auth.service';
 import { UserRepository } from '../../infrastructure';
 import config from '../../infrastructure/config';

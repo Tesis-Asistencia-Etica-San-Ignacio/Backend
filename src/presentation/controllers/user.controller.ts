@@ -12,8 +12,8 @@ import { User } from "../../domain";
 
 export class UserController {
   constructor(
-    private readonly createEvaluatorUseCase: CreateInvestigatorUseCase,
-    private readonly createInvestigatorUseCase: CreateEvaluatorUseCase,
+    private readonly createEvaluatorUseCase: CreateEvaluatorUseCase,
+    private readonly createInvestigatorUseCase: CreateInvestigatorUseCase,
     private readonly getAllUsersUseCase: GetAllUsersUseCase,
     private readonly getUserByIdUseCase: GetUserByIdUseCase,
     private readonly updateUserUseCase: UpdateUserUseCase,

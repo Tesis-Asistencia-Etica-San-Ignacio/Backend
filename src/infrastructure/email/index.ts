@@ -1,2 +1,2 @@
 //Implementaciones de repositorios (MongoDB)
-export * from './smtpService';
+export * from './SmtpService';

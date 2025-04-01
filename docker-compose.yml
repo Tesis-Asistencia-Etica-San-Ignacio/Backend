@@ -1,16 +1,16 @@
 services:
-  backend:
-    build: .
-    image: backend-app
-    container_name: backend-container
-    ports:
-      - "3000:3000"
-    environment:
-      - MINIO_URL=minio
-      - MINIO_ROOT_USER=minio_access_key
-      - MINIO_ROOT_PASSWORD=minio_secret_key
-    depends_on:
-      - minio
+  # backend:
+  #   build: .
+  #   image: backend-app
+  #   container_name: backend-container
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     - MINIO_URL=minio
+  #     - MINIO_ROOT_USER=minio_access_key
+  #     - MINIO_ROOT_PASSWORD=minio_secret_key
+  #   depends_on:
+  #     - minio
 
   minio:
     image: minio/minio
