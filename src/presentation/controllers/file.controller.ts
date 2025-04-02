@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
-import { uploadFileToMinio, getAllFilesFromMinio, getFileByName } from '../../application';
+import { uploadFileToMinio, getAllFilesFromMinio, getFileByName  } from '../../application';
 
 export const uploadFileController = async (req: Request, res: Response) => {
+  console.log("Archivo recibido:", req.file);
   if (!req.file) return res.status(400).send('Archivo no enviado');
 
   try {
