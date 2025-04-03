@@ -18,7 +18,7 @@ export interface EvaluacionDocument extends Document {
 
 const EvaluacionSchema = new Schema<EvaluacionDocument>(
   {
-    uid: { type: Schema.Types.ObjectId, required: true },
+    uid: { type: Schema.Types.ObjectId, ref: 'Usuarios', required: true },
     fundanet: { type: String, required: true },
     file: { type: String, required: true },
     fecha_inicial: { type: Date, required: true },
