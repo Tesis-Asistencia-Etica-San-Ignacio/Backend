@@ -7,6 +7,7 @@ export const validateRoleMiddleware = (roles: string[]) => {
   return (req: Request, res: Response, next: NextFunction): Response | void => {
     let token = req.cookies.accessToken; 
     console.log("Token desde cookies:", token);
+    console.log("refreshToken desde cookies:", req.cookies.refreshToken);
 
     if (!token) {
       console.log("Token no proporcionado");

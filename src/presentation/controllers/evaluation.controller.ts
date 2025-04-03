@@ -8,6 +8,7 @@ import {
   CreateEvaluacionDto, 
   UpdateEvaluacionDto
 } from '../../application';
+import { GetEvaluacionesByUserUseCase } from '../../application/useCases/evaluation/getEvaluacionesByUser.useCase';
 
 
 export class EvaluacionController {
@@ -16,7 +17,8 @@ export class EvaluacionController {
     private readonly getAllEvaluacionsUseCase: GetAllEvaluacionsUseCase,
     private readonly getEvaluacionByIdUseCase: GetEvaluacionByIdUseCase,
     private readonly updateEvaluacionUseCase: UpdateEvaluacionUseCase,
-    private readonly deleteEvaluacionUseCase: DeleteEvaluacionUseCase
+    private readonly deleteEvaluacionUseCase: DeleteEvaluacionUseCase,
+    private readonly getEvaluacionesByUserUseCase: GetEvaluacionesByUserUseCase,
   ) {}
 
   public getAll = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -74,6 +76,24 @@ export class EvaluacionController {
       } else {
         res.status(200).json({ message: 'Evaluacion deleted successfully' });
       }
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public getByUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      // Suponemos que el middleware JWT ha agregado el payload a req.user
+      const userId = req.user?.id;
+      console.log('User ID desde el middleware:', userId); // Para depuración
+
+      if (!userId) {
+        res.status(401).json({ message: 'Usuario no autenticado' });
+        return;
+      }
+      const evaluaciones = await this.getEvaluacionesByUserUseCase.execute(userId);
+      console.log('Evaluaciones obtenidas:', evaluaciones); // Para depuración
+      res.status(200).json(evaluaciones);
     } catch (error) {
       next(error);
     }

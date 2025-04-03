@@ -8,6 +8,7 @@ import {
   GetEvaluacionByIdUseCase,
   UpdateEvaluacionUseCase,
   DeleteEvaluacionUseCase,
+  GetEvaluacionesByUserUseCase,
 } from '../../application';
 
 import {validateRoleMiddleware } from '../../presentation/middleware/jwtMiddleware';
@@ -23,6 +24,8 @@ const getAllEvaluacionsUseCase = new GetAllEvaluacionsUseCase(evaluacionReposito
 const getEvaluacionByIdUseCase = new GetEvaluacionByIdUseCase(evaluacionRepository);
 const updateEvaluacionUseCase = new UpdateEvaluacionUseCase(evaluacionRepository);
 const deleteEvaluacionUseCase = new DeleteEvaluacionUseCase(evaluacionRepository);
+const getEvaluacionesByUserUseCase = new GetEvaluacionesByUserUseCase(evaluacionRepository);
+
 
 // Instanciamos el controlador con los casos de uso
 const evaluacionController = new EvaluacionController(
@@ -30,14 +33,17 @@ const evaluacionController = new EvaluacionController(
   getAllEvaluacionsUseCase,
   getEvaluacionByIdUseCase,
   updateEvaluacionUseCase,
-  deleteEvaluacionUseCase
+  deleteEvaluacionUseCase,
+  getEvaluacionesByUserUseCase,
 );
 
 // Definimos las rutas
-router.get('/', validateRoleMiddleware(['INVESTIGADOR']), evaluacionController.getAll);
+router.get('/my', validateRoleMiddleware(['EVALUADOR']), evaluacionController.getByUser);
 router.get('/:id', validateRoleMiddleware(['INVESTIGADOR']), evaluacionController.getById);
+router.get('/', validateRoleMiddleware(['INVESTIGADOR']), evaluacionController.getAll);
 router.post('/', validateRoleMiddleware(['INVESTIGADOR']), evaluacionController.create);
 router.patch('/:id', validateRoleMiddleware(['INVESTIGADOR']), evaluacionController.update);
 router.delete('/:id', validateRoleMiddleware(['INVESTIGADOR']), evaluacionController.delete);
+
 
 export default router;
