@@ -23,8 +23,8 @@ const updateUserUseCase = new UpdateUserUseCase(userRepository);
 const deleteUserUseCase = new DeleteUserUseCase(userRepository);
 
 const userController = new UserController(
-  createInvestigatorUseCase,
   createEvaluatorUseCase,
+  createInvestigatorUseCase,
   getAllUsersUseCase,
   getUserByIdUseCase,
   updateUserUseCase,

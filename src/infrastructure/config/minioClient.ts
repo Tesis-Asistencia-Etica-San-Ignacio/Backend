@@ -3,6 +3,8 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+console.log('Minio URL:', process.env.MINIO_URL);
+
 export const minioClient = new Client({
   endPoint: process.env.MINIO_URL?.replace('http://', '') ?? 'minio',
   port: 9000,

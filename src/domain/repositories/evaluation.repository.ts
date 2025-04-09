@@ -6,4 +6,5 @@ export interface IEvaluacionRepository {
   create(data: CreateEvaluacionDto): Promise<EvaluacionResponseDto>;
   update(id: string, data: UpdateEvaluacionDto): Promise<EvaluacionResponseDto | null>;
   delete(id: string): Promise<boolean>;
+  findByUserId(userId: string): Promise<EvaluacionResponseDto[]>;
 }

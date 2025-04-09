@@ -88,4 +88,23 @@ export class EvaluacionRepository implements IEvaluacionRepository {
     const result = await EvaluacionModel.findByIdAndDelete(id);
     return result !== null;
   }
+
+  public async findByUserId(userId: string): Promise<EvaluacionResponseDto[]> {
+    const results = await EvaluacionModel.find({ uid: userId });
+    return results.map((doc) => ({
+      id: doc._id.toString(),
+      uid: doc.uid.toString(),
+      fundanet: doc.fundanet,
+      file: doc.file,
+      fecha_inicial: doc.fecha_inicial.toISOString(),
+      fecha_final: doc.fecha_final.toISOString(),
+      evaluacion: doc.evaluacion,
+      estado: doc.estado,
+      tipo_error: doc.tipo_error,
+      aprobado: doc.aprobado,
+      correo_estudiante: doc.correo_estudiante,
+      createdAt: doc.createdAt.toISOString(),
+      updatedAt: doc.updatedAt.toISOString(),
+    }));
+  }
 }
