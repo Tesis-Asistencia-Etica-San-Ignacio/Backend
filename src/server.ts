@@ -17,6 +17,7 @@ import {
   authRouter,
   fileRouter,
   pdfRouter,
+  smtpRouter,
 } from './presentation/routes';
 
 // 1 Crear la aplicación Express
@@ -35,6 +36,7 @@ app.use(`${config.api.conventionApi}/cases`, caseRouter);
 app.use(`${config.api.conventionApi}/prompt`, promptRouter);
 app.use(`${config.api.conventionApi}/auth`, authRouter);
 app.use(`${config.api.conventionApi}/files`, fileRouter);
+app.use(`${config.api.conventionApi}/smtp`, smtpRouter);
 
 // Ruta de prueba
 app.get('/', (req, res) => {
@@ -52,14 +54,18 @@ const startServer = async () => {
   try {
     await database.connect(); // Ensure DB is connected before starting the server
     await initMinioBucket('uploads');
-    app.listen(config.server.port, () => {
+    const server = app.listen(config.server.port, () => {
       console.log(`🚀 Servidor corriendo en el puerto ${config.server.port}`);
     });
+    server.setTimeout(10 * 1000); 
+    
   } catch (error) {
     console.error('❌ Error al iniciar la aplicación:', error);
     process.exit(1);
   }
 };
+
+
 
 // Iniciar la aplicación
 startServer();

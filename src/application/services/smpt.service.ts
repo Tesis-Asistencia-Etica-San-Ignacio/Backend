@@ -1,3 +1,4 @@
+// smpt.service.ts
 import nodemailer from "nodemailer";
 
 export class SmtpService {
@@ -21,12 +22,13 @@ export class SmtpService {
                 user,
                 pass,
             },
+            connectionTimeout: 10000, 
+            socketTimeout: 10000,
         });
     }
 
-    async sendEmail(to: string[], subject: string, html: string) {
+    async sendEmail(to: string[], subject: string, html?: string, attachments?: { filename: string; content: Buffer; contentType: string }[]) {
         try {
-            // Ojo: nodemailer usa "to" como string, no array
             const toList = to.join(", ");
 
             await this.transporter.sendMail({
@@ -34,6 +36,7 @@ export class SmtpService {
                 to: toList,
                 subject,
                 html,
+                attachments, // Agrega la propiedad attachments al objeto de opciones
             });
         } catch (error) {
             console.error("Error enviando email via SMTP:", error);
