@@ -3,12 +3,16 @@ import bcrypt from 'bcryptjs';
 import { IUserRepository } from '../../domain/repositories/user.repository';
 import { LoginDto, RefreshTokenDto, JwtTokensDto } from '../dtos/auth.dto';
 import config from '../../infrastructure/config';
+import { GetUserByIdUseCase, } from '../../application/useCases/user';
+import { log } from 'console';
 
 export class AuthService {
     private userRepository: IUserRepository;
+    private getUserByIdUseCase: GetUserByIdUseCase;
 
     constructor(userRepository: IUserRepository) {
         this.userRepository = userRepository;
+        this.getUserByIdUseCase = new GetUserByIdUseCase(userRepository);
     }
 
     // Login - Solo devuelve access token
@@ -46,12 +50,12 @@ export class AuthService {
             const newAccessToken = jwt.sign(payload, config.jwt.secret, {
                 expiresIn: config.jwt.tokenExpiresIn
             });
-            
+
 
             return {
                 accessToken: newAccessToken,
                 refreshToken,
-                userType: decoded.type,  
+                userType: decoded.type,
             };
         } catch (error) {
             throw new Error((error as Error).message);
@@ -59,10 +63,16 @@ export class AuthService {
     }
 
 
-    public async getSession(token: string): Promise<{ userType: string }> {
+    public async getSession(token: string): Promise<any> {
         try {
             const decoded: any = jwt.verify(token, config.jwt.secret);
-            return { userType: decoded.type };
+            log(decoded.id);
+            const user = await this.getUserByIdUseCase.execute(decoded.id);
+            log(user);
+            if (!user) {
+                throw new Error('Usuario no encontrado');
+            }
+            return user;
         } catch (error) {
             throw new Error('Token inválido o expirado');
         }

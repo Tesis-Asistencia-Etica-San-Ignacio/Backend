@@ -5,10 +5,10 @@ import {
   GetEvaluacionByIdUseCase,
   UpdateEvaluacionUseCase,
   DeleteEvaluacionUseCase,
+  GetEvaluacionesByUserUseCase,
   CreateEvaluacionDto, 
   UpdateEvaluacionDto
 } from '../../application';
-import { GetEvaluacionesByUserUseCase } from '../../application/useCases/evaluation/getEvaluacionesByUser.useCase';
 
 
 export class EvaluacionController {

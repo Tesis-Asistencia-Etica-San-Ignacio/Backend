@@ -1,6 +1,5 @@
-// src/application/useCases/evaluation/GetEvaluacionesByUserUseCase.ts
 import { IEvaluacionRepository } from '../../../domain';
-import { EvaluacionResponseDto } from '../../../application';
+import { EvaluacionResponseDto } from '../..';
 
 export class GetEvaluacionesByUserUseCase {
   constructor(private readonly evaluacionRepository: IEvaluacionRepository) {}

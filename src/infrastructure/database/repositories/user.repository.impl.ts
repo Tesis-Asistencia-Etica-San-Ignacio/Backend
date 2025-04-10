@@ -12,8 +12,6 @@ export class UserRepository implements IUserRepository {
       last_name: user.last_name,
       email: user.email,
       type: user.type,
-      createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
     } as UserResponseDto));
   }
 
@@ -26,8 +24,6 @@ export class UserRepository implements IUserRepository {
       last_name: user.last_name,
       email: user.email,
       type: user.type,
-      createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
     } as UserResponseDto;
   }
 
