@@ -110,8 +110,8 @@ export class AuthController {
                 res.status(401).json({ message: 'No se encontró token de acceso' });
                 return;
             }
-            const session = await this.getSessionUseCase.execute(token);
-            res.status(200).json({ userType: session.userType });
+            const user = await this.getSessionUseCase.execute(token);
+            res.status(200).json(user);
         } catch (error: unknown) {
             if (error instanceof Error) {
                 res.status(401).json({ message: error.message });

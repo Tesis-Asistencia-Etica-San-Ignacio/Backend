@@ -9,6 +9,7 @@ import {
   UpdateUserUseCase,
   DeleteUserUseCase,
 } from '../../application';
+import { validateRoleMiddleware } from '../middleware/jwtMiddleware';
 
 
 const router = Router();
@@ -31,11 +32,14 @@ const userController = new UserController(
   deleteUserUseCase,
 );
 
-router.get('/', userController.getAll);
-router.get('/:id', userController.getById);
-router.post('/evaluador', userController.createEvaluator);
+router.get('/', validateRoleMiddleware(['EVALUADOR', 'INVESTIGADOR']), userController.getAll);
+router.get('/:id', validateRoleMiddleware(['EVALUADOR', 'INVESTIGADOR']), userController.getById);
+router.post('/evaluador', validateRoleMiddleware(['EVALUADOR']), userController.createEvaluator);
+
+// Registro de investigador es público
 router.post('/investigador', userController.createInvestigator);
-router.patch('/:id', userController.update);
-router.delete('/:id', userController.delete);
+
+router.patch('/:id', validateRoleMiddleware(['EVALUADOR', 'INVESTIGADOR']), userController.update);
+router.delete('/:id', validateRoleMiddleware(['EVALUADOR', 'INVESTIGADOR']), userController.delete);
 
 export default router;

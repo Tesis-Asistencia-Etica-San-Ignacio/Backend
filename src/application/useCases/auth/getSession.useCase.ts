@@ -1,4 +1,5 @@
 import { AuthService } from '../../services/auth.service';
+import { UserResponseDto } from '../../../application';
 
 export class GetSessionUseCase {
     private authService: AuthService;
@@ -7,7 +8,7 @@ export class GetSessionUseCase {
         this.authService = authService;
     }
 
-    public async execute(token: string): Promise<{ userType: string }> {
+    public async execute(token: string): Promise<UserResponseDto> {
         return this.authService.getSession(token);
     }
 }
