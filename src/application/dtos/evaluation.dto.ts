@@ -1,18 +1,25 @@
 import { Type, Static } from '@sinclair/typebox';
 
+// En tu diagrama, el estado de la evaluación puede ser "PENDIENTE", 
+// "EN CURSO" o "EVALUADO".
+export const ESTADO_EVALUACION = Type.Union([
+  Type.Literal('PENDIENTE'),
+  Type.Literal('EN CURSO'),
+  Type.Literal('EVALUADO'),
+]);
+
+
 // Esquema para crear una Evaluacion
 export const CreateEvaluacionSchema = Type.Object({
   uid: Type.String({ pattern: '^[0-9a-fA-F]{24}$' }), // Representa un ObjectId como string
-  fundanet: Type.String(),
+  id_fundanet: Type.String(),
   file: Type.String(),
   fecha_inicial: Type.String({ format: 'date-time' }),
   fecha_final: Type.String({ format: 'date-time' }),
-  evaluacion: Type.String(),
-  estado: Type.String(),
+  estado: ESTADO_EVALUACION,
   tipo_error: Type.String(),
   aprobado: Type.Boolean(),
   correo_estudiante: Type.String(),
-  // createdAt y updatedAt son manejados por Mongoose automáticamente
 });
 
 export type CreateEvaluacionDto = Static<typeof CreateEvaluacionSchema>;
@@ -25,12 +32,11 @@ export type UpdateEvaluacionDto = Static<typeof UpdateEvaluacionSchema>;
 export const EvaluacionResponseSchema = Type.Object({
   id: Type.String(),
   uid: Type.String(),
-  fundanet: Type.String(),
+  id_fundanet: Type.String(),
   file: Type.String(),
   fecha_inicial: Type.String({ format: 'date-time' }),
   fecha_final: Type.String({ format: 'date-time' }),
-  evaluacion: Type.String(),
-  estado: Type.String(),
+  estado: ESTADO_EVALUACION,
   tipo_error: Type.String(),
   aprobado: Type.Boolean(),
   correo_estudiante: Type.String(),

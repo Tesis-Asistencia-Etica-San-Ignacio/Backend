@@ -1,6 +1,12 @@
-import { EvaluacionModel } from '../..';
-import { IEvaluacionRepository } from '../../../domain';
-import { CreateEvaluacionDto, UpdateEvaluacionDto, EvaluacionResponseDto } from '../../../application';
+import { EvaluacionModel } from "../..";
+import { IEvaluacionRepository } from "../../../domain";
+import {
+  CreateEvaluacionDto,
+  UpdateEvaluacionDto,
+  EvaluacionResponseDto,
+} from "../../../application";
+
+export type EstadoEvaluacion = 'PENDIENTE' | 'EN CURSO' | 'EVALUADO';
 
 export class EvaluacionRepository implements IEvaluacionRepository {
   public async findAll(): Promise<EvaluacionResponseDto[]> {
@@ -8,12 +14,11 @@ export class EvaluacionRepository implements IEvaluacionRepository {
     return results.map((doc) => ({
       id: doc._id.toString(),
       uid: doc.uid.toString(),
-      fundanet: doc.fundanet,
+      id_fundanet: doc.id_fundanet,
       file: doc.file,
       fecha_inicial: doc.fecha_inicial.toISOString(),
       fecha_final: doc.fecha_final.toISOString(),
-      evaluacion: doc.evaluacion,
-      estado: doc.estado,
+      estado: doc.estado as EstadoEvaluacion,
       tipo_error: doc.tipo_error,
       aprobado: doc.aprobado,
       correo_estudiante: doc.correo_estudiante,
@@ -28,12 +33,11 @@ export class EvaluacionRepository implements IEvaluacionRepository {
     return {
       id: doc._id.toString(),
       uid: doc.uid.toString(),
-      fundanet: doc.fundanet,
+      id_fundanet: doc.id_fundanet,
       file: doc.file,
       fecha_inicial: doc.fecha_inicial.toISOString(),
-  fecha_final: doc.fecha_final.toISOString(),
-      evaluacion: doc.evaluacion,
-      estado: doc.estado,
+      fecha_final: doc.fecha_final.toISOString(),
+      estado: doc.estado as EstadoEvaluacion,
       tipo_error: doc.tipo_error,
       aprobado: doc.aprobado,
       correo_estudiante: doc.correo_estudiante,
@@ -42,17 +46,18 @@ export class EvaluacionRepository implements IEvaluacionRepository {
     };
   }
 
-  public async create(data: CreateEvaluacionDto): Promise<EvaluacionResponseDto> {
+  public async create(
+    data: CreateEvaluacionDto
+  ): Promise<EvaluacionResponseDto> {
     const doc = await EvaluacionModel.create(data);
     return {
       id: doc._id.toString(),
       uid: doc.uid.toString(),
-      fundanet: doc.fundanet,
+      id_fundanet: doc.id_fundanet,
       file: doc.file,
       fecha_inicial: doc.fecha_inicial.toISOString(),
-  fecha_final: doc.fecha_final.toISOString(),
-      evaluacion: doc.evaluacion,
-      estado: doc.estado,
+      fecha_final: doc.fecha_final.toISOString(),
+      estado: doc.estado as EstadoEvaluacion,
       tipo_error: doc.tipo_error,
       aprobado: doc.aprobado,
       correo_estudiante: doc.correo_estudiante,
@@ -65,17 +70,18 @@ export class EvaluacionRepository implements IEvaluacionRepository {
     id: string,
     data: UpdateEvaluacionDto
   ): Promise<EvaluacionResponseDto | null> {
-    const doc = await EvaluacionModel.findByIdAndUpdate(id, data, { new: true });
+    const doc = await EvaluacionModel.findByIdAndUpdate(id, data, {
+      new: true,
+    });
     if (!doc) return null;
     return {
       id: doc._id.toString(),
       uid: doc.uid.toString(),
-      fundanet: doc.fundanet,
+      id_fundanet: doc.id_fundanet,
       file: doc.file,
       fecha_inicial: doc.fecha_inicial.toISOString(),
-  fecha_final: doc.fecha_final.toISOString(),
-      evaluacion: doc.evaluacion,
-      estado: doc.estado,
+      fecha_final: doc.fecha_final.toISOString(),
+      estado: doc.estado as EstadoEvaluacion,
       tipo_error: doc.tipo_error,
       aprobado: doc.aprobado,
       correo_estudiante: doc.correo_estudiante,
@@ -94,12 +100,11 @@ export class EvaluacionRepository implements IEvaluacionRepository {
     return results.map((doc) => ({
       id: doc._id.toString(),
       uid: doc.uid.toString(),
-      fundanet: doc.fundanet,
+      id_fundanet: doc.id_fundanet,
       file: doc.file,
       fecha_inicial: doc.fecha_inicial.toISOString(),
       fecha_final: doc.fecha_final.toISOString(),
-      evaluacion: doc.evaluacion,
-      estado: doc.estado,
+      estado: doc.estado as EstadoEvaluacion,
       tipo_error: doc.tipo_error,
       aprobado: doc.aprobado,
       correo_estudiante: doc.correo_estudiante,

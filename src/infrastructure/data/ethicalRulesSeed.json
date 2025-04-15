@@ -1,0 +1,28 @@
+[
+    {
+      "description": "Confidencialidad de los datos de los participantes",
+      "status": "APROBADO",
+      "codeNumber": 1001
+    },
+    {
+      "description": "Consentimiento informado obligatorio",
+      "status": "APROBADO",
+      "codeNumber": 1002
+    },
+    {
+      "description": "Protección de datos personales",
+      "status": "APROBADO", 
+      "codeNumber": 1003
+    },
+    {
+      "description": "Uso ético de los resultados",
+      "status": "APROBADO",
+      "codeNumber": 1004
+    },
+    {
+      "description": "Revisión por pares de la metodología",
+      "status": "NO_APROBADO",
+      "justification": "Requiere protocolo de revisión más estricto",
+      "codeNumber": 1005
+    }
+  ]

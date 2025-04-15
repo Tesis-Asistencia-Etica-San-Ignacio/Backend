@@ -8,6 +8,7 @@ import authRouter from './auth.router';
 import fileRouter from './file.router';
 import pdfRouter from './pdf.router';
 import smtpRouter from './smtp.router';
+import ethicalRulesRouter from './ethicalRules.router';
 
 export {
   userRouter,
@@ -19,5 +20,6 @@ export {
   authRouter,
   fileRouter,
   pdfRouter,
-  smtpRouter
+  smtpRouter,
+  ethicalRulesRouter,
 };

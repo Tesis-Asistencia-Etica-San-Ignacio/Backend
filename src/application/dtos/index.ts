@@ -4,3 +4,4 @@ export * from './contInfoGeneral.dto';
 export * from './evaluation.dto';
 export * from './prompt.dto';
 export * from './auth.dto';
+export * from './ethicalRule.dto';

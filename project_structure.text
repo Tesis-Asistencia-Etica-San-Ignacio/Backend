@@ -4,6 +4,7 @@
 - docker-compose.yml
 - Dockerfile
 - package.json
+- project_structure.text
 - README.md
 - src
   - application
@@ -12,6 +13,7 @@
       - case.dto.ts
       - contInfoGeneral.dto.ts
       - contIntro.dto.ts
+      - ethicalRule.dto.ts
       - evaluation.dto.ts
       - index.ts
       - prompt.dto.ts
@@ -24,6 +26,7 @@
       - file.service.ts
       - index.ts
       - pdf.service.ts
+      - smpt.service.ts
     - useCases
       - auth
         - getSession.useCase.ts
@@ -51,10 +54,18 @@
         - getContIntroById.useCase.ts
         - index.ts
         - updateContIntro.useCase.ts
+      - ethical_rules
+        - createEthicalRule.useCase.ts
+        - deleteEthicalRule.useCase.ts
+        - getAllEthicalRules.useCase.ts
+        - getEthicalRulesByEvaluation.useCase.ts
+        - index.ts
+        - updateEthicalRule.useCase.ts
       - evaluation
         - createEvaluation.useCase.ts
         - deleteEvaluation.useCase.ts
         - getAllEvaluations.useCase.ts
+        - getEvaluacionsByUser.useCase.ts
         - getEvaluationsById.useCase.ts
         - index.ts
         - updateEvaluation.useCase.ts
@@ -68,10 +79,13 @@
         - getPromptById.useCase.ts
         - index.ts
         - updatePrompt.useCase.ts
+      - smtp
+        - smpt.useCase.ts
       - user
         - createUser.useCase.ts
         - deleteUser.useCase.ts
         - getAllUsers.useCase.ts
+        - getUserByEmail.useCase.ts
         - getUserById.useCase.ts
         - index.ts
         - updateUser.useCase.ts
@@ -80,6 +94,7 @@
       - case.entity.ts
       - contInfoGeneral.entity.ts
       - contIntro.entity.ts
+      - ethicalRule.entity.ts
       - evaluation.entity.ts
       - index.ts
       - prompt.entity.ts
@@ -89,6 +104,7 @@
       - case.repository.ts
       - contInfoGeneral.repository.ts
       - contIntro.repository.ts
+      - ethicalRule.repository.ts
       - evaluation.repository.ts
       - index.ts
       - prompt.repository.ts
@@ -99,6 +115,8 @@
       - index.ts
       - initMinio.ts
       - minioClient.ts
+    - data
+      - ethicalRulesSeed.json
     - database
       - database.ts
       - index.ts
@@ -106,6 +124,7 @@
         - case.model.ts
         - contInfoGeneral.model.ts
         - contIntro.model.ts
+        - ethicalRule.model.ts
         - evaluation.model.ts
         - index.ts
         - prompt.model.ts
@@ -114,6 +133,7 @@
         - case.repository.impl.ts
         - contInfoGeneral.repository.impl.ts
         - contIntro.repository.impl.ts
+        - ethicalRule.repository.impl.ts
         - evaluation.repository.impl.ts
         - index.ts
         - prompt.repository.impl.ts
@@ -129,11 +149,13 @@
       - contInfoGeneral.controller.ts
       - contIntro.controller.ts
       - email.controller.ts
+      - ethicalRule.controller.ts
       - evaluation.controller.ts
       - file.controller.ts
       - index.ts
       - pdf.controller.ts
       - prompt.controller.ts
+      - smpt.controller.ts
       - user.controller.ts
     - index.ts
     - middleware
@@ -147,11 +169,13 @@
       - contInfoGeneral.router.ts
       - contIntro.router.ts
       - email.router.ts
+      - ethicalRules.router.ts
       - evaluation.router.ts
       - file.router.ts
       - index.ts
       - pdf.router.ts
       - prompt.router.ts
+      - smtp.router.ts
       - user.router.ts
   - server.ts
   - shared
@@ -163,5 +187,8 @@
       - validateEnv.ts
   - templates
     - pdfTemplate.ejs
+  - types
+    - ethicalNorm.d.ts
+    - express.d.ts
 - tsconfig.json
 - wait-for-it.sh

@@ -3,11 +3,10 @@ import { Schema, model, Document, Types } from 'mongoose';
 export interface EvaluacionDocument extends Document {
   _id: Types.ObjectId;
   uid: Types.ObjectId;
-  fundanet: string;
+  id_fundanet: string;
   file: string;
   fecha_inicial: Date;
   fecha_final: Date;
-  evaluacion: string;
   estado: string;
   tipo_error: string;
   aprobado: boolean;
@@ -19,11 +18,10 @@ export interface EvaluacionDocument extends Document {
 const EvaluacionSchema = new Schema<EvaluacionDocument>(
   {
     uid: { type: Schema.Types.ObjectId, ref: 'Usuarios', required: true },
-    fundanet: { type: String, required: true },
+    id_fundanet: { type: String, required: true },
     file: { type: String, required: true },
     fecha_inicial: { type: Date, required: true },
     fecha_final: { type: Date, required: true },
-    evaluacion: { type: String, required: true },
     estado: { type: String, required: true },
     tipo_error: { type: String, required: true },
     aprobado: { type: Boolean, required: true },

@@ -38,3 +38,16 @@ export async function getFileByName(fileName: string, bucket = 'uploads') {
   // Si no pasas opciones, minioClient.statObject() retorna una Promesa
   return minioClient.statObject(bucket, fileName);
 }
+
+export async function deleteFileFromMinio(
+  fileName: string,
+  bucket = "uploads"
+): Promise<void> {
+  try {
+    await minioClient.removeObject(bucket, fileName);
+    console.log("Archivo eliminado correctamente de min.io");
+  } catch (err) {
+    console.error("Error al eliminar el archivo de min.io:", err);
+    throw err;
+  }
+}

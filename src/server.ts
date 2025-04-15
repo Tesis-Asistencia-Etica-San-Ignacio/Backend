@@ -18,6 +18,7 @@ import {
   fileRouter,
   pdfRouter,
   smtpRouter,
+  ethicalRulesRouter,
 } from './presentation/routes';
 
 // 1 Crear la aplicación Express
@@ -37,6 +38,7 @@ app.use(`${config.api.conventionApi}/prompt`, promptRouter);
 app.use(`${config.api.conventionApi}/auth`, authRouter);
 app.use(`${config.api.conventionApi}/files`, fileRouter);
 app.use(`${config.api.conventionApi}/smtp`, smtpRouter);
+app.use(`${config.api.conventionApi}/ethicalRules`, ethicalRulesRouter);
 
 // Ruta de prueba
 app.get('/', (req, res) => {
