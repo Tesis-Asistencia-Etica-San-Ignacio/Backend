@@ -3,7 +3,15 @@ import { validateEnv } from '../../shared/utils';
 
 dotenv.config();
 
-const requiredEnvVars = ['MONGO_URI', 'CONVENTION_API', 'JWT_SECRET'];
+const requiredEnvVars = [
+  'MONGO_URI',
+  'CONVENTION_API',
+  'JWT_SECRET',
+  'SMTP_HOST',
+  'SMTP_PORT',
+  'SMTP_USER',
+  'SMTP_PASS'
+];
 validateEnv(requiredEnvVars);
 
 function parseTime(timeStr: string): number {
@@ -49,6 +57,12 @@ const config = {
   },
   api: {
     conventionApi: process.env.CONVENTION_API as string,
+  },
+  smtp: {
+    host: process.env.SMTP_HOST as string,
+    port: parseInt(process.env.SMTP_PORT as string, 10),
+    user: process.env.SMTP_USER as string,
+    pass: process.env.SMTP_PASS as string,
   },
 };
 

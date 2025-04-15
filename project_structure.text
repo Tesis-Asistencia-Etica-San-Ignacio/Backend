@@ -4,6 +4,7 @@
 - docker-compose.yml
 - Dockerfile
 - package.json
+- project_structure.text
 - README.md
 - src
   - application
@@ -24,6 +25,7 @@
       - file.service.ts
       - index.ts
       - pdf.service.ts
+      - smpt.service.ts
     - useCases
       - auth
         - getSession.useCase.ts
@@ -55,6 +57,7 @@
         - createEvaluation.useCase.ts
         - deleteEvaluation.useCase.ts
         - getAllEvaluations.useCase.ts
+        - getEvaluacionsByUser.useCase.ts
         - getEvaluationsById.useCase.ts
         - index.ts
         - updateEvaluation.useCase.ts
@@ -68,10 +71,13 @@
         - getPromptById.useCase.ts
         - index.ts
         - updatePrompt.useCase.ts
+      - smtp
+        - smpt.useCase.ts
       - user
         - createUser.useCase.ts
         - deleteUser.useCase.ts
         - getAllUsers.useCase.ts
+        - getUserByEmail.useCase.ts
         - getUserById.useCase.ts
         - index.ts
         - updateUser.useCase.ts
@@ -118,9 +124,6 @@
         - index.ts
         - prompt.repository.impl.ts
         - user.repository.impl.ts
-    - email
-      - index.ts
-      - SmtpService.ts
     - index.ts
   - presentation
     - controllers
@@ -128,12 +131,12 @@
       - case.controller.ts
       - contInfoGeneral.controller.ts
       - contIntro.controller.ts
-      - email.controller.ts
       - evaluation.controller.ts
       - file.controller.ts
       - index.ts
       - pdf.controller.ts
       - prompt.controller.ts
+      - smpt.controller.ts
       - user.controller.ts
     - index.ts
     - middleware
@@ -146,12 +149,12 @@
       - case.router.ts
       - contInfoGeneral.router.ts
       - contIntro.router.ts
-      - email.router.ts
       - evaluation.router.ts
       - file.router.ts
       - index.ts
       - pdf.router.ts
       - prompt.router.ts
+      - smtp.router.ts
       - user.router.ts
   - server.ts
   - shared
@@ -162,6 +165,11 @@
       - typeboxValidator.ts
       - validateEnv.ts
   - templates
-    - pdfTemplate.ejs
+    - emails
+      - documentTemplate.html
+    - pdf
+      - pdfTemplate.ejs
+  - types
+    - express.d.ts
 - tsconfig.json
 - wait-for-it.sh

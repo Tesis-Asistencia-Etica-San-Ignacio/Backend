@@ -1,14 +1,11 @@
-// smpt.service.ts
 import nodemailer from "nodemailer";
+import config from "../../infrastructure/config/config";
 
 export class SmtpService {
     private transporter: nodemailer.Transporter;
 
     constructor() {
-        const host = process.env.SMTP_HOST;
-        const port = parseInt(process.env.SMTP_PORT || "587", 10);
-        const user = process.env.SMTP_USER;
-        const pass = process.env.SMTP_PASS;
+        const { host, port, user, pass } = config.smtp;
 
         if (!host || !port || !user || !pass) {
             throw new Error("Faltan credenciales SMTP. Verifica tu archivo .env");
@@ -22,7 +19,7 @@ export class SmtpService {
                 user,
                 pass,
             },
-            connectionTimeout: 10000, 
+            connectionTimeout: 10000,
             socketTimeout: 10000,
         });
     }
@@ -32,11 +29,11 @@ export class SmtpService {
             const toList = to.join(", ");
 
             await this.transporter.sendMail({
-                from: "Acme <no-reply@acme.com>", // Ajusta el remitente real
+                from: "Acme <no-reply@acme.com>",
                 to: toList,
                 subject,
                 html,
-                attachments, // Agrega la propiedad attachments al objeto de opciones
+                attachments,
             });
         } catch (error) {
             console.error("Error enviando email via SMTP:", error);
