@@ -5,6 +5,7 @@
 - Dockerfile
 - package.json
 - project_structure.text
+- project_structure.text
 - README.md
 - src
   - application
@@ -138,9 +139,6 @@
         - index.ts
         - prompt.repository.impl.ts
         - user.repository.impl.ts
-    - email
-      - index.ts
-      - SmtpService.ts
     - index.ts
   - presentation
     - controllers
@@ -186,7 +184,12 @@
       - typeboxValidator.ts
       - validateEnv.ts
   - templates
-    - pdfTemplate.ejs
+    - emails
+      - documentTemplate.html
+    - pdf
+      - pdfTemplate.ejs
+  - types
+    - express.d.ts
   - types
     - ethicalNorm.d.ts
     - express.d.ts

@@ -1,15 +1,16 @@
-// smpt.useCase.ts
 import { SmtpService } from '../../services/smpt.service';
+
+interface Attachment {
+    filename: string;
+    content: Buffer;
+    contentType: string;
+}
 
 interface SendEmailData {
     to: string[];
     subject: string;
-    html?: string; // El cuerpo del correo podría ser opcional si solo envías adjuntos
-    attachments?: {
-        filename: string;
-        content: Buffer; // El contenido del archivo adjunto como un Buffer
-        contentType: string; // El tipo de contenido del archivo (ej: 'application/pdf')
-    }[];
+    html?: string;
+    attachments?: Attachment[];
 }
 
 export class SendEmailUseCase {
@@ -21,6 +22,6 @@ export class SendEmailUseCase {
 
     public async execute(data: SendEmailData): Promise<void> {
         const { to, subject, html, attachments } = data;
-        await this.smtpService.sendEmail(to, subject, html, attachments); // Modifica la llamada al servicio
+        await this.smtpService.sendEmail(to, subject, html, attachments);
     }
 }

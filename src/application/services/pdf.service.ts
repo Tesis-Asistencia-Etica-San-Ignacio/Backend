@@ -5,7 +5,7 @@ import path from 'path';
 export class PDFService {
     public async generatePdf(data: { userName: string; userType: string; date: string }): Promise<Buffer> {
         // Ruta absoluta a la plantilla EJS en src/templates
-        const templatePath = path.join(process.cwd(), 'src', 'templates', 'pdfTemplate.ejs');
+        const templatePath = path.join(process.cwd(), 'src', 'templates','pdf', 'pdfTemplate.ejs');
         const htmlContent: string = await ejs.renderFile(templatePath, data);
 
         // Lanzar Puppeteer con opciones extendidas
