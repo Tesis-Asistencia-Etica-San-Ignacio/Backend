@@ -3,6 +3,7 @@ import { Schema, model, Document, Types } from "mongoose";
 
 // 1. Definir la interfaz del documento
 export interface EthicalNormDocument extends Document {
+  _id: Types.ObjectId;
   evaluationId: Types.ObjectId;
   description: string;
   status: "APROBADO" | "NO_APROBADO";
@@ -41,7 +42,7 @@ const EthicalNormSchema = new Schema<EthicalNormDocument>(
       type: Number, 
       required: true,
       min: [1, "El código debe ser mayor a 0"],
-      unique: true
+      unique: false
     }
   },
   {
