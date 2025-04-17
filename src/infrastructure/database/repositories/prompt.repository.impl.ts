@@ -1,15 +1,16 @@
-import { PromtModel } from '../..';
-import { IPromtRepository, Promt } from '../../../domain';
-import { PromtResponseDto, CreatePromtDto, UpdatePromtDto } from '../../../application';
+import { promptModel } from '../..';
+import { IPromptRepository } from '../../../domain';
+import { PromptResponseDto, CreatepromptDto, UpdatepromptDto } from '../../../application';
 
-export class PromtRepository implements IPromtRepository {
-  public async findAll(): Promise<PromtResponseDto[]> {
-    const results = await PromtModel.find({});
+export class PromptRepository implements IPromptRepository {
+  public async findAll(): Promise<PromptResponseDto[]> {
+    const results = await promptModel.find({});
     return results.map((doc) => ({
       id: doc._id.toString(),
+      uid: doc.uid.toString(),
       nombre: doc.nombre,
       texto: doc.texto,
-      version: doc.version,
+      //version: doc.version,
       descripcion: doc.descripcion,
       activo: doc.activo,
       createdAt: doc.createdAt.toISOString(),
@@ -17,14 +18,15 @@ export class PromtRepository implements IPromtRepository {
     }));
   }
 
-  public async findById(id: string): Promise<PromtResponseDto | null> {
-    const doc = await PromtModel.findById(id);
+  public async findById(id: string): Promise<PromptResponseDto | null> {
+    const doc = await promptModel.findById(id);
     if (!doc) return null;
     return {
       id: doc._id.toString(),
+      uid: doc.uid.toString(),
       nombre: doc.nombre,
       texto: doc.texto,
-      version: doc.version,
+      //version: doc.version,
       descripcion: doc.descripcion,
       activo: doc.activo,
       createdAt: doc.createdAt.toISOString(),
@@ -32,13 +34,30 @@ export class PromtRepository implements IPromtRepository {
     };
   }
 
-  public async create(data: Omit<CreatePromtDto, 'id'>): Promise<PromtResponseDto> {
-    const doc = await PromtModel.create(data);
-    return {
+  public async findByEvaluatorId(evaluatorId: string): Promise<PromptResponseDto[]> {
+    const results = await promptModel.find({ uid: evaluatorId });
+    return results.map((doc) => ({
       id: doc._id.toString(),
+      uid: doc.uid.toString(),
       nombre: doc.nombre,
       texto: doc.texto,
-      version: doc.version,
+      //version: doc.version,
+      descripcion: doc.descripcion,
+      activo: doc.activo,
+      createdAt: doc.createdAt.toISOString(),
+      updatedAt: doc.updatedAt.toISOString(),
+    }));
+  }
+
+
+  public async create(data: Omit<CreatepromptDto, 'id'>): Promise<PromptResponseDto> {
+    const doc = await promptModel.create(data);
+    return {
+      id: doc._id.toString(),
+      uid: doc.uid.toString(),
+      nombre: doc.nombre,
+      texto: doc.texto,
+      //version: doc.version,
       descripcion: doc.descripcion,
       activo: doc.activo,
       createdAt: doc.createdAt.toISOString(),
@@ -46,14 +65,15 @@ export class PromtRepository implements IPromtRepository {
     };
   }
 
-  public async update(id: string, data: Partial<Omit<UpdatePromtDto, 'id'>>): Promise<PromtResponseDto | null> {
-    const doc = await PromtModel.findByIdAndUpdate(id, data, { new: true });
+  public async update(id: string, data: Partial<Omit<UpdatepromptDto, 'id'>>): Promise<PromptResponseDto | null> {
+    const doc = await promptModel.findByIdAndUpdate(id, data, { new: true });
     if (!doc) return null;
     return {
       id: doc._id.toString(),
+      uid: doc.uid.toString(),
       nombre: doc.nombre,
       texto: doc.texto,
-      version: doc.version,
+      //version: doc.version,
       descripcion: doc.descripcion,
       activo: doc.activo,
       createdAt: doc.createdAt.toISOString(),
@@ -62,7 +82,12 @@ export class PromtRepository implements IPromtRepository {
   }
 
   public async delete(id: string): Promise<boolean> {
-    const result = await PromtModel.findByIdAndDelete(id);
+    const result = await promptModel.findByIdAndDelete(id);
     return result !== null;
+  }
+
+  public async deleteByEvaluatorId(evaluationId: string): Promise<boolean> {
+    const result = await promptModel.deleteMany({ uid: evaluationId });
+    return result.deletedCount > 0;
   }
 }

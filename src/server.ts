@@ -36,7 +36,7 @@ app.use(`${config.api.conventionApi}/contIntro`, contIntroRouter);
 app.use(`${config.api.conventionApi}/contInfoGeneral`, contInfoGeneralRouter);
 app.use(`${config.api.conventionApi}/evaluacion`, evaluacionRouter);
 app.use(`${config.api.conventionApi}/cases`, caseRouter);
-app.use(`${config.api.conventionApi}/prompt`, promptRouter);
+app.use(`${config.api.conventionApi}/prompts`, promptRouter);
 app.use(`${config.api.conventionApi}/auth`, authRouter);
 app.use(`${config.api.conventionApi}/files`, fileRouter);
 app.use(`${config.api.conventionApi}/smtp`, smtpRouter);

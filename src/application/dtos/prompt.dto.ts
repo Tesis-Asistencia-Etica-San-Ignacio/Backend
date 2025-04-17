@@ -1,27 +1,29 @@
 import { Type, Static } from '@sinclair/typebox';
 
-export const CreatePromtSchema = Type.Object({
+export const CreatePromptSchema = Type.Object({
+  uid: Type.String({ pattern: '^[0-9a-fA-F]{24}$' }),
   nombre: Type.String(),
   texto: Type.String(),
-  version: Type.Number(),
+  //version: Type.Number(),
   descripcion: Type.String(),
   activo: Type.Boolean({ default: true }),
   createdAt: Type.Optional(Type.Date()),
   updatedAt: Type.Optional(Type.Date()),
 });
-export type CreatePromtDto = Static<typeof CreatePromtSchema>;
+export type CreatepromptDto = Static<typeof CreatePromptSchema>;
 
-export const UpdatePromtSchema = Type.Partial(CreatePromtSchema);
-export type UpdatePromtDto = Static<typeof UpdatePromtSchema>;
+export const UpdatepromptSchema = Type.Partial(CreatePromptSchema);
+export type UpdatepromptDto = Static<typeof UpdatepromptSchema>;
 
-export const PromtResponseSchema = Type.Object({
+export const PromptResponseSchema = Type.Object({
   id: Type.String(),
+  uid: Type.String(),
   nombre: Type.String(),
   texto: Type.String(),
-  version: Type.Number(),
+  //version: Type.Number(),
   descripcion: Type.String(),
   activo: Type.Boolean(),
   createdAt: Type.String({ format: 'date-time' }),
   updatedAt: Type.String({ format: 'date-time' }),
 });
-export type PromtResponseDto = Static<typeof PromtResponseSchema>;
+export type PromptResponseDto = Static<typeof PromptResponseSchema>;

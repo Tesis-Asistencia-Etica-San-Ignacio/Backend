@@ -1,0 +1,45 @@
+[
+    {
+      "nombre": "Prompt 1",
+      "texto": "Texto del prompt 1",
+      "version": 1,
+      "descripcion": "Descripción del prompt 1",
+      "activo": true
+    },
+    {
+      "nombre": "Prompt 2",
+      "texto": "Texto del prompt 2",
+      "version": 1,
+      "descripcion": "Descripción del prompt 2",
+      "activo": true
+    },
+    {
+      "nombre": "Prompt 3",
+      "texto": "Texto del prompt 3",
+      "version": 1,
+      "descripcion": "Descripción del prompt 3",
+      "activo": true
+    },
+    {
+      "nombre": "Prompt 4",
+      "texto": "Texto del prompt 4",
+      "version": 1,
+      "descripcion": "Descripción del prompt 4",
+      "activo": true
+    },
+    {
+      "nombre": "Prompt 5",
+      "texto": "Texto del prompt 5",
+      "version": 1,
+      "descripcion": "Descripción del prompt 5",
+      "activo": true
+    },
+    {
+      "nombre": "Prompt 6",
+      "texto": "Texto del prompt 6",
+      "version": 1,
+      "descripcion": "Descripción del prompt 6",
+      "activo": true
+    }
+  ]
+  
