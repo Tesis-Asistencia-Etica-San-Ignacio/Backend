@@ -1,6 +1,6 @@
 import { Schema, model, Document, Types } from 'mongoose';
 
-export interface EvaluacionDocument extends Document {
+export interface EvaluationDocument extends Document {
   _id: Types.ObjectId;
   uid: Types.ObjectId;
   id_fundanet: string;
@@ -15,7 +15,7 @@ export interface EvaluacionDocument extends Document {
   updatedAt: Date;
 }
 
-const EvaluacionSchema = new Schema<EvaluacionDocument>(
+const EvaluationSchema = new Schema<EvaluationDocument>(
   {
     uid: { type: Schema.Types.ObjectId, ref: 'Usuarios', required: true },
     id_fundanet: { type: String, required: true },
@@ -32,4 +32,4 @@ const EvaluacionSchema = new Schema<EvaluacionDocument>(
   }
 );
 
-export const EvaluacionModel = model<EvaluacionDocument>('Evaluaciones', EvaluacionSchema);
+export const EvaluationModel = model<EvaluationDocument>('Evaluaciones', EvaluationSchema);
