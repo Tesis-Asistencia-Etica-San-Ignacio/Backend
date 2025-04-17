@@ -1,10 +1,10 @@
-import { IPromtRepository } from '../../../domain';
-import { UpdatePromtDto, PromtResponseDto } from '../../../application';
+import { IPromptRepository } from '../../../domain';
+import { UpdatepromptDto, PromptResponseDto } from '../../../application';
 
-export class UpdatePromtUseCase {
-  constructor(private readonly promtRepository: IPromtRepository) {}
+export class UpdatepromptUseCase {
+  constructor(private readonly promptRepository: IPromptRepository) {}
 
-  public async execute(id: string, data: UpdatePromtDto): Promise<PromtResponseDto | null> {
-    return this.promtRepository.update(id, data);
+  public async execute(id: string, data: UpdatepromptDto): Promise<PromptResponseDto | null> {
+    return this.promptRepository.update(id, data);
   }
 }

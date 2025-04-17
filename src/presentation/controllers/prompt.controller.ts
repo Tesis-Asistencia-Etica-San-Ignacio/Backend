@@ -1,19 +1,22 @@
 import { Request, Response, NextFunction } from 'express';
-import { CreatePromtUseCase, GetAllPromtsUseCase, GetPromtByIdUseCase, UpdatePromtUseCase, DeletePromtUseCase } from '../../application';
+import { CreatepromptUseCase, GetAllpromptsUseCase, GetpromptByIdUseCase, UpdatepromptUseCase, DeletepromptUseCase, ResetPromptsUseCase, GetPromptsByEvaluatorIdUseCase } from '../../application';
 
-export class PromtController {
+export class PromptController{
   constructor(
-    private readonly createPromtUseCase: CreatePromtUseCase,
-    private readonly getAllPromtsUseCase: GetAllPromtsUseCase,
-    private readonly getPromtByIdUseCase: GetPromtByIdUseCase,
-    private readonly updatePromtUseCase: UpdatePromtUseCase,
-    private readonly deletePromtUseCase: DeletePromtUseCase,
+    private readonly createpromptUseCase: CreatepromptUseCase,
+    private readonly getAllpromptsUseCase: GetAllpromptsUseCase,
+    private readonly getpromptByIdUseCase: GetpromptByIdUseCase,
+    private readonly updatepromptUseCase: UpdatepromptUseCase,
+    private readonly deletepromptUseCase: DeletepromptUseCase,
+    private readonly resetPromptsUseCase: ResetPromptsUseCase,
+    private readonly getPromptsByEvaluatorIdUseCase: GetPromptsByEvaluatorIdUseCase
   ) {}
 
   public getAll = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const promts = await this.getAllPromtsUseCase.execute();
-      res.status(200).json(promts);
+      const prompts = await this.getAllpromptsUseCase.execute();
+      res.status(200).json(prompts);
+      console.log(prompts);
     } catch (error) {
       next(error);
     }
@@ -22,12 +25,26 @@ export class PromtController {
   public getById = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { id } = req.params;
-      const promt = await this.getPromtByIdUseCase.execute(id);
-      if (!promt) {
-        res.status(404).json({ message: 'Promt no encontrado' });
+      const prompt = await this.getpromptByIdUseCase.execute(id);
+      if (!prompt) {
+        res.status(404).json({ message: 'prompt no encontrado' });
       } else {
-        res.status(200).json(promt);
+        res.status(200).json(prompt);
       }
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public getByEvaluatorId = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const { id: evaluatorId } = req.params;
+      const prompts = await this.getPromptsByEvaluatorIdUseCase.execute(evaluatorId);
+      res.status(200).json(prompts);
     } catch (error) {
       next(error);
     }
@@ -35,8 +52,8 @@ export class PromtController {
 
   public create = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const newPromt = await this.createPromtUseCase.execute(req.body);
-      res.status(201).json(newPromt);
+      const newprompt = await this.createpromptUseCase.execute(req.body);
+      res.status(201).json(newprompt);
     } catch (error) {
       next(error);
     }
@@ -45,11 +62,11 @@ export class PromtController {
   public update = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { id } = req.params;
-      const updatedPromt = await this.updatePromtUseCase.execute(id, req.body);
-      if (!updatedPromt) {
-        res.status(404).json({ message: 'Promt no encontrado' });
+      const updatedprompt = await this.updatepromptUseCase.execute(id, req.body);
+      if (!updatedprompt) {
+        res.status(404).json({ message: 'prompt no encontrado' });
       } else {
-        res.status(200).json(updatedPromt);
+        res.status(200).json(updatedprompt);
       }
     } catch (error) {
       next(error);
@@ -59,12 +76,22 @@ export class PromtController {
   public delete = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { id } = req.params;
-      const wasDeleted = await this.deletePromtUseCase.execute(id);
+      const wasDeleted = await this.deletepromptUseCase.execute(id);
       if (!wasDeleted) {
-        res.status(404).json({ message: 'Promt no encontrado' });
+        res.status(404).json({ message: 'prompt no encontrado' });
       } else {
-        res.status(200).json({ message: 'Promt eliminado correctamente' });
+        res.status(200).json({ message: 'prompt eliminado correctamente' });
       }
+    } catch (error) {
+      next(error);
+    }
+  };
+  
+  public resetPrompts = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const { id: evaluatorId } = req.params;
+      await this.resetPromptsUseCase.execute(evaluatorId);
+      res.status(200).json({ message: 'Prompts reinicializados correctamente' });
     } catch (error) {
       next(error);
     }

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { UserController } from '../../presentation';
-import { UserRepository } from '../../infrastructure/database/repositories';
+import { UserRepository, PromptRepository } from '../../infrastructure/database/repositories';
 import {
   CreateEvaluatorUseCase,
   CreateInvestigatorUseCase,
@@ -15,8 +15,9 @@ import { validateRoleMiddleware } from '../middleware/jwtMiddleware';
 const router = Router();
 
 const userRepository = new UserRepository();
+const promptRepository = new PromptRepository(); // Asegúrate de que este repositorio esté definido y exportado correctamente
 
-const createEvaluatorUseCase = new CreateEvaluatorUseCase(userRepository);
+const createEvaluatorUseCase = new CreateEvaluatorUseCase(userRepository, promptRepository);
 const createInvestigatorUseCase = new CreateInvestigatorUseCase(userRepository);
 const getAllUsersUseCase = new GetAllUsersUseCase(userRepository);
 const getUserByIdUseCase = new GetUserByIdUseCase(userRepository);

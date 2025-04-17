@@ -1,11 +1,11 @@
-import { IPromtRepository } from '../../../domain';
-import { CreatePromtDto, PromtResponseDto } from '../../../application';
+import { IPromptRepository } from '../../../domain';
+import { CreatepromptDto, PromptResponseDto } from '../../../application';
 
-export class CreatePromtUseCase {
-  constructor(private readonly promtRepository: IPromtRepository) {}
+export class CreatepromptUseCase {
+  constructor(private readonly promptRepository: IPromptRepository) {}
 
-  public async execute(data: CreatePromtDto): Promise<PromtResponseDto> {
-    const promt = await this.promtRepository.create(data);
-    return promt;
+  public async execute(data: CreatepromptDto): Promise<PromptResponseDto> {
+    const prompt = await this.promptRepository.create(data);
+    return prompt;
   }
 }

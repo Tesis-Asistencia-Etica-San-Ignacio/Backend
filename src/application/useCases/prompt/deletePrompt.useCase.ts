@@ -1,9 +1,9 @@
-import { IPromtRepository } from '../../../domain';
+import { IPromptRepository } from '../../../domain';
 
-export class DeletePromtUseCase {
-  constructor(private readonly promtRepository: IPromtRepository) {}
+export class DeletepromptUseCase {
+  constructor(private readonly promptRepository: IPromptRepository) {}
 
   public async execute(id: string): Promise<boolean> {
-    return this.promtRepository.delete(id);
+    return this.promptRepository.delete(id);
   }
 }

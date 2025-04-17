@@ -1,31 +1,73 @@
-import { Router } from 'express';
-import { PromtController } from '../../presentation';
-import { PromtRepository } from '../../infrastructure/database/repositories';
-import { CreatePromtUseCase, GetAllPromtsUseCase, GetPromtByIdUseCase, UpdatePromtUseCase, DeletePromtUseCase } from '../../application';
-import { validateRoleMiddleware } from '../middleware/jwtMiddleware';
+// src/presentation/routes/prompt.router.ts
+import { Router } from "express";
+import { PromptController } from "../../presentation";
+import { PromptRepository } from "../../infrastructure/database/repositories";
+import {
+  CreatepromptUseCase,
+  GetAllpromptsUseCase,
+  GetpromptByIdUseCase,
+  UpdatepromptUseCase,
+  DeletepromptUseCase,
+  ResetPromptsUseCase,
+  GetPromptsByEvaluatorIdUseCase,
+} from "../../application";
+import { validateRoleMiddleware } from "../middleware/jwtMiddleware";
 
 const router = Router();
+const promptRepository = new PromptRepository();
 
-const promtRepository = new PromtRepository();
+const createpromptUseCase             = new CreatepromptUseCase(promptRepository);
+const getAllpromptsUseCase            = new GetAllpromptsUseCase(promptRepository);
+const getpromptByIdUseCase            = new GetpromptByIdUseCase(promptRepository);
+const updatepromptUseCase             = new UpdatepromptUseCase(promptRepository);
+const deletepromptUseCase             = new DeletepromptUseCase(promptRepository);
+const resetPromptsUseCase             = new ResetPromptsUseCase(promptRepository);
+const getPromptsByEvaluatorIdUseCase  = new GetPromptsByEvaluatorIdUseCase(promptRepository);
 
-const createPromtUseCase = new CreatePromtUseCase(promtRepository);
-const getAllPromtsUseCase = new GetAllPromtsUseCase(promtRepository);
-const getPromtByIdUseCase = new GetPromtByIdUseCase(promtRepository);
-const updatePromtUseCase = new UpdatePromtUseCase(promtRepository);
-const deletePromtUseCase = new DeletePromtUseCase(promtRepository);
-
-const promtController = new PromtController(
-  createPromtUseCase,
-  getAllPromtsUseCase,
-  getPromtByIdUseCase,
-  updatePromtUseCase,
-  deletePromtUseCase
+const promptController = new PromptController(
+  createpromptUseCase,
+  getAllpromptsUseCase,
+  getpromptByIdUseCase,
+  updatepromptUseCase,
+  deletepromptUseCase,
+  resetPromptsUseCase,
+  getPromptsByEvaluatorIdUseCase
 );
 
-router.get('/', validateRoleMiddleware(['EVALUADOR']), promtController.getAll);
-router.get('/:id', validateRoleMiddleware(['EVALUADOR']), promtController.getById);
-router.post('/', validateRoleMiddleware(['EVALUADOR']), promtController.create);
-router.patch('/:id', validateRoleMiddleware(['EVALUADOR']), promtController.update);
-router.delete('/:id', validateRoleMiddleware(['EVALUADOR']), promtController.delete);
+router.get(
+  "/user/:id",
+  validateRoleMiddleware(["EVALUADOR"]),
+  promptController.getByEvaluatorId
+);
+router.post(
+  "/user/:id/reset-prompts",
+  validateRoleMiddleware(["EVALUADOR"]),
+  promptController.resetPrompts
+);
+router.get(
+  "/",
+  validateRoleMiddleware(["EVALUADOR"]),
+  promptController.getAll
+);
+router.get(
+  "/:id",
+  validateRoleMiddleware(["EVALUADOR"]),
+  promptController.getById
+);
+router.post(
+  "/",
+  validateRoleMiddleware(["EVALUADOR"]),
+  promptController.create
+);
+router.patch(
+  "/:id",
+  validateRoleMiddleware(["EVALUADOR"]),
+  promptController.update
+);
+router.delete(
+  "/:id",
+  validateRoleMiddleware(["EVALUADOR"]),
+  promptController.delete
+);
 
 export default router;
