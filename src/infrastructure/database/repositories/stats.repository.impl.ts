@@ -6,17 +6,25 @@ import { differenceInCalendarDays, subMonths } from 'date-fns'
 
 export class StatsRepositoryImpl implements IStatsRepository {
     async aggregateEvaluationStats(from: Date, to: Date): Promise<EvaluationStatsDto> {
+        // Ajustamos 'from' a la medianoche UTC de ese día,
+        // y 'to' a la medianoche UTC del día SIGUIENTE
         const toUtcMidnight = (d: Date) =>
             new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()))
         from = toUtcMidnight(from)
-        to = toUtcMidnight(to)
+        to = new Date(Date.UTC(to.getFullYear(), to.getMonth(), to.getDate() + 1))
 
+        // Rango anterior de un mes
         const prevFrom = subMonths(from, 1)
         const prevTo = subMonths(to, 1)
 
+        // Función para agrupar tarjetas
         async function groupCards(f: Date, t: Date) {
             const [agg] = await EvaluationModel.aggregate([
-                { $match: { fecha_inicial: { $gte: f, $lte: t } } },
+                {
+                    $match: {
+                        fecha_inicial: { $gte: f, $lt: t }
+                    }
+                },
                 {
                     $group: {
                         _id: null,
@@ -36,17 +44,25 @@ export class StatsRepositoryImpl implements IStatsRepository {
         const nowStats = await groupCards(from, to)
         const prevStats = await groupCards(prevFrom, prevTo)
 
+        // Tasa de devolución
         const tasaNow = nowStats.total ? nowStats.rechazados / nowStats.total : 0
         const tasaPrev = prevStats.total ? prevStats.rechazados / prevStats.total : 0
 
+        // Determinamos el formato de agrupación temporal
         const rangeDays = differenceInCalendarDays(to, from)
         const unit =
             rangeDays <= 45 ? '%Y-%m-%d' :
                 rangeDays <= 365 ? '%Y-%V' :
                     '%Y-%m'
 
+        // Serie de líneas — usamos $lt para incluir todo el día final
         const lineSeriesAgg = await EvaluationModel.aggregate([
-            { $match: { fecha_final: { $gte: from, $lte: to }, estado: 'EVALUADO' } },
+            {
+                $match: {
+                    fecha_final: { $gte: from, $lt: to },
+                    estado: 'EVALUADO',
+                }
+            },
             {
                 $group: {
                     _id: { bucket: { $dateToString: { format: unit, date: '$fecha_final' } } },
@@ -84,8 +100,8 @@ export class StatsRepositoryImpl implements IStatsRepository {
             })),
             pieSeries: [
                 { label: 'Aprobadas', value: nowStats.aprobados },
-                { label: 'Rechazadas', value: nowStats.rechazados },
-            ],
+                { label: 'Rechazadas', value: nowStats.rechazados }
+            ]
         }
     }
 }
