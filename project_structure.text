@@ -5,7 +5,6 @@
 - Dockerfile
 - package.json
 - project_structure.text
-- project_structure.text
 - README.md
 - src
   - application
@@ -146,7 +145,6 @@
       - case.controller.ts
       - contInfoGeneral.controller.ts
       - contIntro.controller.ts
-      - email.controller.ts
       - ethicalRule.controller.ts
       - evaluation.controller.ts
       - file.controller.ts
@@ -166,7 +164,6 @@
       - case.router.ts
       - contInfoGeneral.router.ts
       - contIntro.router.ts
-      - email.router.ts
       - ethicalRules.router.ts
       - evaluation.router.ts
       - file.router.ts
@@ -180,16 +177,14 @@
     - constants
       - index.ts
     - utils
+      - emailTemplate.ts
       - index.ts
-      - typeboxValidator.ts
       - validateEnv.ts
   - templates
     - emails
       - documentTemplate.html
     - pdf
       - pdfTemplate.ejs
-  - types
-    - express.d.ts
   - types
     - ethicalNorm.d.ts
     - express.d.ts

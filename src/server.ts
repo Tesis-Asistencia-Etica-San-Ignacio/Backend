@@ -19,6 +19,7 @@ import {
   pdfRouter,
   smtpRouter,
   ethicalRulesRouter,
+  groqRouter
 } from './presentation/routes';
 
 // 1 Crear la aplicación Express
@@ -39,6 +40,7 @@ app.use(`${config.api.conventionApi}/auth`, authRouter);
 app.use(`${config.api.conventionApi}/files`, fileRouter);
 app.use(`${config.api.conventionApi}/smtp`, smtpRouter);
 app.use(`${config.api.conventionApi}/ethicalRules`, ethicalRulesRouter);
+app.use(`${config.api.conventionApi}/groq`, groqRouter);
 
 // Ruta de prueba
 app.get('/', (req, res) => {
@@ -66,8 +68,6 @@ const startServer = async () => {
     process.exit(1);
   }
 };
-
-
 
 // Iniciar la aplicación
 startServer();
