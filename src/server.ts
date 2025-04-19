@@ -19,7 +19,8 @@ import {
   pdfRouter,
   smtpRouter,
   ethicalRulesRouter,
-  groqRouter
+  groqRouter,
+  statsRouter
 } from './presentation/routes';
 
 // 1 Crear la aplicación Express
@@ -27,6 +28,7 @@ const app = express();
 
 configureMiddlewares(app);
 
+app.use(`${config.api.conventionApi}/stats`, statsRouter)
 
 // 2 Definición de rutas protegidas para cada rol
 app.use(`${config.api.conventionApi}/pdf`, pdfRouter);
@@ -35,12 +37,13 @@ app.use(`${config.api.conventionApi}/contIntro`, contIntroRouter);
 app.use(`${config.api.conventionApi}/contInfoGeneral`, contInfoGeneralRouter);
 app.use(`${config.api.conventionApi}/evaluacion`, evaluacionRouter);
 app.use(`${config.api.conventionApi}/cases`, caseRouter);
-app.use(`${config.api.conventionApi}/prompt`, promptRouter);
+app.use(`${config.api.conventionApi}/prompts`, promptRouter);
 app.use(`${config.api.conventionApi}/auth`, authRouter);
 app.use(`${config.api.conventionApi}/files`, fileRouter);
 app.use(`${config.api.conventionApi}/smtp`, smtpRouter);
 app.use(`${config.api.conventionApi}/ethicalRules`, ethicalRulesRouter);
 app.use(`${config.api.conventionApi}/groq`, groqRouter);
+app.use(`${config.api.conventionApi}/stats`, statsRouter)
 
 // Ruta de prueba
 app.get('/', (req, res) => {

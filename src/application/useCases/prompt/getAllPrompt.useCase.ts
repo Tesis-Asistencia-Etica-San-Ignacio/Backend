@@ -1,10 +1,11 @@
-import { IPromtRepository } from '../../../domain';
-import { PromtResponseDto } from '../../../application';
+import { IPromptRepository } from '../../../domain';
+import { PromptResponseDto } from '../../../application';
 
-export class GetAllPromtsUseCase {
-  constructor(private readonly promtRepository: IPromtRepository) {}
+export class GetAllpromptsUseCase {
+  constructor(private readonly promptRepository: IPromptRepository) {}
 
-  public async execute(): Promise<PromtResponseDto[]> {
-    return this.promtRepository.findAll();
+  public async execute(): Promise<PromptResponseDto[]> {
+    console.log('Executing GetAllpromptsUseCase...');
+    return this.promptRepository.findAll();
   }
 }
