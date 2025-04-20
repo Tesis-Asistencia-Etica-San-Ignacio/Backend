@@ -7,4 +7,4 @@ export const readPdfContent = async (buffer: Buffer): Promise<string> => {
   } catch (error) {
     throw new Error("Error al leer el archivo PDF");
   }
-};
+};  

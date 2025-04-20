@@ -14,6 +14,9 @@ export type GroqCompletionOptions = {
   model?: string;
   temperature?: number;
   max_tokens?: number;
+  response_format?: { 
+    type: "text" | "json_object"; // Solo estos valores permitidos
+  };
 };
 
 declare module "express" {

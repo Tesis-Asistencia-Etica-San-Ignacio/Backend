@@ -28,7 +28,6 @@ const app = express();
 
 configureMiddlewares(app);
 
-app.use(`${config.api.conventionApi}/stats`, statsRouter)
 
 // 2 Definición de rutas protegidas para cada rol
 app.use(`${config.api.conventionApi}/pdf`, pdfRouter);

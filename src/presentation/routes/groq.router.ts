@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { generateCompletionController } from "../controllers/groq.controller";
+import { generateCompletionController, processEvaluationController } from "../controllers/groq.controller";
 import multer from "multer";
 
 const router = Router();
@@ -12,5 +12,6 @@ const upload = multer({
   });
 
 router.post("/completion", upload.single("file"), generateCompletionController);
+router.post("/analisis", processEvaluationController);
 
 export default router;
