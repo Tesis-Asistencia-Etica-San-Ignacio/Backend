@@ -21,7 +21,6 @@ export const getAnalysisPrompt = (documentContent: string) => {
           ...acc,
           [q.id]: {  content: "..." }
         }), {}),
-        summary: "Resumen ejecutivo del documento..."
       }, null, 2)}
     `
   };
