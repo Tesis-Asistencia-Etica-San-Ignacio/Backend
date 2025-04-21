@@ -19,6 +19,7 @@ import {
   pdfRouter,
   smtpRouter,
   ethicalRulesRouter,
+  groqRouter,
   statsRouter
 } from './presentation/routes';
 
@@ -27,7 +28,6 @@ const app = express();
 
 configureMiddlewares(app);
 
-app.use(`${config.api.conventionApi}/stats`, statsRouter)
 
 // 2 Definición de rutas protegidas para cada rol
 app.use(`${config.api.conventionApi}/pdf`, pdfRouter);
@@ -41,6 +41,7 @@ app.use(`${config.api.conventionApi}/auth`, authRouter);
 app.use(`${config.api.conventionApi}/files`, fileRouter);
 app.use(`${config.api.conventionApi}/smtp`, smtpRouter);
 app.use(`${config.api.conventionApi}/ethicalRules`, ethicalRulesRouter);
+app.use(`${config.api.conventionApi}/groq`, groqRouter);
 app.use(`${config.api.conventionApi}/stats`, statsRouter)
 
 // Ruta de prueba
@@ -69,8 +70,6 @@ const startServer = async () => {
     process.exit(1);
   }
 };
-
-
 
 // Iniciar la aplicación
 startServer();

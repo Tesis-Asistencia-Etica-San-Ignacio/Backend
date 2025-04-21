@@ -10,7 +10,8 @@ const requiredEnvVars = [
   'SMTP_HOST',
   'SMTP_PORT',
   'SMTP_USER',
-  'SMTP_PASS'
+  'SMTP_PASS',
+  'GROQ_API_KEY',
 ];
 validateEnv(requiredEnvVars);
 
@@ -63,6 +64,9 @@ const config = {
     port: parseInt(process.env.SMTP_PORT as string, 10),
     user: process.env.SMTP_USER as string,
     pass: process.env.SMTP_PASS as string,
+  },
+  groq: {
+    apiKey: process.env.GROQ_API_KEY as string,
   },
 };
 

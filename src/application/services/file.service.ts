@@ -39,6 +39,15 @@ export async function getFileByName(fileName: string, bucket = 'uploads') {
   return minioClient.statObject(bucket, fileName);
 }
 
+export async function getFileByNameBuffer(fileName: string, bucket = 'uploads'): Promise<Buffer> {
+  const fileStream = await minioClient.getObject(bucket, fileName);
+  const chunks: Buffer[] = [];
+  for await (const chunk of fileStream) {
+    chunks.push(chunk);
+  }
+  return Buffer.concat(chunks);
+}
+
 export async function deleteFileFromMinio(
   fileName: string,
   bucket = "uploads"
