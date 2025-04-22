@@ -16,7 +16,6 @@ export class CreateEvaluacionUseCase {
 
   public async execute(data: CreateEvaluacionDto): Promise<Evaluacion> {
     const evaluacion = await this.evaluacionRepository.create(data);
-    await this.crearNormasEticasBase(evaluacion.id);
     return {
       ...evaluacion,
       fecha_inicial: new Date(evaluacion.fecha_inicial),
@@ -26,31 +25,28 @@ export class CreateEvaluacionUseCase {
     };
   }
 
-  public async crearNormasEticasBase(evaluacionId: string): Promise<void> {
+  public async crearNormasEticasBase(evaluacionId: string, normasData: EthicalNormSeed[]): Promise<void> {
     try {
-      const filePath = path.resolve(
-        __dirname, 
-        '../../../infrastructure/data/ethicalRulesSeed.json'
-      );
-      
-      // Verificar existencia del archivo
-      if (!fs.existsSync(filePath)) {
-        throw new Error(`Archivo no encontrado en: ${filePath}`);
+      const normasTransformadas = normasData.map((norma: any) => ({
+        ...norma,
+        status: norma.status ? "APROBADO" : "NO_APROBADO"
+      }));
+
+      if (!normasTransformadas || !Array.isArray(normasTransformadas)) {
+        throw new Error('Formato de normas inválido');
       }
-  
-      const rawData = fs.readFileSync(filePath, 'utf-8');
       
       // Especificar el tipo al parsear
-      const normasBase: EthicalNormSeed[] = JSON.parse(rawData);
   
       await Promise.all(
-        normasBase.map((norma: EthicalNormSeed) => 
+        normasTransformadas.map((norma: EthicalNormSeed) => 
           this.ethicalNormRepository.create({
             evaluationId: evaluacionId,
             description: norma.description,
             status: norma.status,
             codeNumber: norma.codeNumber,
-            justification: norma.justification
+            justification: norma.justification,
+            cita: norma.cita
           })
         )
       );

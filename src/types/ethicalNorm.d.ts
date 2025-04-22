@@ -2,6 +2,7 @@
 export interface EthicalNormSeed {
     description: string;
     status: "APROBADO" | "NO_APROBADO";
-    codeNumber: number;
+    codeNumber: string;
     justification?: string;
+    cita?: string;
   }

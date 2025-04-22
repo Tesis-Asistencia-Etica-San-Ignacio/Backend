@@ -7,7 +7,8 @@ export interface EthicalNorm {
   description: string;
   status: EthicalNormStatus;
   justification?: string;
-  codeNumber: number;
+  cita?: string;
+  codeNumber: string;
   createdAt: Date;
   updatedAt: Date;
 }

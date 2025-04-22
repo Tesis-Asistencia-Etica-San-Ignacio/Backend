@@ -8,7 +8,7 @@ export interface EthicalNormDocument extends Document {
   description: string;
   status: "APROBADO" | "NO_APROBADO";
   justification?: string;
-  codeNumber: number;
+  codeNumber: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -39,7 +39,7 @@ const EthicalNormSchema = new Schema<EthicalNormDocument>(
       maxlength: [500, "La justificación no puede exceder los 500 caracteres"]
     },
     codeNumber: { 
-      type: Number, 
+      type: String, 
       required: true,
       min: [1, "El código debe ser mayor a 0"],
       unique: false

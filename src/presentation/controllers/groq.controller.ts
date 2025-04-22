@@ -116,12 +116,12 @@ export class GroqController {
         throw new Error('La estructura de la respuesta es incorrecta');
       }
       
-
-      await this.createEvaluacionUseCase.crearNormasEticasBase(evaluationId);
-  
-  
+      console.log("GROQ --------------------------------/")
+      console.log("Respuesta del modelo:", parsedAnalysis.analysis);
+      console.log("GROQ --------------------------------/")
       
-  
+      await this.createEvaluacionUseCase.crearNormasEticasBase(evaluationId, parsedAnalysis.analysis);
+
       res.json({ success: true, parsedAnalysis });
   
     } catch (error) {
