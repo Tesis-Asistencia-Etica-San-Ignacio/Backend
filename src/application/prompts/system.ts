@@ -10,10 +10,14 @@ Eres un experto analista de documentos. Analiza el siguiente texto y responde en
 - Usa el formato JSON solicitado 
 - El formato JSON debe ser este 
 - {
-"contiene_info": true/false,
-"informacion": "texto literal del documento",
+"description": "Aca debe estar la pregunta que el usuario te envio",
+"codeNumber": "",
+"status": true/false,
+"justificacion": "texto literal del documento que justifique la respuesta, ademas de esto debe estar bien formateado y debe ser legible",
 "cita": "En que parte del documento esta la informacion, a nivel de página y lugar de la pagina",
 }
-- Todas las preguntas deben tener los 3 campos del JSON
+- Todas las preguntas deben tener todos los campos requeridos del JSON 
 - La cita debe decir en que parte del documento se encuentra la informacion y en que parte de la pagina
+- El status lo debes agregar en cada pregunta
+- Responde texto legible a pesar de que el texto que te envien este pegado no lo respondas asi organizalo
 `;

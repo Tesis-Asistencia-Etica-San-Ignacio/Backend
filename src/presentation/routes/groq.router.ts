@@ -1,6 +1,9 @@
 import { Router } from "express";
-import { generateCompletionController, processEvaluationController } from "../controllers/groq.controller";
+import {  GroqController } from "../controllers/groq.controller";
 import multer from "multer";
+import { CreateEvaluacionUseCase, GenerateCompletionUseCase, GetEvaluacionByIdUseCase  } from "../../application";
+import { EthicalNormRepository, EvaluacionRepository } from '../../infrastructure';
+
 
 const router = Router();
 const upload = multer({
@@ -11,7 +14,16 @@ const upload = multer({
     }
   });
 
-router.post("/completion", upload.single("file"), generateCompletionController);
-router.post("/analisis", processEvaluationController);
+const evaluacionRepository = new EvaluacionRepository();
+const ethicalNormRepository = new EthicalNormRepository();
+
+const createEvaluacionUseCase = new CreateEvaluacionUseCase(evaluacionRepository, ethicalNormRepository);
+const generateCompletionUseCase = new GenerateCompletionUseCase();
+const getEvaluacionByIdUseCase = new GetEvaluacionByIdUseCase(evaluacionRepository);
+
+const groqController = new GroqController(createEvaluacionUseCase, generateCompletionUseCase, getEvaluacionByIdUseCase);
+
+router.post("/completion", upload.single("file"), groqController.generateCompletionController);
+router.post("/analisis", groqController.processEvaluationController);
 
 export default router;

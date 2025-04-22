@@ -17,11 +17,14 @@ export const getAnalysisPrompt = (documentContent: string) => {
 
       FORMATO REQUERIDO (JSON):
       ${JSON.stringify({
-        analysis: ANALYSIS_QUESTIONS.analysis_questions.reduce((acc, q) => ({
-          ...acc,
-          [q.id]: {  content: "..." }
-        }), {}),
+        analysis: ANALYSIS_QUESTIONS.analysis_questions.map(q => ({
+          description: "",
+          codeNumber: q.id, 
+          status: "",
+          justificacion: "",
+          cita: ""
+        })),
       }, null, 2)}
     `
   };
-};
+};;

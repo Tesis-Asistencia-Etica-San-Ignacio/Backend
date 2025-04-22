@@ -26,7 +26,7 @@ export class CreateEvaluacionUseCase {
     };
   }
 
-  private async crearNormasEticasBase(evaluacionId: string): Promise<void> {
+  public async crearNormasEticasBase(evaluacionId: string): Promise<void> {
     try {
       const filePath = path.resolve(
         __dirname, 
@@ -60,3 +60,5 @@ export class CreateEvaluacionUseCase {
     }
   }
 }
+
+
