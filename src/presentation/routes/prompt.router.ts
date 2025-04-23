@@ -35,12 +35,12 @@ const promptController = new PromptController(
 );
 
 router.get(
-  "/user/:id",
+  "/user",
   validateRoleMiddleware(["EVALUADOR"]),
   promptController.getByEvaluatorId
 );
 router.post(
-  "/user/:id/reset-prompts",
+  "/user/reset-prompts",
   validateRoleMiddleware(["EVALUADOR"]),
   promptController.resetPrompts
 );

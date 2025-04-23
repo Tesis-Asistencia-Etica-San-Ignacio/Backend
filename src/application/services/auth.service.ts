@@ -7,8 +7,8 @@ import { GetUserByIdUseCase, } from '../../application/useCases/user';
 import { log } from 'console';
 
 export class AuthService {
-    private userRepository: IUserRepository;
-    private getUserByIdUseCase: GetUserByIdUseCase;
+    private readonly userRepository: IUserRepository;
+    private readonly getUserByIdUseCase: GetUserByIdUseCase;
 
     constructor(userRepository: IUserRepository) {
         this.userRepository = userRepository;
@@ -33,6 +33,7 @@ export class AuthService {
             accessToken,
             refreshToken,
             userType: user.type,
+            id: user.id,
         };
     }
 
@@ -56,6 +57,7 @@ export class AuthService {
                 accessToken: newAccessToken,
                 refreshToken,
                 userType: decoded.type,
+                id: decoded.id,
             };
         } catch (error) {
             throw new Error((error as Error).message);
@@ -74,6 +76,7 @@ export class AuthService {
             }
             return user;
         } catch (error) {
+            log('Error verifying token:', error);
             throw new Error('Token inválido o expirado');
         }
     }
