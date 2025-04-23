@@ -35,14 +35,19 @@ const promptController = new PromptController(
 );
 
 router.get(
-  "/user",
+  "/my",
   validateRoleMiddleware(["EVALUADOR"]),
   promptController.getByEvaluatorId
 );
 router.post(
-  "/user/reset-prompts",
+  "/my/reset-prompts",
   validateRoleMiddleware(["EVALUADOR"]),
   promptController.resetPrompts
+);
+router.patch(
+  "/:id",
+  validateRoleMiddleware(["EVALUADOR"]),
+  promptController.update
 );
 router.get(
   "/",
@@ -58,11 +63,6 @@ router.post(
   "/",
   validateRoleMiddleware(["EVALUADOR"]),
   promptController.create
-);
-router.patch(
-  "/:id",
-  validateRoleMiddleware(["EVALUADOR"]),
-  promptController.update
 );
 router.delete(
   "/:id",
