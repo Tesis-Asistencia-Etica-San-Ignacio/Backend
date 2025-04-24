@@ -101,7 +101,7 @@ export class GroqController {
         { role: "system", content: system },
         { role: "user", content: user }
       ], {
-        model: "llama-3.1-8b-instant",  // Modelo de 132k tokens
+        model: "llama-3.3-70b-versatile",  // Modelo de 132k tokens
         temperature: 0.2,
         response_format: { type: "json_object" }
       });
