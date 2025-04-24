@@ -40,7 +40,7 @@ router.post('/evaluador', validateRoleMiddleware(['EVALUADOR']), userController.
 // Registro de investigador es público
 router.post('/investigador', userController.createInvestigator);
 
-router.patch('/:id', validateRoleMiddleware(['EVALUADOR', 'INVESTIGADOR']), userController.update);
-router.delete('/:id', validateRoleMiddleware(['EVALUADOR', 'INVESTIGADOR']), userController.delete);
+router.patch('/', validateRoleMiddleware(['EVALUADOR', 'INVESTIGADOR']), userController.update);
+router.delete('/', validateRoleMiddleware(['EVALUADOR', 'INVESTIGADOR']), userController.delete);
 
 export default router;

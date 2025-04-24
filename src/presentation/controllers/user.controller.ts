@@ -87,16 +87,11 @@ export class UserController {
     next: NextFunction
   ): Promise<void> => {
     try {
-      const { id } = req.params;
+      const userId = req.user!.id;
       // Verificar que el usuario autenticado es el mismo que se quiere actualizar
-      const userIdFromToken = req.user?.id;
-      if (id !== userIdFromToken) {
-        res.status(403).json({ message: "Acceso denegado: No puedes modificar otro usuario" });
-        return;
-      }
       const updatedUser = await this.updateUserUseCase.execute(
-        id,
-        { ...req.body, id } as User
+        userId,
+        { ...req.body } as User
       );
       if (!updatedUser) {
         res.status(404).json({ message: "User not found" });
@@ -114,14 +109,9 @@ export class UserController {
     next: NextFunction
   ): Promise<void> => {
     try {
-      const { id } = req.params;
+      const userId = req.user!.id;
       // Verificar que el usuario autenticado es el mismo que se quiere eliminar
-      const userIdFromToken = req.user?.id;
-      if (id !== userIdFromToken) {
-        res.status(403).json({ message: "Acceso denegado: No tienes permisos para ejecutar esta accion" });
-        return;
-      }
-      const wasDeleted = await this.deleteUserUseCase.execute(id);
+      const wasDeleted = await this.deleteUserUseCase.execute(userId);
       if (!wasDeleted) {
         res.status(404).json({ message: "User not found" });
       } else {
