@@ -21,7 +21,7 @@ export const configureMiddlewares = (app: express.Application) => {
   app.use(morgan('dev'));
 
   app.use((req, res, next) => {
-    req.setTimeout(15000, () => {
+    req.setTimeout(20000, () => {
       console.log('⏳ Tiempo de espera agotado en la solicitud.');
       res.status(408).send('Timeout en la solicitud.');
     });

@@ -1,9 +1,8 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { GenerateCompletionUseCase } from "../../application/useCases/groq/generateCompletion.useCase";
-import { groq, GroqCompletionOptions, GroqMessage } from "../../infrastructure/config/groqClient";
+import { GroqMessage } from "../../infrastructure/config/groqClient";
 import { readPdfContent } from "../../shared/utils/fileProcessor"; // Función personalizada para leer PDFs
-import { EvaluacionRepository } from "../../infrastructure/database/repositories/evaluation.repository.impl";
-import { GetEvaluacionByIdUseCase, getFileByNameBuffer, CreateEvaluacionUseCase} from "../../application";
+import { GetEvaluacionByIdUseCase, getFileByNameBuffer, CreateEvaluacionUseCase, GetPromptsByEvaluatorIdUseCase} from "../../application";
 import { getAnalysisPrompt } from "../../application/prompts/analisis.prompt";
 import { parseJson } from '../../shared/utils/jsonParser';
 
@@ -11,10 +10,11 @@ export class GroqController {
   constructor(
     private readonly createEvaluacionUseCase: CreateEvaluacionUseCase,
     private readonly generateCompletionUseCase: GenerateCompletionUseCase,
-    private readonly getEvaluacionByIdUseCase: GetEvaluacionByIdUseCase
+    private readonly getEvaluacionByIdUseCase: GetEvaluacionByIdUseCase,
+    private readonly getPromptsByEvaluatorIdUseCase: GetPromptsByEvaluatorIdUseCase
   ) {}
   
-  public generateCompletionController = async (req: Request, res: Response) => {
+  public generateCompletionController = async (req: Request, res: Response, next : NextFunction) => {
     try {
       const { model, temperature, max_tokens } = req.body;
       const messages = JSON.parse(req.body.messages || "[]");
@@ -63,10 +63,10 @@ export class GroqController {
     }
   };
   
-  public processEvaluationController = async (req: Request, res: Response) => {
+  public processEvaluationController = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      // 1. Validar y parsear el DTO
 
+      const userId = req.user!.id;
       const { evaluationId } = req.body;
       console.log("Evaluación recibida:", evaluationId);
   
@@ -93,9 +93,23 @@ export class GroqController {
       } else {
         fileContent = fileBuffer.toString();
       }
+
+      const prompts = await this.getPromptsByEvaluatorIdUseCase.execute(userId);
+
+      if (!prompts) {
+        return res.status(404).json({
+          success: false,
+          error: "Prompts no encontrados"
+        });
+      }
   
-      const { system, user } = getAnalysisPrompt(fileContent);
-  
+      const { system, user } = getAnalysisPrompt(fileContent, prompts);
+
+      console.log("Prompt --------------------------------/")
+      console.log(system);
+      console.log(user);
+      console.log("Prompt --------------------------------/")
+
       // Ejecutar Groq
       const completion = await this.generateCompletionUseCase.execute([
         { role: "system", content: system },
@@ -110,6 +124,8 @@ export class GroqController {
       if (!rawResponse) {
         throw new Error("No se recibió respuesta del modelo");
       } 
+
+      console.log("Respuesta recibida del modelo:", rawResponse);
   
       const parsedAnalysis = parseJson(rawResponse);
       if (typeof parsedAnalysis !== 'object' || !parsedAnalysis.analysis) {
@@ -117,7 +133,7 @@ export class GroqController {
       }
       
       console.log("GROQ --------------------------------/")
-      console.log("Respuesta del modelo:", parsedAnalysis.analysis);
+      console.log("Respuesta parseada del modelo:", parsedAnalysis.analysis);
       console.log("GROQ --------------------------------/")
       
       await this.createEvaluacionUseCase.crearNormasEticasBase(evaluationId, parsedAnalysis.analysis);

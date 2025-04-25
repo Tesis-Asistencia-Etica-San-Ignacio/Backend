@@ -20,6 +20,7 @@ export async function seedPromptsForEvaluator(
   }
   const raw = fs.readFileSync(filePath, 'utf-8');
   const seeds: PromptSeed[] = JSON.parse(raw);
+  console.log("Seeds", seeds);
 
   await Promise.all(
     seeds.map(seed =>
@@ -27,9 +28,8 @@ export async function seedPromptsForEvaluator(
         uid: evaluatorId,
         nombre: seed.nombre,
         texto: seed.texto,
-        //version: seed.version,
         descripcion: seed.descripcion,
-        activo: seed.activo,
+        codigo : seed.codigo
       })
     )
   );

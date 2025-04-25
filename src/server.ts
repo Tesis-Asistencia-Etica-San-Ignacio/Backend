@@ -52,8 +52,6 @@ app.get('/', (req, res) => {
 // 3. Middleware para manejo de errores
 app.use(errorHandlerMiddleware);
 
-
-
 // Conectar la base de datos antes de iniciar el servidor
 const startServer = async () => {
 

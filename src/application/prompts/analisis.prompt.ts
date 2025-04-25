@@ -1,9 +1,9 @@
 import { SYSTEM_PROMPT } from "./system";
-import { ANALYSIS_QUESTIONS } from "./questions";
+import type { PromptResponseDto } from "../dtos/prompt.dto";
 
-export const getAnalysisPrompt = (documentContent: string) => {
-  const questionsText = ANALYSIS_QUESTIONS.analysis_questions
-    .map(q => `[${q.id}] ${q.question}`)
+export const getAnalysisPrompt = (documentContent: string, prompts : PromptResponseDto[]) => {
+  const questionsText = prompts
+    .map(q => `[${q.codigo}] ${q.texto}`)
     .join("\n");
 
   return {
@@ -17,9 +17,9 @@ export const getAnalysisPrompt = (documentContent: string) => {
 
       FORMATO REQUERIDO (JSON):
       ${JSON.stringify({
-        analysis: ANALYSIS_QUESTIONS.analysis_questions.map(q => ({
+        analysis: prompts.map(q => ({
           description: "",
-          codeNumber: q.id, 
+          codeNumber: q.codigo, 
           status: "",
           justificacion: "",
           cita: ""

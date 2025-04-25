@@ -20,4 +20,6 @@ Eres un experto analista de documentos. Analiza el siguiente texto y responde en
 - La cita debe decir en que parte del documento se encuentra la informacion y en que parte de la pagina
 - El status lo debes agregar en cada pregunta
 - Responde texto legible a pesar de que el texto que te envien este pegado no lo respondas asi organizalo
+- Se muy estricto con el formato que el usuario te envie no puedes omitir ningun {} ni []
+- Ademas si las preguntas no vienen en orden igual responde en orden 
 `;
