@@ -2,7 +2,12 @@ import { NextFunction, Request, Response } from "express";
 import { GenerateCompletionUseCase } from "../../application/useCases/groq/generateCompletion.useCase";
 import { GroqMessage } from "../../infrastructure/config/groqClient";
 import { readPdfContent } from "../../shared/utils/fileProcessor"; // Función personalizada para leer PDFs
-import { GetEvaluacionByIdUseCase, getFileByNameBuffer, CreateEvaluacionUseCase, GetPromptsByEvaluatorIdUseCase} from "../../application";
+import { GetEvaluacionByIdUseCase, 
+  getFileByNameBuffer, 
+  CreateEvaluacionUseCase, 
+  GetPromptsByEvaluatorIdUseCase, 
+  GetEvaluacionesByUserUseCase
+} from "../../application";
 import { getAnalysisPrompt } from "../../application/prompts/analisis.prompt";
 import { parseJson } from '../../shared/utils/jsonParser';
 
@@ -11,7 +16,8 @@ export class GroqController {
     private readonly createEvaluacionUseCase: CreateEvaluacionUseCase,
     private readonly generateCompletionUseCase: GenerateCompletionUseCase,
     private readonly getEvaluacionByIdUseCase: GetEvaluacionByIdUseCase,
-    private readonly getPromptsByEvaluatorIdUseCase: GetPromptsByEvaluatorIdUseCase
+    private readonly getPromptsByEvaluatorIdUseCase: GetPromptsByEvaluatorIdUseCase,
+    private readonly getEvaluacionesByUserUseCase: GetEvaluacionesByUserUseCase
   ) {}
   
   public generateCompletionController = async (req: Request, res: Response, next : NextFunction) => {
@@ -69,10 +75,25 @@ export class GroqController {
       const userId = req.user!.id;
       const { evaluationId } = req.body;
       console.log("Evaluación recibida:", evaluationId);
-  
+
+      const evaluacionesUsuario = await this.getEvaluacionesByUserUseCase.execute(userId);
+
+      console.log("Evaluaciones del usuario ", evaluacionesUsuario);
+
+      const existeEvaluacion = evaluacionesUsuario.some(
+        (evaluacion) => evaluacion.id.toString() === evaluationId.toString()
+      );
+
+      if (!existeEvaluacion) {
+        return res.status(404).json({
+          success: false,
+          error: "Evaluación no encontrada"
+        });
+      }
       // 2. Obtener la evaluación desde MongoDB
       const evaluation = await this.getEvaluacionByIdUseCase.execute(evaluationId);
-      console.log("Repuesta Mongo: ", evaluation);
+      
+      //console.log("Repuesta Mongo: ", evaluation);
       
       if (!evaluation) {
         return res.status(404).json({
@@ -105,10 +126,13 @@ export class GroqController {
   
       const { system, user } = getAnalysisPrompt(fileContent, prompts);
 
+      /*
+      Esto imprime el prompt
       console.log("Prompt --------------------------------/")
       console.log(system);
       console.log(user);
       console.log("Prompt --------------------------------/")
+      */
 
       // Ejecutar Groq
       const completion = await this.generateCompletionUseCase.execute([
@@ -125,13 +149,14 @@ export class GroqController {
         throw new Error("No se recibió respuesta del modelo");
       } 
 
-      console.log("Respuesta recibida del modelo:", rawResponse);
+      // console.log("Respuesta recibida del modelo:", rawResponse); Muestra la respuesta del modelo
   
       const parsedAnalysis = parseJson(rawResponse);
       if (typeof parsedAnalysis !== 'object' || !parsedAnalysis.analysis) {
         throw new Error('La estructura de la respuesta es incorrecta');
       }
       
+      //Esto muestra la respuesta parseada
       console.log("GROQ --------------------------------/")
       console.log("Respuesta parseada del modelo:", parsedAnalysis.analysis);
       console.log("GROQ --------------------------------/")

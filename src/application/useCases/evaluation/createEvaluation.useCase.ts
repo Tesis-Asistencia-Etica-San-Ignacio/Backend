@@ -35,9 +35,7 @@ export class CreateEvaluacionUseCase {
       if (!normasTransformadas || !Array.isArray(normasTransformadas)) {
         throw new Error('Formato de normas inválido');
       }
-      
-      // Especificar el tipo al parsear
-  
+        
       await Promise.all(
         normasTransformadas.map((norma: EthicalNormSeed) => 
           this.ethicalNormRepository.create({
@@ -45,7 +43,7 @@ export class CreateEvaluacionUseCase {
             description: norma.description,
             status: norma.status,
             codeNumber: norma.codeNumber,
-            justification: norma.justification,
+            justification: norma.justificacion,
             cita: norma.cita
           })
         )
