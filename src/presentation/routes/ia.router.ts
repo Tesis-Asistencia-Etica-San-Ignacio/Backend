@@ -1,12 +1,13 @@
 import { Router } from "express";
-import { GroqController } from "../controllers/groq.controller";
+import { IAController } from "../controllers/ia.controller";
 import multer from "multer";
 import {
   CreateEvaluacionUseCase, 
   GenerateCompletionUseCase, 
   GetEvaluacionByIdUseCase, 
   GetPromptsByEvaluatorIdUseCase,
-  GetEvaluacionesByUserUseCase
+  GetEvaluacionesByUserUseCase,
+  UpdateEvaluacionUseCase,
 } from "../../application";
 import { EthicalNormRepository, EvaluacionRepository, PromptRepository } from '../../infrastructure';
 import { validateRoleMiddleware } from "../middleware/jwtMiddleware";
@@ -29,10 +30,14 @@ const generateCompletionUseCase = new GenerateCompletionUseCase();
 const getEvaluacionByIdUseCase = new GetEvaluacionByIdUseCase(evaluacionRepository);
 const getPromptsByEvaluatorIdUseCase = new GetPromptsByEvaluatorIdUseCase(promptRepository);
 const getEvaluacionesByUserUseCase = new GetEvaluacionesByUserUseCase(evaluacionRepository);
+const updateEvaluacionUseCase = new UpdateEvaluacionUseCase(evaluacionRepository);
 
-const groqController = new GroqController(createEvaluacionUseCase, generateCompletionUseCase, getEvaluacionByIdUseCase, 
+const groqController = new IAController(createEvaluacionUseCase, 
+  generateCompletionUseCase, 
+  getEvaluacionByIdUseCase, 
   getPromptsByEvaluatorIdUseCase,
   getEvaluacionesByUserUseCase,
+  updateEvaluacionUseCase
 );
 
 router.post("/completion", upload.single("file"), groqController.generateCompletionController);

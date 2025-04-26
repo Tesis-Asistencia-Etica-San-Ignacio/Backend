@@ -6,18 +6,20 @@ import { GetEvaluacionByIdUseCase,
   getFileByNameBuffer, 
   CreateEvaluacionUseCase, 
   GetPromptsByEvaluatorIdUseCase, 
-  GetEvaluacionesByUserUseCase
+  GetEvaluacionesByUserUseCase,
+  UpdateEvaluacionUseCase
 } from "../../application";
 import { getAnalysisPrompt } from "../../application/prompts/analisis.prompt";
 import { parseJson } from '../../shared/utils/jsonParser';
 
-export class GroqController {
+export class IAController {
   constructor(
     private readonly createEvaluacionUseCase: CreateEvaluacionUseCase,
     private readonly generateCompletionUseCase: GenerateCompletionUseCase,
     private readonly getEvaluacionByIdUseCase: GetEvaluacionByIdUseCase,
     private readonly getPromptsByEvaluatorIdUseCase: GetPromptsByEvaluatorIdUseCase,
-    private readonly getEvaluacionesByUserUseCase: GetEvaluacionesByUserUseCase
+    private readonly getEvaluacionesByUserUseCase: GetEvaluacionesByUserUseCase,
+    private readonly updateEvaluacionUseCase: UpdateEvaluacionUseCase
   ) {}
   
   public generateCompletionController = async (req: Request, res: Response, next : NextFunction) => {
@@ -92,7 +94,7 @@ export class GroqController {
       }
       // 2. Obtener la evaluación desde MongoDB
       const evaluation = await this.getEvaluacionByIdUseCase.execute(evaluationId);
-      
+
       //console.log("Repuesta Mongo: ", evaluation);
       
       if (!evaluation) {
@@ -101,7 +103,14 @@ export class GroqController {
           error: "Evaluación no encontrada"
         });
       }
-  
+
+      if(evaluation.estado == "EVALUADO") {
+        return res.status(400).json({
+          success: false,
+          error: "Evaluación ya evaluada"
+        });
+      }
+
       // 3. Obtener archivo de MinIO
       const fileName = evaluation.file.split('/').pop() || "";
       console.log("Archivo recibido:", fileName);
@@ -157,11 +166,14 @@ export class GroqController {
       }
       
       //Esto muestra la respuesta parseada
+      /*
       console.log("GROQ --------------------------------/")
       console.log("Respuesta parseada del modelo:", parsedAnalysis.analysis);
-      console.log("GROQ --------------------------------/")
+      console.log("GROQ --------------------------------/")*/
       
       await this.createEvaluacionUseCase.crearNormasEticasBase(evaluationId, parsedAnalysis.analysis);
+
+      await this.updateEvaluacionUseCase.execute(evaluationId, { estado: "EVALUADO" });
 
       res.json({ success: true, parsedAnalysis });
   

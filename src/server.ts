@@ -19,7 +19,7 @@ import {
   pdfRouter,
   smtpRouter,
   ethicalRulesRouter,
-  groqRouter,
+  iaRouter,
   statsRouter
 } from './presentation/routes';
 
@@ -41,7 +41,7 @@ app.use(`${config.api.conventionApi}/auth`, authRouter);
 app.use(`${config.api.conventionApi}/files`, fileRouter);
 app.use(`${config.api.conventionApi}/smtp`, smtpRouter);
 app.use(`${config.api.conventionApi}/ethicalRules`, ethicalRulesRouter);
-app.use(`${config.api.conventionApi}/groq`, groqRouter);
+app.use(`${config.api.conventionApi}/ia`, iaRouter);
 app.use(`${config.api.conventionApi}/stats`, statsRouter)
 
 // Ruta de prueba
