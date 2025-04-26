@@ -76,11 +76,11 @@ export class IAController {
 
       const userId = req.user!.id;
       const { evaluationId } = req.body;
-      console.log("Evaluación recibida:", evaluationId);
+      //console.log("Evaluación recibida:", evaluationId);
 
       const evaluacionesUsuario = await this.getEvaluacionesByUserUseCase.execute(userId);
 
-      console.log("Evaluaciones del usuario ", evaluacionesUsuario);
+      //console.log("Evaluaciones del usuario ", evaluacionesUsuario);
 
       const existeEvaluacion = evaluacionesUsuario.some(
         (evaluacion) => evaluacion.id.toString() === evaluationId.toString()
@@ -113,7 +113,7 @@ export class IAController {
 
       // 3. Obtener archivo de MinIO
       const fileName = evaluation.file.split('/').pop() || "";
-      console.log("Archivo recibido:", fileName);
+      //console.log("Archivo recibido:", fileName);
       const fileBuffer = await getFileByNameBuffer(fileName);
   
       // 4. Procesar el archivo
@@ -175,7 +175,7 @@ export class IAController {
 
       await this.updateEvaluacionUseCase.execute(evaluationId, { estado: "EVALUADO" });
 
-      res.json({ success: true, parsedAnalysis });
+      res.json({ success: true, "message": "Evaluación procesada con exito" });
   
     } catch (error) {
       console.error("Error en procesamiento de evaluación:", error);
