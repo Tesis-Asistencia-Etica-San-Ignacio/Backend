@@ -3,9 +3,8 @@ export interface Prompt {
     uid: string;
     nombre: string;
     texto: string;
-    //version: number;
+    codigo: string;
     descripcion: string;
-    activo: boolean;
     createdAt: Date;
     updatedAt: Date;
   }

@@ -6,10 +6,10 @@ import { UserRepository } from '../../infrastructure';
 import config from '../../infrastructure/config';
 
 export class AuthController {
-    private authService: AuthService;
-    private loginUseCase: LoginUseCase;
-    private refreshTokenUseCase: RefreshTokenUseCase;
-    private getSessionUseCase: GetSessionUseCase;
+    private readonly authService: AuthService;
+    private readonly loginUseCase: LoginUseCase;
+    private readonly refreshTokenUseCase: RefreshTokenUseCase;
+    private readonly getSessionUseCase: GetSessionUseCase;
 
     constructor() {
         this.authService = new AuthService(new UserRepository());
@@ -54,31 +54,6 @@ export class AuthController {
             }
         }
     }
-    //para probar en postman
-    /* public async refreshToken(req: Request, res: Response): Promise<void> {
-        try {
-            const { refreshToken } = req.body as RefreshTokenDto;
-
-            if (!refreshToken) {
-                res.status(401).json({ message: 'No se encontró el token de actualización' });
-                return;
-            }
-
-            const tokens = await this.refreshTokenUseCase.execute({ refreshToken });
-
-            this.setAuthCookies(res, tokens.accessToken, tokens.refreshToken);
-            res.status(200).json({
-                message: 'Tokens renovados correctamente',
-                userType: tokens.userType,
-            });
-        } catch (error: unknown) {
-            if (error instanceof Error) {
-                res.status(401).json({ message: error.message });
-            } else {
-                res.status(500).json({ message: 'Error desconocido' });
-            }
-        }
-    } */
 
     //para produccion
     public async refreshToken(req: Request, res: Response): Promise<void> {

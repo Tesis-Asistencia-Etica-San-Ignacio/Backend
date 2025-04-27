@@ -5,5 +5,6 @@ export interface PromptSeed {
     version: number;
     descripcion: string;
     activo: boolean;
+    codigo: string;
   }
   

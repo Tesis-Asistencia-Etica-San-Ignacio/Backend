@@ -30,5 +30,6 @@ export const JwtTokensSchema = Type.Object({
   accessToken: Type.String(),
   refreshToken: Type.String(),
   userType: Type.String(),
+  id: Type.String(),
 });
 export type JwtTokensDto = Static<typeof JwtTokensSchema>;

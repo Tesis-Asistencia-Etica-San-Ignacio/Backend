@@ -5,3 +5,4 @@ export * from './getAllUsers.useCase';
 export * from './getUserByEmail.useCase';
 export * from './updateUser.useCase';
 export * from './getUserById.useCase';
+export * from './updatePassword.useCase';

@@ -7,6 +7,7 @@ import {
   UpdateUserUseCase,
   DeleteUserUseCase,
   CreateUserDto,
+  UpdatePasswordUseCase,
 } from "../../application";
 import { User } from "../../domain";
 
@@ -17,7 +18,8 @@ export class UserController {
     private readonly getAllUsersUseCase: GetAllUsersUseCase,
     private readonly getUserByIdUseCase: GetUserByIdUseCase,
     private readonly updateUserUseCase: UpdateUserUseCase,
-    private readonly deleteUserUseCase: DeleteUserUseCase
+    private readonly deleteUserUseCase: DeleteUserUseCase,
+    private readonly updatePasswordUseCase: UpdatePasswordUseCase
   ) {}
 
   public getAll = async (
@@ -87,16 +89,11 @@ export class UserController {
     next: NextFunction
   ): Promise<void> => {
     try {
-      const { id } = req.params;
+      const userId = req.user!.id;
       // Verificar que el usuario autenticado es el mismo que se quiere actualizar
-      const userIdFromToken = req.user?.id;
-      if (id !== userIdFromToken) {
-        res.status(403).json({ message: "Acceso denegado: No puedes modificar otro usuario" });
-        return;
-      }
       const updatedUser = await this.updateUserUseCase.execute(
-        id,
-        { ...req.body, id } as User
+        userId,
+        { ...req.body } as User
       );
       if (!updatedUser) {
         res.status(404).json({ message: "User not found" });
@@ -114,14 +111,9 @@ export class UserController {
     next: NextFunction
   ): Promise<void> => {
     try {
-      const { id } = req.params;
+      const userId = req.user!.id;
       // Verificar que el usuario autenticado es el mismo que se quiere eliminar
-      const userIdFromToken = req.user?.id;
-      if (id !== userIdFromToken) {
-        res.status(403).json({ message: "Acceso denegado: No tienes permisos para ejecutar esta accion" });
-        return;
-      }
-      const wasDeleted = await this.deleteUserUseCase.execute(id);
+      const wasDeleted = await this.deleteUserUseCase.execute(userId);
       if (!wasDeleted) {
         res.status(404).json({ message: "User not found" });
       } else {
@@ -131,4 +123,30 @@ export class UserController {
       next(error);
     }
   };
+
+  public updatePassword = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const userId = req.user!.id;
+      const { password, newPassword } = req.body;
+
+      if (!password || !newPassword) {
+        res.status(400).json({ message: 'Campos incompletos' });
+        return;
+      }
+
+      console.log('userId', userId);
+      console.log('password', password);
+      console.log('newPassword', newPassword);
+
+      await this.updatePasswordUseCase.execute({
+        userId,
+        password,
+        newPassword,
+      });
+
+      res.status(200).json({ message: 'Contraseña actualizada exitosamente' });
+    } catch (error: any) {
+      res.status(400).json({ message: error.message });
+    }
+  }
 }

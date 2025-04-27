@@ -5,9 +5,8 @@ export interface PromptDocument extends Document {
   uid: Types.ObjectId;
   nombre: string;
   texto: string;
-  //version: number;
+  codigo: string; 
   descripcion: string;
-  activo: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -17,9 +16,8 @@ const promptSchema = new Schema<PromptDocument>(
     uid: { type: Schema.Types.ObjectId, ref: 'Usuarios', required: true },
     nombre: { type: String, required: true },
     texto: { type: String, required: true },
-    //version: { type: Number, required: true },
     descripcion: { type: String, required: true },
-    activo: { type: Boolean, default: true },
+    codigo: { type: String, required: true },
   },
   {
     timestamps: true, // Esto agrega los campos createdAt y updatedAt automáticamente

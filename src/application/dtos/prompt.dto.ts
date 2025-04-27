@@ -4,9 +4,8 @@ export const CreatePromptSchema = Type.Object({
   uid: Type.String({ pattern: '^[0-9a-fA-F]{24}$' }),
   nombre: Type.String(),
   texto: Type.String(),
-  //version: Type.Number(),
   descripcion: Type.String(),
-  activo: Type.Boolean({ default: true }),
+  codigo: Type.String(),
   createdAt: Type.Optional(Type.Date()),
   updatedAt: Type.Optional(Type.Date()),
 });
@@ -20,9 +19,8 @@ export const PromptResponseSchema = Type.Object({
   uid: Type.String(),
   nombre: Type.String(),
   texto: Type.String(),
-  //version: Type.Number(),
+  codigo: Type.String(),
   descripcion: Type.String(),
-  activo: Type.Boolean(),
   createdAt: Type.String({ format: 'date-time' }),
   updatedAt: Type.String({ format: 'date-time' }),
 });

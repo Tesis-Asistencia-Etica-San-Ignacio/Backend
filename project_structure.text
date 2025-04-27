@@ -17,15 +17,23 @@
       - evaluation.dto.ts
       - index.ts
       - prompt.dto.ts
+      - stats
+        - evaluationStats.dto.ts
       - user.dto.ts
     - exceptions
       - index.ts
     - index.ts
+    - prompts
+      - analisis.prompt.ts
+      - questions.ts
+      - system.ts
     - services
       - auth.service.ts
       - file.service.ts
+      - groq.service.ts
       - index.ts
       - pdf.service.ts
+      - promptSeeding.service.ts
       - smpt.service.ts
     - useCases
       - auth
@@ -69,6 +77,9 @@
         - getEvaluationsById.useCase.ts
         - index.ts
         - updateEvaluation.useCase.ts
+      - groq
+        - generateCompletion.useCase.ts
+        - index.ts
       - index.ts
       - pdf
         - generatePdf.useCase.ts
@@ -77,10 +88,15 @@
         - deletePrompt.useCase.ts
         - getAllPrompt.useCase.ts
         - getPromptById.useCase.ts
+        - getPromptsByEvaluatorId.useCase.ts
         - index.ts
+        - resetPrompt.useCase.ts
         - updatePrompt.useCase.ts
       - smtp
         - smpt.useCase.ts
+      - stats
+        - evaluationStats.UseCase.ts
+        - index.ts
       - user
         - createUser.useCase.ts
         - deleteUser.useCase.ts
@@ -88,6 +104,7 @@
         - getUserByEmail.useCase.ts
         - getUserById.useCase.ts
         - index.ts
+        - updatePassword.useCase.ts
         - updateUser.useCase.ts
   - domain
     - entities
@@ -108,15 +125,18 @@
       - evaluation.repository.ts
       - index.ts
       - prompt.repository.ts
+      - stats.repository.ts
       - user.repository.ts
   - infrastructure
     - config
       - config.ts
+      - groqClient.ts
       - index.ts
       - initMinio.ts
       - minioClient.ts
     - data
       - ethicalRulesSeed.json
+      - promptsSeed.json
     - database
       - database.ts
       - index.ts
@@ -137,7 +157,9 @@
         - evaluation.repository.impl.ts
         - index.ts
         - prompt.repository.impl.ts
+        - stats.repository.impl.ts
         - user.repository.impl.ts
+    - email
     - index.ts
   - presentation
     - controllers
@@ -148,10 +170,12 @@
       - ethicalRule.controller.ts
       - evaluation.controller.ts
       - file.controller.ts
+      - ia.controller.ts
       - index.ts
       - pdf.controller.ts
       - prompt.controller.ts
       - smpt.controller.ts
+      - stats.controller.ts
       - user.controller.ts
     - index.ts
     - middleware
@@ -167,10 +191,12 @@
       - ethicalRules.router.ts
       - evaluation.router.ts
       - file.router.ts
+      - ia.router.ts
       - index.ts
       - pdf.router.ts
       - prompt.router.ts
       - smtp.router.ts
+      - stats.router.ts
       - user.router.ts
   - server.ts
   - shared
@@ -178,7 +204,9 @@
       - index.ts
     - utils
       - emailTemplate.ts
+      - fileProcessor.ts
       - index.ts
+      - jsonParser.ts
       - validateEnv.ts
   - templates
     - emails
@@ -188,5 +216,6 @@
   - types
     - ethicalNorm.d.ts
     - express.d.ts
+    - promptSeed.d.ts
 - tsconfig.json
 - wait-for-it.sh
