@@ -14,8 +14,15 @@ export const configureMiddlewares = (app: express.Application) => {
 
   app.use(cors({
     origin: process.env.FRONTEND_URL,
-    credentials: true
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+      allowedHeaders: ['Content-Type', 'Authorization'],
   }));
+
+   // 2) Aumentar límite de tamaño de los bodies JSON y URL–encoded
+   app.use(express.json({ limit: '5mb' }));
+   app.use(express.urlencoded({ extended: true, limit: '5mb' }));
+ 
 
   app.use(helmet());
   app.use(morgan('dev'));

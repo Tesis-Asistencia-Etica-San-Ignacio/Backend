@@ -3,91 +3,91 @@
       "nombre": "Prompt 1",
       "texto": "Contiene versión y fecha del FCI",
       "descripcion": "esta suele ser la fecha que esta en parte inferior",
-      "codigo": "Q1"
+      "codigo": "Q01"
     },
     {
       "nombre": "Prompt 2",
       "texto": "Contiene título del proyecto e instituciones participantes",
       "descripcion": ".",
-      "codigo": "Q2"
+      "codigo": "Q02"
     },
     {
       "nombre": "Prompt 3",
       "texto": "Describe la justificación y los objetivos de la investigación. Problema, pertinencia del estudio, objetivo general",
       "descripcion": ".",
-      "codigo": "Q3"
+      "codigo": "Q03"
     },
     {
       "nombre": "Prompt 4",
       "texto": "Describe los procedimientos del estudio y su propósito, incluyendo la identificación de aquellos que son experimentales (aleatorización, cegamiento, uso de placebo, etc.).",
       "descripcion": ".",
-      "codigo": "Q4"
+      "codigo": "Q04"
     },
     {
       "nombre": "Prompt 5",
       "texto":  "Determina las molestias o los riesgos esperados.  Si no existen informar.",
       "descripcion": ".",
-      "codigo": "Q5"
+      "codigo": "Q05"
     },
     {
       "nombre": "Prompt 6",
       "texto": "Determina los beneficios que puedan obtenerse. Si no existen informar.",
       "descripcion": ".Descripción del prompt 6",
-      "codigo": "Q6"
+      "codigo": "Q06"
     },
     {
       "nombre": "Prompt 7.1",
       "texto": "Dónde se almacenarán los datos.",
       "descripcion": ".",
-      "codigo": "Q7.1"
+      "codigo": "Q07.1"
     },
     {
       "nombre": "Prompt 7.2",
       "texto": "Mecanismos de custodia y seguridad de los mismos.",
       "descripcion": ".",
-      "codigo": "Q7.2"
+      "codigo": "Q07.2"
     },
     {
       "nombre": "Prompt 7.3",
       "texto": "Tiempo de custodia.",
       "descripcion": ".",
-      "codigo": "Q7.3"
+      "codigo": "Q07.3"
     },
     {
       "nombre": "Prompt 7.4",
       "texto": "Quiénes tendrán acceso a la información y bajo qué parámetros de seguridad se accederá a ellos.",
       "descripcion": ".",
-      "codigo": "Q7.4"
+      "codigo": "Q07.4"
     },
     {
       "nombre": "Prompt 7.5",
       "texto": "Tratamiento de datos: codificación o anonimización tanto para los análisis como para la publicación de los resultados",
       "descripcion": ".",
-      "codigo": "Q7.5"
+      "codigo": "Q07.5"
     },
     {
       "nombre": "Prompt 7.6",
       "texto": "Posibilidad de conocer sus datos personales registrados en la base de datos del estudio, solicitar rectificación de los mismos y de retirar su consentimiento para el tratamiento de los datos en cualquier momento del estudio, excepto a partir de la anonimización. ",
       "descripcion": ".",
-      "codigo": "Q7.6"
+      "codigo": "Q07.6"
     },
     {
       "nombre": "Prompt 7.7",
       "texto": "Describe los procesos de transferencia de datos a terceros, en caso de estudios colaborativos, y la garantía de mantener la privacidad, confidencialidad y seguridad en el tratamiento por parte del tercero. ",
       "descripcion": ".",
-      "codigo": "Q7.7"
+      "codigo": "Q07.7"
     },
     {
       "nombre": "Prompt 8",
       "texto": "Indica los procedimientos alternativos  que  pudieran  ser ventajosos para el sujeto.",
       "descripcion": ".",
-      "codigo": "Q8"
+      "codigo": "Q08"
     },
     {
       "nombre": "Prompt 9",
       "texto": "Expresa el compromiso de proporcionar información actualizada obtenida durante el estudio, aunque ésta pudiera afectar la voluntad del sujeto para continuar participando.En caso de realización de estudios que requieran entrega de resultados de procedimiento o consejería (genética, por ejemplo), se debe explicar el proceso.",
       "descripcion": ".",
-      "codigo": "Q9"
+      "codigo": "Q09"
     },
     {
       "nombre": "Prompt 10",
