@@ -11,7 +11,8 @@ export const CreateEthicalNormSchema = Type.Object({
   description: Type.String(),
   status: EthicalNormStatusEnum,
   justification: Type.Optional(Type.String()),
-  codeNumber: Type.Number(),
+  codeNumber: Type.String(),
+  cita: Type.Optional(Type.String()),
 });
 
 export type CreateEthicalNormDto = Static<typeof CreateEthicalNormSchema>;
@@ -25,7 +26,7 @@ export const EthicalNormResponseSchema = Type.Object({
   description: Type.String(),
   status: EthicalNormStatusEnum,
   justification: Type.Optional(Type.String()),
-  codeNumber: Type.Number(),
+  codeNumber: Type.String(),
   createdAt: Type.Date(),
   updatedAt: Type.Date(),
 });

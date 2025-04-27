@@ -6,8 +6,9 @@ export interface EthicalNorm {
   evaluationId: string;
   description: string;
   status: EthicalNormStatus;
-  justification?: string;
-  codeNumber: number;
+  justification: string;
+  cita: string;
+  codeNumber: string;
   createdAt: Date;
   updatedAt: Date;
 }

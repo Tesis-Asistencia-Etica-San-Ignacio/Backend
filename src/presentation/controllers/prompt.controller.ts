@@ -42,8 +42,8 @@ export class PromptController{
     next: NextFunction
   ): Promise<void> => {
     try {
-      const { id: evaluatorId } = req.params;
-      const prompts = await this.getPromptsByEvaluatorIdUseCase.execute(evaluatorId);
+      const userId = req.user!.id;
+      const prompts = await this.getPromptsByEvaluatorIdUseCase.execute(userId);
       res.status(200).json(prompts);
     } catch (error) {
       next(error);
@@ -89,8 +89,8 @@ export class PromptController{
   
   public resetPrompts = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const { id: evaluatorId } = req.params;
-      await this.resetPromptsUseCase.execute(evaluatorId);
+      const userId = req.user!.id;
+      await this.resetPromptsUseCase.execute(userId);
       res.status(200).json({ message: 'Prompts reinicializados correctamente' });
     } catch (error) {
       next(error);

@@ -26,6 +26,7 @@ export const UserResponseSchema = Type.Object({
   name: Type.String(),
   last_name: Type.String(),
   email: Type.String({ format: 'email' }),
+  password: Type.String(),
   type: UserTypeEnum,
   createdAt: Type.Date(),
   updatedAt: Type.Date(),

@@ -7,8 +7,9 @@ export interface EthicalNormDocument extends Document {
   evaluationId: Types.ObjectId;
   description: string;
   status: "APROBADO" | "NO_APROBADO";
-  justification?: string;
-  codeNumber: number;
+  justification: string;
+  cita: string;
+  codeNumber: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -36,13 +37,16 @@ const EthicalNormSchema = new Schema<EthicalNormDocument>(
     },
     justification: { 
       type: String,
-      maxlength: [500, "La justificación no puede exceder los 500 caracteres"]
+      maxlength: [1000, "La justificación no puede exceder los 1000 caracteres"]
     },
     codeNumber: { 
-      type: Number, 
+      type: String, 
       required: true,
-      min: [1, "El código debe ser mayor a 0"],
       unique: false
+    },
+    cita: { 
+      type: String, 
+      required: false
     }
   },
   {
@@ -55,8 +59,8 @@ EthicalNormSchema.index({ evaluationId: 1, status: 1 });
 
 // 4. Middleware de validación previo a guardar
 EthicalNormSchema.pre("save", function(next) {
-  if (this.justification && this.status === "APROBADO") {
-    this.justification = undefined; // Limpiar justificación si está aprobada
+  if (this.justification && this.status === "NO_APROBADO") {
+    this.justification = ""; // Limpiar justificación si está aprobada
   }
   next();
 });

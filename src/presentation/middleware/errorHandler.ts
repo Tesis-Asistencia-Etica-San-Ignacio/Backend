@@ -1,4 +1,3 @@
-// src/presentation/middleware/errorHandler.ts
 import { Request, Response, NextFunction } from 'express';
 
 interface CustomError extends Error {
@@ -15,38 +14,38 @@ export const errorHandlerMiddleware = (
   res: Response,
   _next: NextFunction
 ) => {
-  console.error('🔥 Error catched by errorHandlerMiddleware:', err);
+  console.error('🔥 Error capturado por errorHandlerMiddleware:', err);
 
   let statusCode = 500;
-  let message = 'Internal Server Error';
+  let message = 'Error Interno del Servidor';
 
   // 1) MongoDB Duplicate Key (code=11000)
   if (err.code === 11000 && err.keyValue) {
     statusCode = 409;
     const duplicatedFields = Object.keys(err.keyValue).join(', ');
-    message = `Duplicate value in field(s): ${duplicatedFields}.`;
+    message = `Valor duplicado en campo(s): ${duplicatedFields}.`;
   }
-  // 2) Mongoose Validation Error
+  // 2) Error de validación de Mongoose
   else if (err.name === 'ValidationError' && err.errors) {
     statusCode = 400;
     message = Object.values(err.errors)
       .map((error) => error.message)
       .join(', ');
   }
-  // 3) JSON Parse Error (invalid JSON payload)
+  // 3) Error de sintaxis JSON (payload inválido)
   else if (err instanceof SyntaxError && 'body' in err) {
     statusCode = 400;
-    message = 'Invalid JSON format.';
+    message = 'Formato JSON inválido.';
   }
-  // 4) Unauthorized (JWT) error
+  // 4) No autorizado (JWT)
   else if (err.name === 'UnauthorizedError') {
     statusCode = 401;
-    message = 'Invalid or missing authentication token.';
+    message = 'Token de autenticación inválido o ausente.';
   }
-  // 5) Forbidden
+  // 5) Prohibido
   else if (err.name === 'ForbiddenError') {
     statusCode = 403;
-    message = 'You do not have permission to access this resource.';
+    message = 'No tienes permiso para acceder a este recurso.';
   }
 
   res.status(statusCode).json({
