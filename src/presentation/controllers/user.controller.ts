@@ -7,6 +7,7 @@ import {
   UpdateUserUseCase,
   DeleteUserUseCase,
   CreateUserDto,
+  UpdatePasswordUseCase,
 } from "../../application";
 import { User } from "../../domain";
 
@@ -17,7 +18,8 @@ export class UserController {
     private readonly getAllUsersUseCase: GetAllUsersUseCase,
     private readonly getUserByIdUseCase: GetUserByIdUseCase,
     private readonly updateUserUseCase: UpdateUserUseCase,
-    private readonly deleteUserUseCase: DeleteUserUseCase
+    private readonly deleteUserUseCase: DeleteUserUseCase,
+    private readonly updatePasswordUseCase: UpdatePasswordUseCase
   ) {}
 
   public getAll = async (
@@ -121,4 +123,30 @@ export class UserController {
       next(error);
     }
   };
+
+  public updatePassword = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const userId = req.user!.id;
+      const { password, newPassword } = req.body;
+
+      if (!password || !newPassword) {
+        res.status(400).json({ message: 'Campos incompletos' });
+        return;
+      }
+
+      console.log('userId', userId);
+      console.log('password', password);
+      console.log('newPassword', newPassword);
+
+      await this.updatePasswordUseCase.execute({
+        userId,
+        password,
+        newPassword,
+      });
+
+      res.status(200).json({ message: 'Contraseña actualizada exitosamente' });
+    } catch (error: any) {
+      res.status(400).json({ message: error.message });
+    }
+  }
 }

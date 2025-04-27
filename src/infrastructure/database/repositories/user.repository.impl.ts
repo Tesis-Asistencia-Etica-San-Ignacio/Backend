@@ -22,6 +22,7 @@ export class UserRepository implements IUserRepository {
       id: user._id.toString(),
       name: user.name,
       last_name: user.last_name,
+      password: user.password,
       email: user.email,
       type: user.type,
     } as UserResponseDto;
@@ -69,5 +70,9 @@ export class UserRepository implements IUserRepository {
   public async delete(id: string): Promise<boolean> {
     const result = await UserModel.findByIdAndDelete(id);
     return result !== null;
+  }
+
+  async updatePassword(id: string, hashedPassword: string): Promise<void> {
+    await UserModel.findByIdAndUpdate(id, { password: hashedPassword });
   }
 }
