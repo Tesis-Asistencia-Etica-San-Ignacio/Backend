@@ -1,13 +1,17 @@
+// src/application/useCases/pdf/generatePdf.useCase.ts
 import { PDFService } from '../../services/pdf.service';
 
 export class GeneratePdfUseCase {
-    private pdfService: PDFService;
+  constructor(private readonly pdfService: PDFService) {}
 
-    constructor(pdfService: PDFService) {
-        this.pdfService = pdfService;
-    }
-
-    public async execute(data: { userName: string; userType: string; date: string }): Promise<Buffer> {
-        return this.pdfService.generatePdf(data);
-    }
+  /**
+   * @param templateName nombre de la plantilla EJS en src/templates/pdf
+   * @param data objeto con propiedades (e.g. date, norms, etc)
+   */
+  public async execute<T>(
+    templateName: string,
+    data: T
+  ): Promise<Buffer> {
+    return this.pdfService.generatePdf(templateName, data);
+  }
 }
