@@ -21,18 +21,18 @@ export class PdfController {
       }
 
       // 1) Si ya existe en caché, lo devolvemos
-      if (pdfCache.has(evaluationId)) {
-        const buf = pdfCache.get(evaluationId)!;
-         res
-          .status(200)
-          .set({
-            "Content-Type": "application/pdf",
-            "Content-Length": buf.length,
-            "Cache-Hit": "true",
-          })
-          .send(buf);
-          return
-      }
+      // if (pdfCache.has(evaluationId)) {
+      //   const buf = pdfCache.get(evaluationId)!;
+      //    res
+      //     .status(200)
+      //     .set({
+      //       "Content-Type": "application/pdf",
+      //       "Content-Length": buf.length,
+      //       "Cache-Hit": "true",
+      //     })
+      //     .send(buf);
+      //     return
+      // }
 
       // 2) Sino, lo generamos y guardamos
       const norms = await this.getNorms.execute(evaluationId);
