@@ -69,6 +69,7 @@ export class EthicalNormController {
     next: NextFunction
   ): Promise<void> => {
     try {
+      console.log(req.body);
       const { id } = req.params;
       const updatedNorm = await this.updateUseCase.execute(
         id,
