@@ -38,4 +38,5 @@ export class PdfController {
       res.status(500).send("Error generando PDF");
     }
   }
+
 }

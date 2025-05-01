@@ -168,9 +168,9 @@ export class IAController {
 
       //Esto muestra la respuesta parseada
 
-      console.log("GROQ --------------------------------/")
+      /* console.log("GROQ --------------------------------/")
       console.log("Respuesta parseada del modelo:", parsedAnalysis.analysis);
-      console.log("GROQ --------------------------------/")
+      console.log("GROQ --------------------------------/") */
 
       await this.createEvaluacionUseCase.crearNormasEticasBase(evaluationId, parsedAnalysis.analysis);
 
