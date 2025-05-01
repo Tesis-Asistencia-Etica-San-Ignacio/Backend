@@ -26,6 +26,7 @@ export const EthicalNormResponseSchema = Type.Object({
   description: Type.String(),
   status: EthicalNormStatusEnum,
   justification: Type.Optional(Type.String()),
+  cita: Type.Optional(Type.String()),
   codeNumber: Type.String(),
   createdAt: Type.Date(),
   updatedAt: Type.Date(),

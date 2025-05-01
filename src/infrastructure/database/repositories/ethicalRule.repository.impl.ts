@@ -72,6 +72,7 @@ export class EthicalNormRepository implements IEthicalNormRepository {
       description: norm.description,
       status: norm.status,
       justification: norm.justification,
+      cita: norm.cita,
       codeNumber: norm.codeNumber,
       createdAt: norm.createdAt,
       updatedAt: norm.updatedAt

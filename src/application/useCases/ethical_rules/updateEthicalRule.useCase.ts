@@ -9,9 +9,7 @@ export class UpdateEthicalRuleUseCase {
     id: string,
     data: UpdateEthicalNormDto
   ): Promise<EthicalNormResponseDto | null> {
-    if (data.status === "APROBADO" && data.justification) {
-      throw new Error("Las normas aprobadas no requieren justificación");
-    }
+
     return this.repository.update(id, data);
   }
 }

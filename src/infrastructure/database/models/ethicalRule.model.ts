@@ -37,7 +37,7 @@ const EthicalNormSchema = new Schema<EthicalNormDocument>(
     },
     justification: { 
       type: String,
-      maxlength: [1000, "La justificación no puede exceder los 1000 caracteres"]
+      maxlength: [10000, "La justificación no puede exceder los 10000 caracteres"]
     },
     codeNumber: { 
       type: String, 
