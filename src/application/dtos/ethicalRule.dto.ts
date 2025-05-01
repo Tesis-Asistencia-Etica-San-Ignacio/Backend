@@ -1,4 +1,3 @@
-// application/dtos/ethicalNorm.dto.ts
 import { Type, Static } from "@sinclair/typebox";
 
 export const EthicalNormStatusEnum = Type.Union([
@@ -10,9 +9,9 @@ export const CreateEthicalNormSchema = Type.Object({
   evaluationId: Type.String(),
   description: Type.String(),
   status: EthicalNormStatusEnum,
-  justification: Type.Optional(Type.String()),
+  justification: Type.String(),
+  cita: Type.String(),
   codeNumber: Type.String(),
-  cita: Type.Optional(Type.String()),
 });
 
 export type CreateEthicalNormDto = Static<typeof CreateEthicalNormSchema>;
@@ -25,8 +24,8 @@ export const EthicalNormResponseSchema = Type.Object({
   evaluationId: Type.String(),
   description: Type.String(),
   status: EthicalNormStatusEnum,
-  justification: Type.Optional(Type.String()),
-  cita: Type.Optional(Type.String()),
+  justification: Type.String(),
+  cita: Type.String(),
   codeNumber: Type.String(),
   createdAt: Type.Date(),
   updatedAt: Type.Date(),

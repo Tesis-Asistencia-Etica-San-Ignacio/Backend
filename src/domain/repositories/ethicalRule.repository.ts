@@ -1,4 +1,3 @@
-// domain/repositories/iEthicalNorm.repository.ts
 import { EthicalNorm } from "../entities";
 import {
   UpdateEthicalNormDto,

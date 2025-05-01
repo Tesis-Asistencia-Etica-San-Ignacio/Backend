@@ -1,4 +1,3 @@
-// src/interfaces/controllers/SmtpController.ts
 import { Request, Response } from 'express';
 import { SendEmailUseCase } from '../../application/useCases/smtp/smpt.useCase';
 import { SmtpService } from '../../application/services/smpt.service';
@@ -9,7 +8,6 @@ import { EthicalNormRepository } from '../../infrastructure/database/repositorie
 import { generateEmailHtml } from '../../shared/utils/emailTemplate';
 import { GetUserByIdUseCase } from '../../application/useCases/user/getUserById.useCase';
 import { UserRepository } from '../../infrastructure/database/repositories/user.repository.impl';
-import pdfCache from '../../cache/pdfCache';
 
 export class SmtpController {
   private readonly sendEmailUseCase = new SendEmailUseCase(new SmtpService());
@@ -67,19 +65,14 @@ export class SmtpController {
         res.status(400).json({ message: 'No se pudo determinar nombre de usuario.' });
         return;
       }
+
       // 5. Generar el PDF en base al template y los datos
-       // 1) Intentar leer del cache
-       let pdfBuffer = pdfCache.get(evaluationId);
-       if (!pdfBuffer) {
-         // 2) Si no existe, generarlo (y opcionalmente cachearlo)
-         const norms = await this.getNormsUseCase.execute(evaluationId);
-         pdfBuffer = await this.generatePdfUseCase.execute('ethicalNormsReport', {
-           norms,
-           date: new Date().toLocaleDateString('es-CO'),
-         });
-         pdfCache.set(evaluationId, pdfBuffer);
-       }
-       
+      const norms = await this.getNormsUseCase.execute(evaluationId);
+      const pdfBuffer = await this.generatePdfUseCase.execute('ethicalNormsReport', {
+        norms,
+        date: new Date().toLocaleDateString('es-CO'),
+      });
+
       // 6. Generar el HTML del correo
       const htmlContent = await generateEmailHtml({
         userName: userFullName,
@@ -93,8 +86,8 @@ export class SmtpController {
         html: htmlContent,
         attachments: [
           {
-            filename:    'reporte-normas.pdf',
-            content:     pdfBuffer,
+            filename: 'reporte-normas.pdf',
+            content: pdfBuffer,
             contentType: 'application/pdf',
           },
         ],

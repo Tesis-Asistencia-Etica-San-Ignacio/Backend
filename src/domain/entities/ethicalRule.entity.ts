@@ -1,4 +1,3 @@
-// domain/entities/ethicalNorm.entity.ts
 export type EthicalNormStatus = "APROBADO" | "NO_APROBADO";
 
 export interface EthicalNorm {

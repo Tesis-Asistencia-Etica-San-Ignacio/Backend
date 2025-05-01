@@ -17,15 +17,14 @@ export interface EthicalNormDocument extends Document {
 // 2. Crear el esquema
 const EthicalNormSchema = new Schema<EthicalNormDocument>(
   {
-    evaluationId: { 
-      type: Schema.Types.ObjectId, 
+    evaluationId: {
+      type: Schema.Types.ObjectId,
       required: true,
       ref: "Evaluation" // Referencia a la colección de evaluaciones
     },
-    description: { 
-      type: String, 
+    description: {
+      type: String,
       required: true,
-      minlength: [10, "La descripción debe tener al menos 10 caracteres"]
     },
     status: {
       type: String,
@@ -35,18 +34,19 @@ const EthicalNormSchema = new Schema<EthicalNormDocument>(
       },
       required: [true, "El estado es requerido"]
     },
-    justification: { 
+    justification: {
       type: String,
-      maxlength: [10000, "La justificación no puede exceder los 10000 caracteres"]
+      maxlength: [10000, "La justificación no puede exceder los 10000 caracteres"],
+      required: true
     },
-    codeNumber: { 
-      type: String, 
+    codeNumber: {
+      type: String,
       required: true,
       unique: false
     },
-    cita: { 
-      type: String, 
-      required: false
+    cita: {
+      type: String,
+      required: true
     }
   },
   {
@@ -58,15 +58,16 @@ const EthicalNormSchema = new Schema<EthicalNormDocument>(
 EthicalNormSchema.index({ evaluationId: 1, status: 1 });
 
 // 4. Middleware de validación previo a guardar
-EthicalNormSchema.pre("save", function(next) {
+EthicalNormSchema.pre("save", function (next) {
   if (this.justification && this.status === "NO_APROBADO") {
-    this.justification = ""; // Limpiar justificación si está aprobada
+    this.justification = "No se encontraron justificaciones"; // Limpiar justificación si está aprobada
+    this.cita = "No se encontraron citas"; // Limpiar cita si está aprobada
   }
   next();
 });
 
 // 5. Exportar el modelo
 export const EthicalNorm = model<EthicalNormDocument>(
-  "EthicalNorm", 
+  "EthicalNorm",
   EthicalNormSchema
 );

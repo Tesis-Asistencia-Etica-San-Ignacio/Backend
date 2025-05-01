@@ -13,7 +13,7 @@ Eres un experto analista de documentos. Analiza el siguiente texto y responde en
 "description": "Aca debe estar la pregunta que el usuario te envio",
 "codeNumber": "",
 "status": true/false,
-"justificacion": "texto literal del documento que justifique la respuesta, ademas de esto debe estar bien formateado y debe ser legible",
+"justification": "texto literal del documento que justifique la respuesta, ademas de esto debe estar bien formateado y debe ser legible",
 "cita": "En que parte del documento esta la informacion, a nivel de página y lugar de la pagina",
 }
 - Todas las preguntas deben tener todos los campos requeridos del JSON 

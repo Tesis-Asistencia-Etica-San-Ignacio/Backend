@@ -21,7 +21,7 @@ export const getAnalysisPrompt = (documentContent: string, prompts : PromptRespo
           description: "",
           codeNumber: q.codigo, 
           status: "",
-          justificacion: "",
+          justification: "",
           cita: ""
         })),
       }, null, 2)}
