@@ -104,7 +104,7 @@ export class IAController {
         });
       }
 
-      if(evaluation.estado == "EVALUADO") {
+      if(evaluation.estado == "EN CURSO") {
         return res.status(400).json({
           success: false,
           error: "Evaluación ya evaluada"
@@ -173,7 +173,7 @@ export class IAController {
       
       await this.createEvaluacionUseCase.crearNormasEticasBase(evaluationId, parsedAnalysis.analysis);
 
-      await this.updateEvaluacionUseCase.execute(evaluationId, { estado: "EVALUADO" });
+      await this.updateEvaluacionUseCase.execute(evaluationId, { estado: "EN CURSO" });
 
       res.json({ success: true, "message": "Evaluación procesada con exito" });
   
