@@ -3,6 +3,6 @@ export interface EthicalNormSeed {
     description: string;
     status: "APROBADO" | "NO_APROBADO";
     codeNumber: string;
-    justificacion: string;
+    justification: string;
     cita: string;
   }

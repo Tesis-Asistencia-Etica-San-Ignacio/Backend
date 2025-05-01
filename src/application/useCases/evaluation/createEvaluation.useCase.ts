@@ -4,8 +4,6 @@ import {
   IEthicalNormRepository,
 } from "../../../domain";
 import { CreateEvaluacionDto } from "../..";
-import path from "path";
-import fs from "fs";
 import { EthicalNormSeed } from "../../../types/ethicalNorm";
 
 export class CreateEvaluacionUseCase {
@@ -43,7 +41,7 @@ export class CreateEvaluacionUseCase {
             description: norma.description,
             status: norma.status,
             codeNumber: norma.codeNumber,
-            justification: norma.justificacion,
+            justification: norma.justification,
             cita: norma.cita
           })
         )
