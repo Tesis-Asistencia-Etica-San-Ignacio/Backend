@@ -67,13 +67,13 @@
     },
     {
       "nombre": "Prompt 7.6",
-      "texto": "Posibilidad de conocer sus datos personales registrados en la base de datos del estudio, solicitar rectificación de los mismos y de retirar su consentimiento para el tratamiento de los datos en cualquier momento del estudio, excepto a partir de la anonimización. ",
+      "texto": "Posibilidad de conocer sus datos personales registrados en la base de datos del estudio, solicitar rectificación de los mismos y de retirar su consentimiento para el tratamiento de los datos en cualquier momento del estudio, excepto a partir de la anonimización.",
       "descripcion": ".",
       "codigo": "Q07.6"
     },
     {
       "nombre": "Prompt 7.7",
-      "texto": "Describe los procesos de transferencia de datos a terceros, en caso de estudios colaborativos, y la garantía de mantener la privacidad, confidencialidad y seguridad en el tratamiento por parte del tercero. ",
+      "texto": "Describe los procesos de transferencia de datos a terceros, en caso de estudios colaborativos, y la garantía de mantener la privacidad, confidencialidad y seguridad en el tratamiento por parte del tercero.",
       "descripcion": ".",
       "codigo": "Q07.7"
     },
@@ -91,7 +91,7 @@
     },
     {
       "nombre": "Prompt 10",
-      "texto": "Expresa la garantía de que, si existen gastos adicionales, éstos serán cubiertos por el presupuesto de la investigación o de la institución responsable de la misma.Enunciar costos generados por participar en el estudio, ej.: transporte, alimentación etc. y la forma cómo serán reembolsados (bonos de alimentación o transporte, dinero). ",
+      "texto": "Expresa la garantía de que, si existen gastos adicionales, éstos serán cubiertos por el presupuesto de la investigación o de la institución responsable de la misma.Enunciar costos generados por participar en el estudio, ej.: transporte, alimentación etc. y la forma cómo serán reembolsados (bonos de alimentación o transporte, dinero).",
       "descripcion": ".",
       "codigo": "Q10"
     },
@@ -103,7 +103,7 @@
     },
     {
       "nombre": "Prompt 12",
-      "texto": "Indica la libertad de retirar su consentimiento en cualquier momento y dejar de participar en el estudio sin que por ello se creen perjuicios para continuar su cuidado y tratamiento. ",
+      "texto": "Indica la libertad de retirar su consentimiento en cualquier momento y dejar de participar en el estudio sin que por ello se creen perjuicios para continuar su cuidado y tratamiento.",
       "descripcion": ".",
       "codigo": "Q12"
     }

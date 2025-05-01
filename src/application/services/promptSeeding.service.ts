@@ -1,4 +1,3 @@
-// src/application/services/promptSeedingService.ts
 import path from 'path';
 import fs from 'fs';
 import { PromptSeed } from '../../types/promptSeed';
@@ -29,7 +28,7 @@ export async function seedPromptsForEvaluator(
         nombre: seed.nombre,
         texto: seed.texto,
         descripcion: seed.descripcion,
-        codigo : seed.codigo
+        codigo: seed.codigo
       })
     )
   );
