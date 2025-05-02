@@ -21,5 +21,7 @@ Eres un experto analista de documentos. Analiza el siguiente texto y responde en
 - El status lo debes agregar en cada pregunta
 - Responde texto legible a pesar de que el texto que te envien este pegado no lo respondas asi organizalo
 - Se muy estricto con el formato que el usuario te envie no puedes omitir ningun {} ni []
-- Ademas si las preguntas no vienen en orden igual responde en orden 
+- Ademas si las preguntas no vienen en orden igual responde en orden
+- Si no hay cita para alguna pregunta debes poner "No se encontraron citas" en el campo cita
+- Si no hay justificacion para alguna pregunta debes poner "No se encontraron justificaciones" en el campo justificacion
 `;

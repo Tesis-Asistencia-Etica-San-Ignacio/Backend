@@ -69,12 +69,13 @@ export class EvaluatePipelineUseCase {
                 { role: 'user', content: user },
             ],
             {
-                model: 'llama-3.3-70b-versatile',
+                model: 'meta-llama/llama-4-scout-17b-16e-instruct',
                 temperature: 0.2,
                 response_format: { type: 'json_object' },
             },
         );
         const raw = completion.choices[0]?.message?.content;
+        /* console.log('raw', raw); */
         if (!raw) throw new Error('Sin respuesta del modelo');
         const parsed = parseJson(raw);
         if (typeof parsed !== 'object' || !parsed.analysis)
@@ -84,10 +85,7 @@ export class EvaluatePipelineUseCase {
         if (cleanNormsBefore) {
             await this.deleteNorms.execute(evaluation.id);
         }
-        await this.createNorms.crearNormasEticasBase(
-            evaluation.id,
-            parsed.analysis,
-        );
+        await this.createNorms.crearNormasEticasBase(evaluation.id, parsed.analysis,);
         await this.updateEval.execute(evaluation.id, { estado: 'EN CURSO' });
     }
 }

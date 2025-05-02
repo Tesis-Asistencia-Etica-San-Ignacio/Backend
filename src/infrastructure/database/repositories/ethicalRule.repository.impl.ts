@@ -1,4 +1,3 @@
-// infrastructure/database/repositories/ethicalNorm.repository.ts
 import { EthicalNorm as EthicalNormModel } from "../models";
 import { EthicalNorm, IEthicalNormRepository } from "../../../domain";
 import { UpdateEthicalNormDto, EthicalNormResponseDto } from "../../../application";
@@ -31,7 +30,7 @@ export class EthicalNormRepository implements IEthicalNormRepository {
     id: string,
     data: UpdateEthicalNormDto
   ): Promise<EthicalNormResponseDto | null> {
-    const updateData = data.evaluationId 
+    const updateData = data.evaluationId
       ? { ...data, evaluationId: new Types.ObjectId(data.evaluationId) }
       : data;
 
@@ -55,7 +54,7 @@ export class EthicalNormRepository implements IEthicalNormRepository {
     const norms = await EthicalNormModel.find({
       evaluationId: new Types.ObjectId(evaluationId)
     }).lean();
-    
+
     return norms.map(norm => this.toResponseDto(norm));
   }
 

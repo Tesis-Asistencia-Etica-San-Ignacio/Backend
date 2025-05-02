@@ -1,7 +1,5 @@
-// infrastructure/database/models/ethicalNorm.model.ts
 import { Schema, model, Document, Types } from "mongoose";
 
-// 1. Definir la interfaz del documento
 export interface EthicalNormDocument extends Document {
   _id: Types.ObjectId;
   evaluationId: Types.ObjectId;

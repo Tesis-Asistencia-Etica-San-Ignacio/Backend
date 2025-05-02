@@ -16,19 +16,19 @@ export const configureMiddlewares = (app: express.Application) => {
     origin: process.env.FRONTEND_URL,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-      allowedHeaders: ['Content-Type', 'Authorization'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
   }));
 
-   // 2) Aumentar límite de tamaño de los bodies JSON y URL–encoded
-   app.use(express.json({ limit: '5mb' }));
-   app.use(express.urlencoded({ extended: true, limit: '5mb' }));
- 
+  // 2) Aumentar límite de tamaño de los bodies JSON y URL–encoded
+  app.use(express.json({ limit: '5mb' }));
+  app.use(express.urlencoded({ extended: true, limit: '5mb' }));
+
 
   app.use(helmet());
   app.use(morgan('dev'));
 
   app.use((req, res, next) => {
-    req.setTimeout(20000, () => {
+    req.setTimeout(30000, () => {
       console.log('⏳ Tiempo de espera agotado en la solicitud.');
       res.status(408).send('Timeout en la solicitud.');
     });

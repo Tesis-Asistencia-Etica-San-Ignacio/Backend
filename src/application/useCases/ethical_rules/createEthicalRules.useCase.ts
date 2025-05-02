@@ -6,10 +6,13 @@ export class CreateEthicalRulesUseCase {
 
   public async crearNormasEticasBase(evaluacionId: string, normasData: EthicalNormSeed[]): Promise<void> {
     try {
-      const normasTransformadas = normasData.map((norma: any) => ({
-        ...norma,
-        status: norma.status ? "APROBADO" : "NO_APROBADO"
-      }));
+      const normasTransformadas = normasData.map((norma: any) => {
+        return {
+          ...norma,
+          status: norma.status ? "APROBADO" : "NO_APROBADO",
+          cita: norma.cita === undefined || norma.cita === null || norma.cita === "" ? "No se encontraron citas" : norma.cita,
+        };
+      });
 
       if (!normasTransformadas || !Array.isArray(normasTransformadas)) {
         throw new Error('Formato de normas inválido');
