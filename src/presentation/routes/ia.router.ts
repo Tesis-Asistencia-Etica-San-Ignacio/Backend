@@ -1,46 +1,56 @@
-import { Router } from "express";
-import { IAController } from "../controllers/ia.controller";
-import multer from "multer";
+import { Router } from 'express';
+import { IAController } from '../controllers/ia.controller';
 import {
-  CreateEvaluacionUseCase, 
-  GenerateCompletionUseCase, 
-  GetEvaluacionByIdUseCase, 
+  CreateEthicalRulesUseCase,
+  GenerateCompletionUseCase,
+  GetEvaluacionByIdUseCase,
   GetPromptsByEvaluatorIdUseCase,
   GetEvaluacionesByUserUseCase,
   UpdateEvaluacionUseCase,
-} from "../../application";
-import { EthicalNormRepository, EvaluacionRepository, PromptRepository } from '../../infrastructure';
-import { validateRoleMiddleware } from "../middleware/jwtMiddleware";
+  deleteEthicalRulesByEvaluationIdUseCase,
+} from '../../application';
+import {
+  EthicalNormRepository,
+  EvaluacionRepository,
+  PromptRepository,
+} from '../../infrastructure';
+import { validateRoleMiddleware } from '../middleware/jwtMiddleware';
 
 const router = Router();
-const upload = multer({
-  storage: multer.memoryStorage(),
-  limits: {
-    fileSize: 10 * 1024 * 1024, // Límite de 10MB
-    files: 1 // Solo permite 1 archivo
-  }
-});
 
-const evaluacionRepository = new EvaluacionRepository();
-const ethicalNormRepository = new EthicalNormRepository();
-const promptRepository = new PromptRepository();
+const evaluacionRepo = new EvaluacionRepository();
+const ethicalRepo = new EthicalNormRepository();
+const promptRepo = new PromptRepository();
 
-const createEvaluacionUseCase = new CreateEvaluacionUseCase(evaluacionRepository, ethicalNormRepository);
-const generateCompletionUseCase = new GenerateCompletionUseCase();
-const getEvaluacionByIdUseCase = new GetEvaluacionByIdUseCase(evaluacionRepository);
-const getPromptsByEvaluatorIdUseCase = new GetPromptsByEvaluatorIdUseCase(promptRepository);
-const getEvaluacionesByUserUseCase = new GetEvaluacionesByUserUseCase(evaluacionRepository);
-const updateEvaluacionUseCase = new UpdateEvaluacionUseCase(evaluacionRepository);
+const createNormsUC = new CreateEthicalRulesUseCase(ethicalRepo);
+const generateLLMUC = new GenerateCompletionUseCase();
+const getEvalByIdUC = new GetEvaluacionByIdUseCase(evaluacionRepo);
+const getPromptsUC = new GetPromptsByEvaluatorIdUseCase(promptRepo);
+const getEvalsByUserUC = new GetEvaluacionesByUserUseCase(evaluacionRepo);
+const updateEvalUC = new UpdateEvaluacionUseCase(evaluacionRepo);
+const deleteNormsUC = new deleteEthicalRulesByEvaluationIdUseCase(ethicalRepo);
 
-const groqController = new IAController(createEvaluacionUseCase, 
-  generateCompletionUseCase, 
-  getEvaluacionByIdUseCase, 
-  getPromptsByEvaluatorIdUseCase,
-  getEvaluacionesByUserUseCase,
-  updateEvaluacionUseCase
+const iaController = new IAController(
+  createNormsUC,
+  generateLLMUC,
+  getEvalByIdUC,
+  getPromptsUC,
+  getEvalsByUserUC,
+  updateEvalUC,
+  deleteNormsUC,
 );
 
-router.post("/completion", upload.single("file"), groqController.generateCompletionController);
-router.post("/analisis", validateRoleMiddleware(["EVALUADOR"]), groqController.processEvaluationController);
+/* Rutas */
+router.post(
+  '/evaluate',
+  validateRoleMiddleware(['EVALUADOR']),
+  iaController.evaluate,
+);
+
+router.post(
+  '/re-evaluate',
+  validateRoleMiddleware(['EVALUADOR']),
+  iaController.reEvaluate,
+);
 
 export default router;

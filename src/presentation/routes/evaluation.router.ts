@@ -1,6 +1,5 @@
-import { Router } from 'express';
-import { EvaluacionController } from '../controllers';
-import { EthicalNormRepository, EvaluacionRepository } from '../../infrastructure';
+import { Router } from "express";
+import { EvaluacionController } from "../controllers";
 
 import {
   CreateEvaluacionUseCase,
@@ -9,42 +8,51 @@ import {
   UpdateEvaluacionUseCase,
   DeleteEvaluacionUseCase,
   GetEvaluacionesByUserUseCase,
-} from '../../application';
+  deleteEthicalRulesByEvaluationIdUseCase,
+} from "../../application";
 
-import {validateRoleMiddleware } from '../../presentation/middleware/jwtMiddleware';
+import {
+  EvaluacionRepository,
+  EthicalNormRepository,
+} from "../../infrastructure";
+
+import { validateRoleMiddleware } from "../middleware/jwtMiddleware";
 
 const router = Router();
 
-// Instanciamos el repositorio
-const evaluacionRepository = new EvaluacionRepository();
-const ethicalNormRepository = new EthicalNormRepository(); 
+/* ───── Repositorios ───── */
+const evaluacionRepo = new EvaluacionRepository();
+const ethicalNormRepo = new EthicalNormRepository();
 
-// Instanciamos los casos de uso
-const createEvaluacionUseCase = new CreateEvaluacionUseCase(evaluacionRepository, ethicalNormRepository);
-const getAllEvaluacionsUseCase = new GetAllEvaluacionsUseCase(evaluacionRepository);
-const getEvaluacionByIdUseCase = new GetEvaluacionByIdUseCase(evaluacionRepository);
-const updateEvaluacionUseCase = new UpdateEvaluacionUseCase(evaluacionRepository);
-const deleteEvaluacionUseCase = new DeleteEvaluacionUseCase(evaluacionRepository, ethicalNormRepository);
-const getEvaluacionesByUserUseCase = new GetEvaluacionesByUserUseCase(evaluacionRepository);
-
-
-// Instanciamos el controlador con los casos de uso
-const evaluacionController = new EvaluacionController(
-  createEvaluacionUseCase,
-  getAllEvaluacionsUseCase,
-  getEvaluacionByIdUseCase,
-  updateEvaluacionUseCase,
-  deleteEvaluacionUseCase,
-  getEvaluacionesByUserUseCase,
+/* ───── Use‑cases auxiliares ───── */
+const deleteNormsUC = new deleteEthicalRulesByEvaluationIdUseCase(
+  ethicalNormRepo,
 );
 
-// Definimos las rutas
-router.get('/my', validateRoleMiddleware(['EVALUADOR']), evaluacionController.getByUser);
-router.get('/:id', validateRoleMiddleware(['INVESTIGADOR', 'EVALUADOR']), evaluacionController.getById);
-router.get('/', validateRoleMiddleware(['INVESTIGADOR', 'EVALUADOR']), evaluacionController.getAll);
-router.post('/', validateRoleMiddleware(['INVESTIGADOR', 'EVALUADOR']), evaluacionController.create);
-router.patch('/:id', validateRoleMiddleware(['INVESTIGADOR', 'EVALUADOR']), evaluacionController.update);
-router.delete('/:id', validateRoleMiddleware(['INVESTIGADOR', 'EVALUADOR']), evaluacionController.delete);
+/* ───── Use‑cases principales ───── */
+const createEvaluacionUC = new CreateEvaluacionUseCase(evaluacionRepo);
+const getAllEvaluacionsUC = new GetAllEvaluacionsUseCase(evaluacionRepo);
+const getEvaluacionByIdUC = new GetEvaluacionByIdUseCase(evaluacionRepo);
+const updateEvaluacionUC = new UpdateEvaluacionUseCase(evaluacionRepo);
+const deleteEvaluacionUC = new DeleteEvaluacionUseCase(evaluacionRepo, deleteNormsUC);
+const getEvalsByUserUC = new GetEvaluacionesByUserUseCase(evaluacionRepo);
 
+/* ───── Controlador ───── */
+const evaluacionController = new EvaluacionController(
+  createEvaluacionUC,
+  getAllEvaluacionsUC,
+  getEvaluacionByIdUC,
+  updateEvaluacionUC,
+  deleteEvaluacionUC,
+  getEvalsByUserUC,
+);
+
+/* ───── Rutas ───── */
+router.get("/my", validateRoleMiddleware(["EVALUADOR"]), evaluacionController.getByUser,);
+router.get("/:id", validateRoleMiddleware(["EVALUADOR"]), evaluacionController.getById,);
+router.get("/", validateRoleMiddleware(["EVALUADOR"]), evaluacionController.getAll,);
+router.post("/", validateRoleMiddleware(["EVALUADOR"]), evaluacionController.create,);
+router.patch("/:id", validateRoleMiddleware(["EVALUADOR"]), evaluacionController.update,);
+router.delete("/:id", validateRoleMiddleware(["EVALUADOR"]), evaluacionController.delete,);
 
 export default router;

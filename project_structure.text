@@ -25,7 +25,6 @@
     - index.ts
     - prompts
       - analisis.prompt.ts
-      - questions.ts
       - system.ts
     - services
       - auth.service.ts
@@ -159,7 +158,6 @@
         - prompt.repository.impl.ts
         - stats.repository.impl.ts
         - user.repository.impl.ts
-    - email
     - index.ts
   - presentation
     - controllers
@@ -209,10 +207,14 @@
       - jsonParser.ts
       - validateEnv.ts
   - templates
+    - assets
+      - logo-HUSI-ajustado-nuevo.png
+      - pontificia_universidad_javeriana_logo-320x130.jpg
     - emails
       - documentTemplate.html
     - pdf
-      - pdfTemplate.ejs
+      - ethicalNormsReport.ejs
+      - pdfConsentTemplate.ejs
   - types
     - ethicalNorm.d.ts
     - express.d.ts

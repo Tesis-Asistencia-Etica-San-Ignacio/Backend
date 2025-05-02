@@ -18,7 +18,6 @@ export class SmtpController {
 
   public async sendEmail(req: Request, res: Response): Promise<void> {
     try {
-      // Extraemos to, infoMail y evaluationId
       const {
         to,
         infoMail,

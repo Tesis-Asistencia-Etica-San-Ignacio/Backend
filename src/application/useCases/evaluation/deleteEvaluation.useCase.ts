@@ -1,11 +1,9 @@
-// src/application/useCases/evaluation/deleteEvaluation.useCase.ts
-import { IEvaluacionRepository, IEthicalNormRepository } from "../../../domain";
-import { deleteFileFromMinio } from "../../../application";
+import { IEvaluacionRepository } from "../../../domain";
+import { deleteFileFromMinio, deleteEthicalRulesByEvaluationIdUseCase } from "../../../application";
 
 export class DeleteEvaluacionUseCase {
-  constructor(private readonly evaluationRepository: IEvaluacionRepository,
-    private readonly ethicalNormRepository: IEthicalNormRepository
-  ) {}
+  constructor(private readonly evaluationRepository: IEvaluacionRepository, private readonly deleteEthicalRulesByEvaluationId: deleteEthicalRulesByEvaluationIdUseCase
+  ) { }
 
   public async execute(evaluationId: string): Promise<boolean> {
     // 1. Recupera la evaluación desde la BD
@@ -14,12 +12,12 @@ export class DeleteEvaluacionUseCase {
       return false;
     }
 
-    await this.ethicalNormRepository.deleteByEvaluationId(evaluationId);
+    await this.deleteEthicalRulesByEvaluationId.execute(evaluationId);
 
     // 2. Extraer la URL del archivo asociado
     // "http://localhost:9000/uploads/Taller4-LauraOvalle.pdf"
     const fileUrl: string = evaluation.file;
-    
+
     // 3. Elimina la evaluación de la BD
     await this.evaluationRepository.delete(evaluationId);
 
