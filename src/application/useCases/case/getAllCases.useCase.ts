@@ -1,13 +1,10 @@
-import { Case } from "../../../domain/entities/case.entity";
-import { ICaseRepository } from "../../../domain/repositories/case.repository";
+import { ICaseRepository } from "../../../domain";
+import { CaseResponseDto } from "../..";
+
 
 export class GetAllCasesUseCase {
   constructor(private readonly caseRepository: ICaseRepository) {}
-
-  public async execute(filter?: {
-    type?: string;
-    email?: string;
-  }): Promise<Case[]> {
-    return this.caseRepository.findAll(filter);
+  public async execute(): Promise<CaseResponseDto[]> {
+    return this.caseRepository.findAll();
   }
 }

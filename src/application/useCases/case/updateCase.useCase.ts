@@ -1,13 +1,22 @@
-import { Case } from "../../../domain/entities/case.entity";
-import { ICaseRepository } from "../../../domain/repositories/case.repository";
+import { ICaseRepository, Case } from "../../../domain";
+import { UpdateCaseDto } from "../..";
 
 export class UpdateCaseUseCase {
-  constructor(private readonly caseRepository: ICaseRepository) {}
+  constructor(private readonly caseRepository: ICaseRepository) { }
 
   public async execute(
     id: string,
-    data: Partial<Omit<Case, 'id'>>,
+    data: UpdateCaseDto,
   ): Promise<Case | null> {
-    return this.caseRepository.update(id, data);
+    const caso = await this.caseRepository.update(id, data);
+    if (caso) {
+      return {
+        ...caso,
+        createdAt: new Date(caso.createdAt),
+        updatedAt: new Date(caso.updatedAt),
+        fecha: new Date(caso.fecha),
+      }
+    }
+    return null;
   }
 }

@@ -1,9 +1,10 @@
-import { Case } from "../entities/case.entity";
+import { CreateCaseDto, UpdateCaseDto, CaseResponseDto } from '../../application';
 
 export interface ICaseRepository {
-  findAll(filter?: { type?: string; email?: string }): Promise<Case[]>;
-  findById(id: string): Promise<Case | null>;
-  create(data: Omit<Case, 'id'>): Promise<Case>;
-  update(id: string, data: Partial<Omit<Case, 'id'>>): Promise<Case | null>;
+  findAll(): Promise<CaseResponseDto[]>;
+  findById(id: string): Promise<CaseResponseDto | null>;
+  create(data: CreateCaseDto): Promise<CaseResponseDto>;
+  update(id: string, data:UpdateCaseDto): Promise<CaseResponseDto | null>;
   delete(id: string): Promise<boolean>;
+  findByUserId(userId: string): Promise<CaseResponseDto[]>
 }

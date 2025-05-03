@@ -2,6 +2,7 @@ import { model, Schema, Document, Types } from 'mongoose';
 
 export interface ContInfoGeneralDocument extends Document {
   _id: Types.ObjectId;
+  cid : Types.ObjectId;
   problema: string;
   objetivo: string;
   def_estudio: string;
@@ -26,6 +27,7 @@ export interface ContInfoGeneralDocument extends Document {
 }
 
 const ContInfoGeneralSchema = new Schema<ContInfoGeneralDocument>({
+  cid : { type: Schema.Types.ObjectId, ref: 'Cases' , required: true },
   problema: { type: String, required: true },
   objetivo: { type: String, required: true },
   def_estudio: { type: String, required: true },

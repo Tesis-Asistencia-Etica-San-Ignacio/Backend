@@ -1,10 +1,16 @@
-import { Case } from '../../../domain/entities/case.entity';
-import { ICaseRepository } from '../../../domain/repositories/case.repository';
+import { ICaseRepository, Case } from '../../../domain';
+import { CreateCaseDto } from '../../dtos';
 
 export class CreateCaseUseCase {
   constructor(private readonly caseRepository: ICaseRepository) {}
 
-  public async execute(data: Omit<Case, 'id'>): Promise<Case> {
-    return this.caseRepository.create(data);
+  public async execute(data: CreateCaseDto): Promise<Case> {
+    const caso = await this.caseRepository.create(data);
+    return {
+      ...caso,
+      createdAt: new Date(caso.createdAt),
+      updatedAt: new Date(caso.updatedAt),
+      fecha: new Date(caso.fecha),
+    }
   }
 }

@@ -1,5 +1,6 @@
 export interface ContInfoGeneral {
     id: string;
+    cid : string;  
     problema: string;
     objetivo: string;
     def_estudio: string;

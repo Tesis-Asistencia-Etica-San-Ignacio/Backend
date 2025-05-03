@@ -10,7 +10,7 @@ export class PdfController {
     new EthicalNormRepository()
   );
 
-  public async generatePdf(req: Request, res: Response): Promise<void> {
+  public async generateEvaluatorPdf(req: Request, res: Response): Promise<void> {
     try {
       const { evaluationId } = req.body;
       if (!evaluationId) {
@@ -21,6 +21,34 @@ export class PdfController {
       const norms = await this.getNorms.execute(evaluationId);
       const buf = await this.genPdf.execute("ethicalNormsReport", {
         norms,
+        date: new Date().toLocaleDateString("es-CO"),
+      });
+
+      res
+        .status(200)
+        .set({
+          "Content-Type": "application/pdf",
+          "Content-Length": buf.length,
+          "Cache-Hit": "false",
+        })
+        .send(buf);
+      return
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Error generando PDF");
+    }
+  }
+
+  public async generateInvestigatorPdf(req: Request, res: Response): Promise<void> {
+    try {
+      // const { documentId } = req.body;
+      // if (!documentId) {
+      //   res.status(400).send("Documento requerido");
+      //   return;
+      // }
+
+      //const norms = await this.getNorms.execute(documentId);
+      const buf = await this.genPdf.execute("pdfConsentTemplate", {
         date: new Date().toLocaleDateString("es-CO"),
       });
 

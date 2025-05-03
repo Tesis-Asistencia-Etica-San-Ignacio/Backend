@@ -2,10 +2,9 @@ import { Type, Static } from '@sinclair/typebox';
 
 // Esquema para crear un cont_intro
 export const CreateContIntroSchema = Type.Object({
+  cid : Type.String({ pattern: '^[0-9a-fA-F]{24}$' }),
   instituciones: Type.String(),
   codigo_sujeto: Type.String(),
-  createdAt: Type.Optional(Type.Date()),
-  updatedAt: Type.Optional(Type.Date()),
 });
 
 export type CreateContIntroDto = Static<typeof CreateContIntroSchema>;
@@ -17,6 +16,7 @@ export type UpdateContIntroDto = Static<typeof UpdateContIntroSchema>;
 
 export const ContIntroResponseSchema = Type.Object({
   id: Type.String(),
+  cid : Type.String({ pattern: '^[0-9a-fA-F]{24}$' }),
   instituciones: Type.String(),
   codigo_sujeto: Type.String(),
   createdAt: Type.Date(),

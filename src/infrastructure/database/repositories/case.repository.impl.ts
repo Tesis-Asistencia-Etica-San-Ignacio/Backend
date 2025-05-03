@@ -1,63 +1,65 @@
-import { Case } from '../../../domain/entities/case.entity';
-import { ICaseRepository } from '../../../domain/repositories/case.repository';
-import { CaseModel } from '../models/case.model';
-
+import { CaseModel } from '../..';
+import { ICaseRepository } from '../../../domain';
+import { 
+  CreateCaseDto, 
+  UpdateCaseDto, 
+  CaseResponseDto } from '../../../application';
 export class CaseRepository implements ICaseRepository {
-  public async findAll(): Promise<Case[]> {
-    const results = await CaseModel.find();
+  public async findAll(): Promise<CaseResponseDto[]> {
+    const results = await CaseModel.find({});
     return results.map((doc) => ({
       id: doc._id.toString(),
       uid: doc.uid.toString(),
       nombre_proyecto: doc.nombre_proyecto,
-      fecha: doc.fecha,
-      instituciones: doc.instituciones,
-      introduccion: doc.introduccion,
-      info_general: doc.info_general,
-      estado: doc.estado,
+      version: doc.version,
+      codigo: doc.codigo,
+      fecha: doc.fecha.toISOString(),
+      createdAt: doc.createdAt.toISOString(),
+      updatedAt: doc.updatedAt.toISOString(),
     }));
   }
 
-  public async findById(id: string): Promise<Case | null> {
+  public async findById(id: string): Promise<CaseResponseDto | null> {
     const doc = await CaseModel.findById(id);
     if (!doc) return null;
     return {
       id: doc._id.toString(),
       uid: doc.uid.toString(),
       nombre_proyecto: doc.nombre_proyecto,
-      fecha: doc.fecha,
-      instituciones: doc.instituciones,
-      introduccion: doc.introduccion,
-      info_general: doc.info_general,
-      estado: doc.estado,
+      version: doc.version,
+      codigo: doc.codigo,
+      fecha: doc.fecha.toISOString(),
+      createdAt: doc.createdAt.toISOString(),
+      updatedAt: doc.updatedAt.toISOString(),
     };
   }
 
-  public async create(data: Omit<Case, "id">): Promise<Case> {
+  public async create(data: CreateCaseDto): Promise<CaseResponseDto> {
     const doc = await CaseModel.create(data);
     return {
       id: doc._id.toString(),
       uid: doc.uid.toString(),
       nombre_proyecto: doc.nombre_proyecto,
-      fecha: doc.fecha,
-      instituciones: doc.instituciones,
-      introduccion: doc.introduccion,
-      info_general: doc.info_general,
-      estado: doc.estado,
+      version: doc.version,
+      codigo: doc.codigo,
+      fecha: doc.fecha.toISOString(),
+      createdAt: doc.createdAt.toISOString(),
+      updatedAt: doc.updatedAt.toISOString(),
     };
   }
 
-  public async update(id: string, data: Partial<Omit<Case, "id">>): Promise<Case | null> {
+  public async update(id: string, data: UpdateCaseDto): Promise<CaseResponseDto | null> {
     const doc = await CaseModel.findByIdAndUpdate(id, data, { new: true });
     if (!doc) return null;
     return {
       id: doc._id.toString(),
       uid: doc.uid.toString(),
       nombre_proyecto: doc.nombre_proyecto,
-      fecha: doc.fecha,
-      instituciones: doc.instituciones,
-      introduccion: doc.introduccion,
-      info_general: doc.info_general,
-      estado: doc.estado,
+      version: doc.version,
+      codigo: doc.codigo,
+      fecha: doc.fecha.toISOString(),
+      createdAt: doc.createdAt.toISOString(),
+      updatedAt: doc.updatedAt.toISOString(),
     };
   }
 
@@ -65,4 +67,19 @@ export class CaseRepository implements ICaseRepository {
     const doc = await CaseModel.findByIdAndDelete(id);
     return doc !== null;
   }
+
+  public async findByUserId(userId: string): Promise<CaseResponseDto[]> {
+    const results = await CaseModel.find({ uid: userId });
+    return results.map((doc) => ({
+      id: doc._id.toString(),
+      uid: doc.uid.toString(),
+      nombre_proyecto: doc.nombre_proyecto,
+      version: doc.version,
+      codigo: doc.codigo,
+      fecha: doc.fecha.toISOString(),
+      createdAt: doc.createdAt.toISOString(),
+      updatedAt: doc.updatedAt.toISOString(),
+    }));
+  }
+
 }

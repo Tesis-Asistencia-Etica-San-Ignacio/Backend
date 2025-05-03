@@ -1,14 +1,13 @@
-export interface BaseCase {
-    
+export interface Case {
     id: string,
     uid: string,
     nombre_proyecto: string,
-    introduccion: string,
-    estado: string,
-    fecha?: Date,
-    instituciones?: string,
-    info_general?: string, 
+    fecha: Date,
+    version: string,
+    codigo: string,
+    createdAt: Date,
+    updatedAt: Date
   }
 
-  export type Case = BaseCase;
+
   
