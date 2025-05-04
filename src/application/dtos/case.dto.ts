@@ -7,6 +7,7 @@ export const CreateCaseSchema = Type.Object({
   fecha: Type.String({ format: 'date-time' }),
   version: Type.String(),
   codigo: Type.String(),
+  pdf: Type.String(),
   createdAt: Type.String({ format: 'date-time' }),
   updatedAt: Type.String({ format: 'date-time' }),
 });
@@ -22,9 +23,10 @@ export const CaseResponseSchema = Type.Object({
   id: Type.String(),
   uid: Type.String(),
   nombre_proyecto: Type.String(),
+  fecha: Type.String({ format: 'date-time' }),
   version: Type.String(),
   codigo: Type.String(),
-  fecha: Type.String({ format: 'date-time' }),
+  pdf: Type.String(),
   createdAt: Type.String({ format: 'date-time' }),
   updatedAt: Type.String({ format: 'date-time' }),
 });

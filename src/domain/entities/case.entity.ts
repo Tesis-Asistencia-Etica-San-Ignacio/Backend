@@ -5,6 +5,7 @@ export interface Case {
     fecha: Date,
     version: string,
     codigo: string,
+    pdf: string,
     createdAt: Date,
     updatedAt: Date
   }

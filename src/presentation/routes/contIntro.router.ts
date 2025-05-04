@@ -27,10 +27,10 @@ const contIntroController = new ContIntroController(
   deleteContIntroUseCase
 );
 
-router.get('/', validateRoleMiddleware(['EVALUADOR']), contIntroController.getAll);
-router.get('/:id', validateRoleMiddleware(['EVALUADOR']), contIntroController.getById);
-router.post('/', validateRoleMiddleware(['EVALUADOR']), contIntroController.create);
-router.patch('/:id', validateRoleMiddleware(['EVALUADOR']), contIntroController.update);
-router.delete('/:id', validateRoleMiddleware(['EVALUADOR']), contIntroController.delete);
+router.get('/', validateRoleMiddleware(['INVESTIGADOR']), contIntroController.getAll);
+router.get('/:id', validateRoleMiddleware(['INVESTIGADOR']), contIntroController.getById);
+router.post('/', validateRoleMiddleware(['INVESTIGADOR']), contIntroController.create);
+router.patch('/:id', validateRoleMiddleware(['INVESTIGADOR']), contIntroController.update);
+router.delete('/:id', validateRoleMiddleware(['INVESTIGADOR']), contIntroController.delete);
 
 export default router;

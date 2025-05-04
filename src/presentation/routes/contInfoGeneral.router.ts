@@ -27,10 +27,10 @@ const contInfoGeneralController = new ContInfoGeneralController(
   deleteContInfoGeneralUseCase
 );
 
-router.get('/', validateRoleMiddleware(['EVALUADOR']), contInfoGeneralController.getAll);
-router.get('/:id', validateRoleMiddleware(['EVALUADOR']), contInfoGeneralController.getById);
-router.post('/', validateRoleMiddleware(['EVALUADOR']), contInfoGeneralController.create);
-router.patch('/:id', validateRoleMiddleware(['EVALUADOR']), contInfoGeneralController.update);
-router.delete('/:id', validateRoleMiddleware(['EVALUADOR']), contInfoGeneralController.delete);
+router.get('/', validateRoleMiddleware(['INVESTIGADOR']), contInfoGeneralController.getAll);
+router.get('/:id', validateRoleMiddleware(['INVESTIGADOR']), contInfoGeneralController.getById);
+router.post('/', validateRoleMiddleware(['INVESTIGADOR']), contInfoGeneralController.create);
+router.patch('/:id', validateRoleMiddleware(['INVESTIGADOR']), contInfoGeneralController.update);
+router.delete('/:id', validateRoleMiddleware(['INVESTIGADOR']), contInfoGeneralController.delete);
 
 export default router;

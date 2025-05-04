@@ -7,6 +7,7 @@ export interface CaseDocument extends Document {
   fecha: Date;
   version: string;
   codigo: string;
+  pdf: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -16,6 +17,7 @@ const CaseSchema = new Schema<CaseDocument>(
     uid: { type: Schema.Types.ObjectId, required: true, ref: "User" },
     nombre_proyecto: { type: String, required: true },
     fecha: { type: Date },
+    pdf: { type: String, required: true },
     version: { type: String, required: true },
     codigo: { type: String, required: true },
   },
