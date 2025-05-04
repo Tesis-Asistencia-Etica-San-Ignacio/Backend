@@ -41,14 +41,11 @@ export class PdfController {
 
   public async generateInvestigatorPdf(req: Request, res: Response): Promise<void> {
     try {
-      // const { documentId } = req.body;
-      // if (!documentId) {
-      //   res.status(400).send("Documento requerido");
-      //   return;
-      // }
+      const data  = req.body
+      console.log("En el controlador ---------------------->", data);
 
-      //const norms = await this.getNorms.execute(documentId);
       const buf = await this.genPdf.execute("pdfConsentTemplate", {
+        data,
         date: new Date().toLocaleDateString("es-CO"),
       });
 

@@ -19,6 +19,8 @@ export class PDFService {
       `${templateName}.ejs`
     );
 
+    console.log("En el Service ---------------------->", data);
+
     // carga logos igual
     const logoHusiPath = path.resolve('src', 'templates', 'assets', 'logo-HUSI-ajustado-nuevo.png');
     const logoPujPath = path.resolve('src', 'templates', 'assets', 'pontificia_universidad_javeriana_logo-320x130.jpg');

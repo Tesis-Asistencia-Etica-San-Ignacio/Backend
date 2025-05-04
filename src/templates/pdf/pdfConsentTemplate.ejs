@@ -86,7 +86,6 @@
 
 <body>
 
-<!-- ENCABEZADO -->
 <table class="header-table">
   <tr>
     <td rowspan="2" style="width: 10%; text-align: center; ">
@@ -96,9 +95,9 @@
       GESTIÓN DE INVESTIGACIÓN CLÍNICA<br>
     </td>
     <td rowspan="2" style="width: 20%; font-size: 10px; text-align: left;">
-      <strong>CÓDIGO:</strong> GIC-R-24<br>
-      <strong>VERSIÓN:</strong> 04<br>
-      <strong>APROBADO:</strong> 16/02/24<br>
+      <strong>CÓDIGO:</strong> <%= data.codigo %><br>
+      <strong>VERSIÓN:</strong> <%= data.version %><br>
+      <strong>APROBADO:</strong> <%= data.fecha %><br>
       <strong>PÁGINA:</strong> 1 DE 1
     </td>
   </tr>
@@ -109,112 +108,134 @@
   </tr>
 </table>
 
-<!-- CUERPO PRINCIPAL -->
 <table class="main-table">
 
-  <!-- Introducción -->
-  <tr>
+    <tr>
     <td class="header-cell">INTRODUCCIÓN</td>
   </tr>
   <tr>
     <td>
-      Código del sujeto: ____________
+      Código del sujeto: <%= data.codigo_sujeto %><br>
       <br><br>
-      Este documento de consentimiento es para uso en un proyecto de investigación que involucrará a sujetos que quizá tengan o no la capacidad de dar consentimiento para su participación.
+      Este documento de consentimiento es para uso en un proyecto de investigación que involucrará a sujetos que quizá tengan 
+      o no la capacidad de dar consentimiento para su participación. En este documento de consentimiento, “usted” hace referencia 
+      al participante de la investigación. Si usted es un representante legal, recuerde que “usted” hace referencia al 
+      participante de investigación.
       <br><br>
-      Usted está siendo invitado a participar en el proyecto de investigación "<strong>Evaluación de la calidad nutricional en adultos mayores de Bogotá</strong>". El proyecto es realizado por <strong>Hospital Universitario San Ignacio y Pontificia Universidad Javeriana</strong>.
-      <br><br>
-      Antes de dar su consentimiento, usted necesita entender plenamente el propósito de su decisión. Este proceso se denomina consentimiento informado. Una vez que haya leído este documento y resuelto con el investigador las dudas, se le pedirá que firme este formato en señal de aceptación de participar.
-    </td>
+      Usted está siendo invitado a participar en el proyecto de investigación “<%= data.nombre_proyecto %>”. 
+      Este documento le proporciona la información necesaria para que usted participe voluntaria y libremente. 
+      El proyecto es realizado por <%= data.instituciones %>. Antes de dar su consentimiento, usted necesita entender 
+      plenamente el propósito de su decisión. Este proceso se denomina consentimiento informado. Una vez que haya leído 
+      este documento y resuelto con el investigador las dudas, se le pedirá que firme este formato en señal de aceptación 
+      de participar.
+   </td>
   </tr>
 
-  <!-- Información General -->
-  <tr>
+    <tr>
     <td class="header-cell">INFORMACIÓN GENERAL</td>
   </tr>
   <tr>
     <td>
       <div class="content">
         <strong>1. ¿Por qué se debe realizar este estudio?</strong><br>
-        Este estudio busca analizar los hábitos alimenticios y su relación con enfermedades crónicas en adultos mayores.
+        <%= data.problema %>
       </div>
       <div class="content">
         <strong>2. ¿Cuál es el objetivo de este estudio?</strong><br>
-        Evaluar el estado nutricional de los participantes y proponer recomendaciones de mejora.
+        <%= data.objetivo %>
       </div>
       <div class="content">
         <strong>3. ¿En qué consiste el estudio?</strong><br>
-        Encuestas alimenticias, medición de peso, talla y una entrevista personal de 30 minutos.
+        <%= data.def_estudio %>
       </div>
       <div class="content">
         <strong>4. ¿Cuáles son las molestias o riesgos esperados?</strong><br>
-        Leves molestias como cansancio al contestar preguntas o pequeño estrés durante las mediciones.
+        <%= data.riesgos %>
       </div>
       <div class="content">
         <strong>5. ¿Cuáles son los beneficios que puedo obtener por participar?</strong><br>
-        Recibirá un reporte gratuito de su estado nutricional y sugerencias de mejora.
+        <%= data.beneficios%>
       </div>
       <div class="content">
         <strong>6. ¿Existe confidencialidad en el manejo de mis datos? Este proyecto se acoge a la ley 1581 de 2012 (Hábeas Data) que aplica para el tratamiento de datos personales.</strong><br>
-        Los datos se almacenarán de manera anónima, protegidos por protocolos de seguridad digital, siguiendo la Ley 1581 de 2012.
+        <%= data.confidencialidad %>
       </div>
       <div class="content">
-        <strong>7.	¿Existen procedimientos alternativos que pudieran ser ventajosos para mi?</strong><br>
-        No. Participar en este estudio no genera ningún costo para usted.
+        <strong>7.  ¿Existen procedimientos alternativos que pudieran ser ventajosos para mi?</strong><br>
+        <%= data.p_alternativos %>
       </div>
       <div class="content">
-        <strong>8.	 Expresar el compromiso de proporcionar información actualizada obtenida durante el estudio, aunque ésta pudiera afectar la voluntad del sujeto para continuar participando</strong><br>
-        Aproximadamente 1 hora en una única sesión.
+        <strong>8.   Expresar el compromiso de proporcionar información actualizada obtenida durante el estudio, aunque ésta pudiera afectar la voluntad del sujeto para continuar participando</strong><br>
+        <%= data.compromiso_info %>
       </div>
       <div class="content">
-        <strong>9.	¿Existe alguna obligación financiera? Participar en este estudio no tiene ningún costo económico para usted. </strong><br>
-        Puede retirarse libremente en cualquier momento sin afectar su tratamiento médico habitual.
+        <strong>9.  ¿Existe alguna obligación financiera? Participar en este estudio no tiene ningún costo económico para usted. </strong><br>
+        <%= data.ob_financiera %>
       </div>
       <div class="content">
-        <strong>10.	¿Cuánto tiempo durará mi participación en el estudio?  </strong><br>
-        Puede retirarse libremente en cualquier momento sin afectar su tratamiento médico habitual.
+        <strong>10. ¿Cuánto tiempo durará mi participación en el estudio?  </strong><br>
+        <%= data.duracion %>
       </div>
       <div class="content">
-        <strong>11.	¿Qué sucede si no deseo participa o me retiro del estudio? Usted puede decidir no participar o retirarse en cualquier momento del estudio, sin que esto afecte de manera alguna el tratamiento médico que necesita. </strong><br>
-        Puede retirarse libremente en cualquier momento sin afectar su tratamiento médico habitual.
-      </div>
-      <div class="note">
-        En estudios en los que se involucran menores de edad o discapacitados físicos y mentales adultos, que propongan intervenciones o procedimientos que superan el riesgo mínimo (no hacen parte del estándar de manejo), se debe evaluar la capacidad de entendimiento de acuerdo a la Res. 8430 de 1993. (Mantener o retirar el numeral 12 de acuerdo a la naturaleza del estudio)
+        <strong>11. ¿Qué sucede si no deseo participa o me retiro del estudio? Usted puede decidir no participar o retirarse en cualquier momento del estudio, sin que esto afecte de manera alguna el tratamiento médico que necesita. </strong><br>
+        <%= data.afectaciones %>
       </div>
       <div class="content">
         <strong>12. Al menor de edad o la persona que usted representa se le solicitará informar su aceptación para ingresar al estudio a través de un Asentimiento Informado.  De acuerdo a la Resolución 8430 de 1993, el proceso de asentimiento debe estar precedido de una valoración de razonamiento entendimiento y lógica realizada por un psicólogo, neurólogo o psiquiatra.  A través de este documento se solicita su autorización para realizar la valoración. </strong><br>
-        Puede retirarse libremente en cualquier momento sin afectar su tratamiento médico habitual.
-      </div>
-      <div class="note">
-        En caso de estudios con riesgo mayor al mínimo (mantener o retirar el numeral 13 de acuerdo a la naturaleza del estudio):       
+        <%= data.asentimiento_informado %>
       </div>
       <div class="content">
-        <strong>13.	¿Qué sucede si esta investigación afecta directamente mi salud?</strong><br>
-        Puede retirarse libremente en cualquier momento sin afectar su tratamiento médico habitual.
+        <strong>13. ¿Qué sucede si esta investigación afecta directamente mi salud?</strong><br>
+        <%= data.riesgo_salud_poliza %>
       </div>
       <div class="content">
-        Si bien es poco probable que se produzca una lesión, el/la incluir nombre del patrocinador (patrocinador del estudio) realizará el pago de los gastos médicos relacionados con una lesión directamente causada por los medicamentos administrados/los procedimientos realizados en esta investigación al centro hospitalario del estudio, y el centro del estudio le proporcionará el tratamiento médico sin costo alguno para usted o para el sistema de salud.  Para garantizar la cobertura de los riesgos o los posibles daños y lesiones y la atención adecuada que pueda surgir del estudio, nombre del patrocinador del estudio, ha contratado un seguro con la compañía nombre de la compañía, con dirección en incluir dirección, incluir ciudad Colombia.
-        En caso que necesite información o en caso de emergencia póngase en contacto con el/la investigador/a del estudio Dr./Dra. incluir nombre, celular XXXXX.  A fin de activar la póliza la investigadora contactará a la Directora de la Oficina de Investigaciones del Hospital Universitario San Ignacio, incluir nombre Director/a Of. Investigaciones, celular o al correo email. 
-        Al firmar este formulario usted no renuncia a ningún derecho legal, aceptar atención médica o aceptar el pago de lo el/la s gastos médicos
-      </div>        
+        Si bien es poco probable que se produzca una lesión, el/la <%= data.patrocinador %> realizará el
+         pago de los gastos médicos relacionados con una lesión directamente causada por los medicamentos administrados/los procedimientos
+         realizados en esta investigación al centro hospitalario del estudio, y el centro del estudio le proporcionará el tratamiento
+         médico sin costo alguno para usted o para el sistema de salud.  Para garantizar la cobertura de los riesgos o los posibles daños
+         y lesiones y la atención adecuada que pueda surgir del estudio, <%= data.patrocinador %>, ha contratado un seguro con
+         la compañía <%= data.compania_seguro %>, con dirección en <%= data.dir_seguro %>, Colombia.
+      </div>
+      <div class="content">
+          En caso que necesite información o en caso de emergencia póngase en contacto con
+            <% if (data.genero_doctor==='Masculino' ) { %>
+                  el investigador del estudio Dr.
+            <% } else if (data.genero_doctor==='Femenino' ) { %>
+                  la investigadora del estudio Dra.
+            <% } else { %>
+                  el/la investigador/a del estudio Dr./Dra. <% } %>
+            <%= data.nombre_doctor %>, celular <%= data.cel_doctor %>.
+                  A fin de activar la póliza la investigadora contactará a la Directora de la Oficina de
+                  Investigaciones del Hospital Universitario San Ignacio, <%= data.nombre_dir_investigaciones %>, 
+                  celular <%= data.cel_correo_dir_investigaciones %>.
+      </div>
+      <div class="content">
+        Al firmar este formulario usted no renuncia a ningún derecho legal, aceptar atención médica o aceptar el pago de lo el/la s
+        gastos médicos.
+      </div>
+
     </td>
   </tr>
 
-  <!-- Autorización -->
-  <tr>
+    <tr>
     <td class="header-cell">AUTORIZACIÓN</td>
   </tr>
   <tr>
     <td>
       <div class="content">
-        He comprendido las explicaciones brindadas y doy mi consentimiento voluntario para participar en el estudio "Evaluación de la calidad nutricional en adultos mayores de Bogotá".
+        He comprendido las explicaciones que en un lenguaje claro y sencillo se me han brindado.
+        El investigador me ha permitido expresar todas mis observaciones y ha aclarado todas las dudas y preguntas
+        que he planteado respecto a los fines, métodos, ventajas, inconvenientes y pronóstico de participar en el estudio.
+        Se me ha proporcionado una copia de este documento.
         <br><br>
-        Si tengo dudas, puedo contactar al Dr./Dra. (nombre), celular (número), extensión (número).
+        Al firmar este documento doy mi consentimiento voluntario para participar en el estudio “<%= data.nombre_estudio %>”.
+        <br><br>
+        Si usted tiene dudas acerca de su participación en este estudio puede comunicarse con el investigador principal:
+        Dr/a. <%= data.nombre_inv_principal %>, celular <%= data.cel_inv_principal %>, teléfono <%= data.tel_inv_principal %>,
+        ext <%= data.ext_inv_principal %>. Presidente del Comité de Ética Institucional: 
+        <%= data.nombre_presidente %>, Calle 42 N° 4-49, oficina 507. Teléfono 5946161 ext. 2470. 
       </div>
 
-      <div class="note">
-        NOTA: Usted encontrará dos formatos de firmas. El primero es el genérico, el segundo aplica para sujetos que requieren representación legal. Escoja el que aplique a su estudio y elimine el otro.
-      </div>
       <table class="signature-table">
         <tr>
           <td class="signature-table-cell1">Nombre del participante</td>
@@ -225,7 +246,7 @@
           <td class="signature-table-cell2"></td>
         </tr>
         <tr>
-          <td class="signature-table-cell1">Número de documento</td>
+          <td class="signature-table-cell1">Número de documento de identidad</td>
           <td class="signature-table-cell2"></td>
         </tr>
         <tr>
@@ -237,7 +258,7 @@
           <td class="signature-table-cell2"></td>
         </tr>
       </table>
-      
+
       <table class="signature-table">
         <tr>
           <td class="signature-table-cell1">Nombre del Testigo Imparcial 1</td>
@@ -248,7 +269,7 @@
           <td class="signature-table-cell2"></td>
         </tr>
         <tr>
-          <td class="signature-table-cell1">Número de documento</td>
+          <td class="signature-table-cell1">Número de documento de identidad</td>
           <td class="signature-table-cell2"></td>
         </tr>
         <tr>
@@ -264,7 +285,7 @@
           <td class="signature-table-cell2"></td>
         </tr>
       </table>
-      
+
       <table class="signature-table">
         <tr>
           <td class="signature-table-cell1">Nombre del Testigo Imparcial 2</td>
@@ -275,7 +296,7 @@
           <td class="signature-table-cell2"></td>
         </tr>
         <tr>
-          <td class="signature-table-cell1">Número de documento</td>
+          <td class="signature-table-cell1">Número de documento de identidad</td>
           <td class="signature-table-cell2"></td>
         </tr>
         <tr>
@@ -290,99 +311,15 @@
           <td class="signature-table-cell1">Fecha</td>
           <td class="signature-table-cell2"></td>
         </tr>
-      </table>
-      <!-- Firma del participante -->
-      <table class="signature-table">
-          <tr>
-            <td class="signature-table-cell1">Nombre del participante</td>
-            <td class="signature-table-cell2"></td>
-          </tr>
-          <tr>
-            <td class="signature-table-cell1">Firma del participante</td>
-            <td class="signature-table-cell2"></td>
-          </tr>
-          <tr>
-            <td class="signature-table-cell1">Número de documento de identidad</td>
-            <td class="signature-table-cell2"></td>
-          </tr>
-          <tr>
-            <td class="signature-table-cell1">Teléfono</td>
-            <td class="signature-table-cell2"></td>
-          </tr>
-          <tr>
-            <td class="signature-table-cell1">Fecha</td>
-            <td class="signature-table-cell2"></td>
-          </tr>
         </table>
-        
-        <!-- Firma del Testigo Imparcial 1 -->
+
         <table class="signature-table">
           <tr>
-            <td class="signature-table-cell1">Nombre del Testigo Imparcial 1</td>
+            <td class="signature-table-cell1">Nombre del miembro del equipo de investigación que realiza el proceso de consentimiento</td>
             <td class="signature-table-cell2"></td>
           </tr>
           <tr>
-            <td class="signature-table-cell1">Firma</td>
-            <td class="signature-table-cell2"></td>
-          </tr>
-          <tr>
-            <td class="signature-table-cell1">Número de documento de identidad</td>
-            <td class="signature-table-cell2"></td>
-          </tr>
-          <tr>
-            <td class="signature-table-cell1">Teléfono</td>
-            <td class="signature-table-cell2"></td>
-          </tr>
-          <tr>
-            <td class="signature-table-cell1">Relación con el participante</td>
-            <td class="signature-table-cell2"></td>
-          </tr>
-          <tr>
-            <td class="signature-table-cell1">Fecha</td>
-            <td class="signature-table-cell2"></td>
-          </tr>
-        </table>
-        
-        <!-- Firma del Testigo Imparcial 2 -->
-        <table class="signature-table">
-          <tr>
-            <td class="signature-table-cell1">Nombre del Testigo Imparcial 2</td>
-            <td class="signature-table-cell2"></td>
-          </tr>
-          <tr>
-            <td class="signature-table-cell1">Firma</td>
-            <td class="signature-table-cell2"></td>
-          </tr>
-          <tr>
-            <td class="signature-table-cell1">Número de documento de identidad</td>
-            <td class="signature-table-cell2"></td>
-          </tr>
-          <tr>
-            <td class="signature-table-cell1">Teléfono</td>
-            <td class="signature-table-cell2"></td>
-          </tr>
-          <tr>
-            <td class="signature-table-cell1">Relación con el participante</td>
-            <td class="signature-table-cell2"></td>
-          </tr>
-          <tr>
-            <td class="signature-table-cell1">Fecha</td>
-            <td class="signature-table-cell2"></td>
-          </tr>
-        </table>
-        
-        <!-- Firma del Miembro del Equipo de Investigación -->
-        <table class="signature-table">
-          <tr>
-            <td class="signature-table-cell1">Nombre del miembro del equipo de investigación</td>
-            <td class="signature-table-cell2"></td>
-          </tr>
-          <tr>
-            <td class="signature-table-cell1">Firma</td>
-            <td class="signature-table-cell2"></td>
-          </tr>
-          <tr>
-            <td class="signature-table-cell1">Número de documento de identidad</td>
+            <td class="signature-table-cell1">Número de documento de identidad </td>
             <td class="signature-table-cell2"></td>
           </tr>
           <tr>
@@ -394,78 +331,76 @@
             <td class="signature-table-cell2"></td>
           </tr>
         </table>
-        
-        <!-- Firma del Representante Legal 1 -->
+
         <table class="signature-table">
           <tr>
-            <td class="signature-table-cell1">Nombre del participante</td>
+            <td class="signature-table-cell1">Nombre del Participante</td>
             <td class="signature-table-cell2"></td>
-          </tr>
+        </tr>
           <tr>
             <td class="signature-table-cell1">Número de documento de identidad</td>
             <td class="signature-table-cell2"></td>
-          </tr>
+        </tr>
         </table>
-        
         <table class="signature-table">
           <tr>
             <td class="signature-table-cell1">Nombre del Representante Legal 1</td>
             <td class="signature-table-cell2"></td>
-          </tr>
+        </tr>
           <tr>
             <td class="signature-table-cell1">Firma</td>
             <td class="signature-table-cell2"></td>
-          </tr>
+        </tr>
           <tr>
             <td class="signature-table-cell1">Número de documento de identidad</td>
             <td class="signature-table-cell2"></td>
-          </tr>
+        </tr>
+
           <tr>
             <td class="signature-table-cell1">Teléfono</td>
             <td class="signature-table-cell2"></td>
-          </tr>
+        </tr>
           <tr>
             <td class="signature-table-cell1">Relación con el participante</td>
             <td class="signature-table-cell2"></td>
-          </tr>
+        </tr>
           <tr>
             <td class="signature-table-cell1">Fecha</td>
             <td class="signature-table-cell2"></td>
-          </tr>
+        </tr>
         </table>
-        
-        <!-- Firma del Representante Legal 2 (opcional) -->
+
         <table class="signature-table">
           <tr>
             <td class="signature-table-cell1">Nombre del Representante Legal 2</td>
             <td class="signature-table-cell2"></td>
-          </tr>
+        </tr>
           <tr>
             <td class="signature-table-cell1">Firma</td>
             <td class="signature-table-cell2"></td>
-          </tr>
+        </tr>
           <tr>
             <td class="signature-table-cell1">Número de documento de identidad</td>
             <td class="signature-table-cell2"></td>
-          </tr>
+        </tr>
           <tr>
             <td class="signature-table-cell1">Teléfono</td>
             <td class="signature-table-cell2"></td>
-          </tr>
+        </tr>
           <tr>
             <td class="signature-table-cell1">Relación con el participante</td>
             <td class="signature-table-cell2"></td>
-          </tr>
+        </tr>
           <tr>
             <td class="signature-table-cell1">Fecha</td>
             <td class="signature-table-cell2"></td>
-          </tr>
+        </tr>
         </table>
-      
+
     </td>
-    
+
   </tr>
-  
+
 </table>
 </body>
 </html>
