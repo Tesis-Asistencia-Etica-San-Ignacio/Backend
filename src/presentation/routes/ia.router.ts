@@ -30,6 +30,9 @@ const getEvalsByUserUC = new GetEvaluacionesByUserUseCase(evaluacionRepo);
 const updateEvalUC = new UpdateEvaluacionUseCase(evaluacionRepo);
 const deleteNormsUC = new deleteEthicalRulesByEvaluationIdUseCase(ethicalRepo);
 
+/* const updateApiKey = new UpdateEvaluacionUseCase(); */
+
+
 const iaController = new IAController(
   createNormsUC,
   generateLLMUC,
@@ -38,6 +41,7 @@ const iaController = new IAController(
   getEvalsByUserUC,
   updateEvalUC,
   deleteNormsUC,
+  /* updateApiKey, */
 );
 
 /* Rutas */
@@ -51,6 +55,12 @@ router.post(
   '/re-evaluate',
   validateRoleMiddleware(['EVALUADOR']),
   iaController.reEvaluate,
+);
+
+router.patch(
+  '/config/apikey',
+  validateRoleMiddleware(['ADMIN']),
+  
 );
 
 export default router;
