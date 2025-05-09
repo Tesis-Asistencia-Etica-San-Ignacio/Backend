@@ -69,7 +69,7 @@ export class EvaluatePipelineUseCase {
                 { role: 'user', content: user },
             ],
             {
-                model: 'meta-llama/llama-4-scout-17b-16e-instruct',
+                model: 'deepseek-r1-distill-llama-70b',
                 /* 
                 meta-llama/llama-4-scout-17b-16e-instruct
                 llama-3.3-70b-versatile
@@ -77,7 +77,6 @@ export class EvaluatePipelineUseCase {
                 deepseek-r1-distill-llama-70b
                 meta-llama/llama-4-maverick-17b-128e-instruct
                 mistral-saba-24b
-                meta-llama/llama-4-scout-17b-16e-instruct
                  */
                 temperature: 0.2,
                 response_format: { type: 'json_object' },

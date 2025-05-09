@@ -10,8 +10,6 @@ import { initMinioBucket } from './infrastructure/config/initMinio';
 import {
   caseRouter,
   userRouter,
-  contIntroRouter,
-  contInfoGeneralRouter,
   evaluacionRouter,
   promptRouter,
   authRouter,
@@ -32,8 +30,6 @@ configureMiddlewares(app);
 // 2 Definición de rutas protegidas para cada rol
 app.use(`${config.api.conventionApi}/pdf`, pdfRouter);
 app.use(`${config.api.conventionApi}/user`, userRouter);
-app.use(`${config.api.conventionApi}/contIntro`, contIntroRouter);
-app.use(`${config.api.conventionApi}/contInfoGeneral`, contInfoGeneralRouter);
 app.use(`${config.api.conventionApi}/evaluacion`, evaluacionRouter);
 app.use(`${config.api.conventionApi}/cases`, caseRouter);
 app.use(`${config.api.conventionApi}/prompts`, promptRouter);

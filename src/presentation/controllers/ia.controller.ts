@@ -21,6 +21,8 @@ export class IAController {
     getEvalsByUserUC: GetEvaluacionesByUserUseCase,
     updateEvalUC: UpdateEvaluacionUseCase,
     deleteNormsUC: deleteEthicalRulesByEvaluationIdUseCase,
+
+    /* updateApiKey: UpdateEvaluacionUseCase, */
   ) {
     this.pipelineUC = new EvaluatePipelineUseCase(
       getEvalByIdUC,
@@ -60,4 +62,6 @@ export class IAController {
       res.status(500).json({ success: false, error: e.message ?? 'Error' });
     }
   };
+
+
 }

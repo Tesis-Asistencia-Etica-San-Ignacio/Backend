@@ -5,7 +5,7 @@ import {
   getFileByName,
   CreateEvaluacionUseCase,
 } from "../../application";
-import { EthicalNormRepository, EvaluacionRepository } from "../../infrastructure";
+import { EvaluacionRepository } from "../../infrastructure";
 
 export const uploadFileController = async (req: Request, res: Response) => {
   console.log("Archivo recibido:", req.file);
@@ -37,17 +37,15 @@ export const uploadFileController = async (req: Request, res: Response) => {
       fecha_inicial: new Date().toISOString(),
       fecha_final: new Date().toISOString(),
       estado: "PENDIENTE" as const, // Forzamos que sea uno de los valores permitidos
-      tipo_error: "N/A", 
+      tipo_error: "N/A",
       aprobado: false,
       correo_estudiante: "estudiante@ejemplo.com",
     };
 
     // 5. Crear la evaluación utilizando el use case
     const evaluacionRepository = new EvaluacionRepository();
-    const ethicalNormRepository = new EthicalNormRepository();
     const createEvaluacionUseCase = new CreateEvaluacionUseCase(
       evaluacionRepository,
-      ethicalNormRepository
     );
     const nuevaEvaluacion = await createEvaluacionUseCase.execute(
       evaluacionData
