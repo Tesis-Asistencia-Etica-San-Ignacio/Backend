@@ -7,7 +7,8 @@ import {
   GetEvaluacionesByUserUseCase,
   UpdateEvaluacionUseCase,
   deleteEthicalRulesByEvaluationIdUseCase,
-  ObtainModelsUseCase
+  ObtainModelsUseCase,
+  ModifyProviderApiKeyUseCase
 } from '../../application';
 import { EvaluatePipelineUseCase } from '../../application/useCases/ia/evaluatePipeline.useCase';
 
@@ -22,7 +23,8 @@ export class IAController {
     getEvalsByUserUC: GetEvaluacionesByUserUseCase,
     updateEvalUC: UpdateEvaluacionUseCase,
     deleteNormsUC: deleteEthicalRulesByEvaluationIdUseCase,
-    private readonly obtainModelsUC: ObtainModelsUseCase
+    private readonly obtainModelsUC: ObtainModelsUseCase,
+    private readonly  modifyProviderApiKeyUC: ModifyProviderApiKeyUseCase
 
     /* updateApiKey: UpdateEvaluacionUseCase, */
   ) {
@@ -40,7 +42,6 @@ export class IAController {
   /** Primera evaluación */
   public evaluate = async (req: Request, res: Response) => {
     try {
-      console.log("En el controlador ---------------------->", req.body); 
       await this.pipelineUC.execute({
         evaluatorId: req.user!.id,
         evaluationId: req.body.evaluationId,
@@ -75,6 +76,14 @@ export class IAController {
     }
   };
 
-
+  public modifyApiKey = async (req: Request, res: Response) => {
+    try {
+      const { provider, apiKey } = req.body;
+      const result = await this.modifyProviderApiKeyUC.execute(provider as string, apiKey as string);
+      res.json({ success: true, message: `API key para ${result} actualizada con éxito` });
+    } catch (e: any) {
+      res.status(500).json({ success: false, error: e.message ?? 'Error' });
+    }
+  };
 
 }

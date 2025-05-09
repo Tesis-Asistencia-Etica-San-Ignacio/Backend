@@ -8,7 +8,8 @@ import {
   GetEvaluacionesByUserUseCase,
   UpdateEvaluacionUseCase,
   deleteEthicalRulesByEvaluationIdUseCase,
-  ObtainModelsUseCase
+  ObtainModelsUseCase,
+  ModifyProviderApiKeyUseCase
 } from '../../application';
 import {
   EthicalNormRepository,
@@ -31,7 +32,7 @@ const getEvalsByUserUC = new GetEvaluacionesByUserUseCase(evaluacionRepo);
 const updateEvalUC = new UpdateEvaluacionUseCase(evaluacionRepo);
 const deleteNormsUC = new deleteEthicalRulesByEvaluationIdUseCase(ethicalRepo);
 const ObtainModelsUC = new ObtainModelsUseCase();
-
+const modifyProviderApiKeyUC = new ModifyProviderApiKeyUseCase();
 /* const updateApiKey = new UpdateEvaluacionUseCase(); */
 
 
@@ -44,7 +45,7 @@ const iaController = new IAController(
   updateEvalUC,
   deleteNormsUC,
   ObtainModelsUC,
-  /* updateApiKey, */
+  modifyProviderApiKeyUC
 );
 
 /* Rutas */
@@ -66,10 +67,10 @@ router.post(
   iaController.reEvaluate,
 );
 
-router.patch(
+router.post(
   '/config/apikey',
-  validateRoleMiddleware(['ADMIN']),
-  
+  validateRoleMiddleware(['EVALUADOR']),
+  iaController.modifyApiKey
 );
 
 export default router;
