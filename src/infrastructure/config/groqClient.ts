@@ -18,9 +18,3 @@ export type GroqCompletionOptions = {
     type: "text" | "json_object"; // Solo estos valores permitidos
   };
 };
-
-declare module "express" {
-  interface Request {
-    file?: Express.Multer.File;
-  }
-}

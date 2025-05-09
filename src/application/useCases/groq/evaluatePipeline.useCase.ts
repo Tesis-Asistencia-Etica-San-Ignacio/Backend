@@ -83,7 +83,7 @@ export class EvaluatePipelineUseCase {
                 response_format: { type: 'json_object' },
             },
         );
-        const raw = completion.choices[0]?.message?.content;
+        const raw = completion;
         /* console.log('raw', raw); */
         if (!raw) throw new Error('Sin respuesta del modelo');
         const parsed = parseJson(raw);
