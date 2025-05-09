@@ -5,3 +5,4 @@ export * from './auth.dto';
 export * from './ethicalRule.dto';
 export * from './stats/evaluationStats.dto';
 export * from './case.dto';
+export * from './ia.dto';

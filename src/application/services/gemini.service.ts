@@ -1,18 +1,22 @@
-import { gemini, GeminiCompletionOptions } from "../../infrastructure/config/geminiClient";
+import { gemini } from "../../infrastructure/config/geminiClient";
+import { IaOptionsDto } from "../dtos";
 
-export async function sendGeminiCompletion( options : GeminiCompletionOptions
+export async function sendGeminiCompletion( ia : IaOptionsDto
 ) {
-  const response = await gemini.models.generateContent({
-    model: options.model ||"gemini-2.5-pro-preview-05-06", //Experimental: gemini-2.5-pro-exp-03-25
-    contents: options.contents,
-    config : {
-      temperature: options.config?.temperature ?? 0.5,
-      maxOutputTokens: options.config?.maxOutputTokens ?? 4096,
-      systemInstruction: options.config?.systemInstruction
-    }
-  });
-  console.log(response.text);
-
-  return response.text
+  try {
+    const response = await gemini.models.generateContent({
+      model: ia.model || "gemini-2.0-flash", //Experimental: gemini-2.5-pro-exp-03-25
+      contents: ia.contents,
+      config : {
+        temperature: ia.temperature ?? 0.5,
+        maxOutputTokens: ia.maxOutputTokens ?? 4096,
+        systemInstruction: ia.systemInstruction,
+        responseMimeType: 'application/json',
+      }
+    });
+    return response.text
+  } catch (error) {
+    throw new Error(`Gemini API Error: ${error instanceof Error ? error.message : "Unknown error"}`);
+  }
 }
 

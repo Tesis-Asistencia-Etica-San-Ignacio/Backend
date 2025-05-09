@@ -1,8 +1,13 @@
-import { createGroqChatCompletion } from "../../../application/services/groq.service";
-import { GroqCompletionOptions, GroqMessage } from "../../../infrastructure/config/groqClient";
+import { createGroqChatCompletion, sendGeminiCompletion } from "../../../application/services/";
+import { IaOptionsDto } from "../../dtos";
 
 export class GenerateCompletionUseCase {
-  async execute(messages: GroqMessage[], options?: GroqCompletionOptions) {
-    return createGroqChatCompletion(messages, options);
+  async execute(IaMessage: IaOptionsDto, ia: string) {
+    switch (ia) {
+      case "groq":
+        return createGroqChatCompletion(IaMessage);
+      case "gemini":
+        return sendGeminiCompletion(IaMessage);
+    }
   }
 }

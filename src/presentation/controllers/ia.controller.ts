@@ -38,6 +38,7 @@ export class IAController {
   /** Primera evaluación */
   public evaluate = async (req: Request, res: Response) => {
     try {
+      console.log("En el controlador ---------------------->", req.body); 
       await this.pipelineUC.execute({
         evaluatorId: req.user!.id,
         evaluationId: req.body.evaluationId,

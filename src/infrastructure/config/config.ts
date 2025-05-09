@@ -11,7 +11,6 @@ const requiredEnvVars = [
   'SMTP_PORT',
   'SMTP_USER',
   'SMTP_PASS',
-  'GROQ_API_KEY',
 ];
 validateEnv(requiredEnvVars);
 

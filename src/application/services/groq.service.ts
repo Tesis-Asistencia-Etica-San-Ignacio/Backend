@@ -1,18 +1,17 @@
-import { groq, GroqCompletionOptions, GroqMessage } from "../../infrastructure/config/groqClient";
+import { groq } from "../../infrastructure/config/groqClient";
+import { IaOptionsDto } from "../dtos";
 
-export async function createGroqChatCompletion(
-    messages: GroqMessage[],
-    options: GroqCompletionOptions = {}
+  export async function createGroqChatCompletion(
+    ia : IaOptionsDto,
   ) {
     try {
       const response = await groq.chat.completions.create({
-        messages,
-        model: options.model || "llama3-70b-8192",
-        temperature: options.temperature ?? 0.5,
-        max_tokens: options.max_tokens ?? 4096,
-        response_format: options.response_format || { type: "text" },
+        messages : [{ role: "system", content: ia.systemInstruction }, { role: "user", content: ia.contents }],
+        model: ia.model || "deepseek-r1-distill-llama-70b",
+        temperature: ia.temperature ?? 0.5,
+        max_tokens: ia.maxOutputTokens ?? 4096,
+        response_format: ia.responseType || { type: "text" },
       });
-
       return response.choices[0].message?.content;
     } catch (error) {
       throw new Error(`Groq API Error: ${error instanceof Error ? error.message : "Unknown error"}`);

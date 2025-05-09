@@ -8,6 +8,8 @@ Eres un experto analista de documentos. Analiza el siguiente texto y responde en
 - Si una pregunta no aplica, usa \`null\` como valor
 - Solo responde exclusivamente no hagas un resumen
 - Usa el formato JSON solicitado 
+- Tu respuesta DEBE ser EXCLUSIVAMENTE el objeto JSON, sin ningún texto adicional antes o después, y SIN usar bloques de código Markdown (como \`\`\`json\`\`\`).
+- No me des una respuesta de CONSOLA tu respuesta dene SER EXCLUSIVAMENTE el objeto JSON EN TEXTO PLANO
 - El formato JSON debe ser este 
 - {
 "description": "Aca debe estar la pregunta que el usuario te envio",
