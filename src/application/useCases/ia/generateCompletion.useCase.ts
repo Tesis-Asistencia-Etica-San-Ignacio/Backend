@@ -1,4 +1,4 @@
-import { createGroqChatCompletion, sendGeminiCompletion } from "../../../application/services/";
+import { createGroqChatCompletion, sendGeminiCompletion } from "../../services";
 import { IaOptionsDto } from "../../dtos";
 
 export class GenerateCompletionUseCase {

@@ -8,6 +8,7 @@ import {
   GetEvaluacionesByUserUseCase,
   UpdateEvaluacionUseCase,
   deleteEthicalRulesByEvaluationIdUseCase,
+  ObtainModelsUseCase
 } from '../../application';
 import {
   EthicalNormRepository,
@@ -29,6 +30,7 @@ const getPromptsUC = new GetPromptsByEvaluatorIdUseCase(promptRepo);
 const getEvalsByUserUC = new GetEvaluacionesByUserUseCase(evaluacionRepo);
 const updateEvalUC = new UpdateEvaluacionUseCase(evaluacionRepo);
 const deleteNormsUC = new deleteEthicalRulesByEvaluationIdUseCase(ethicalRepo);
+const ObtainModelsUC = new ObtainModelsUseCase();
 
 /* const updateApiKey = new UpdateEvaluacionUseCase(); */
 
@@ -41,10 +43,17 @@ const iaController = new IAController(
   getEvalsByUserUC,
   updateEvalUC,
   deleteNormsUC,
+  ObtainModelsUC,
   /* updateApiKey, */
 );
 
 /* Rutas */
+router.get(
+  '/models',
+  validateRoleMiddleware(['EVALUADOR']),
+  iaController.getModels,
+);
+
 router.post(
   '/evaluate',
   validateRoleMiddleware(['EVALUADOR']),

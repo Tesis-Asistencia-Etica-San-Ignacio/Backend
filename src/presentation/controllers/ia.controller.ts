@@ -7,8 +7,9 @@ import {
   GetEvaluacionesByUserUseCase,
   UpdateEvaluacionUseCase,
   deleteEthicalRulesByEvaluationIdUseCase,
+  ObtainModelsUseCase
 } from '../../application';
-import { EvaluatePipelineUseCase } from '../../application/useCases/groq/evaluatePipeline.useCase';
+import { EvaluatePipelineUseCase } from '../../application/useCases/ia/evaluatePipeline.useCase';
 
 export class IAController {
   private readonly pipelineUC: EvaluatePipelineUseCase;
@@ -21,6 +22,7 @@ export class IAController {
     getEvalsByUserUC: GetEvaluacionesByUserUseCase,
     updateEvalUC: UpdateEvaluacionUseCase,
     deleteNormsUC: deleteEthicalRulesByEvaluationIdUseCase,
+    private readonly obtainModelsUC: ObtainModelsUseCase
 
     /* updateApiKey: UpdateEvaluacionUseCase, */
   ) {
@@ -63,6 +65,16 @@ export class IAController {
       res.status(500).json({ success: false, error: e.message ?? 'Error' });
     }
   };
+
+  public getModels = async (req: Request, res: Response) => {
+    try {
+      const models = await this.obtainModelsUC.execute();
+      res.json({ success: true, models });
+    } catch (e: any) {
+      res.status(500).json({ success: false, error: e.message ?? 'Error' });
+    }
+  };
+
 
 
 }
