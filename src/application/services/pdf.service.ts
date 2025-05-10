@@ -42,7 +42,7 @@ export class PDFService {
 
     const pdfBuffer = await Promise.race([
       page.pdf({ format: 'A4', printBackground: true }),
-      new Promise<Buffer>((_, rej) => setTimeout(() => rej('timeout'), 60000))
+      new Promise<Buffer>((_, rej) => setTimeout(() => rej(new Error('timeout')), 60000))
     ]);
     await browser.close();
 
