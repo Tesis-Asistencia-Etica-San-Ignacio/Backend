@@ -7,6 +7,8 @@ export interface BaseUser {
   email: string;
   password: string;
   type: UserType;
+  modelo: string;
+  provider: string;
   createdAt: Date;
   updatedAt: Date;
 }

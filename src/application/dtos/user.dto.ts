@@ -11,6 +11,8 @@ export const CreateUserSchema = Type.Object({
   email: Type.String({ format: 'email' }),
   password: Type.String(),
   type: UserTypeEnum,
+  model: Type.Optional(Type.String()),
+  provider : Type.Optional(Type.String()),
   createdAt: Type.Optional(Type.Date()),
   updatedAt: Type.Optional(Type.Date()),
 });
@@ -27,6 +29,8 @@ export const UserResponseSchema = Type.Object({
   last_name: Type.String(),
   email: Type.String({ format: 'email' }),
   password: Type.String(),
+  modelo: Type.Optional(Type.String()),
+  provider : Type.Optional(Type.String()),
   type: UserTypeEnum,
   createdAt: Type.Date(),
   updatedAt: Type.Date(),

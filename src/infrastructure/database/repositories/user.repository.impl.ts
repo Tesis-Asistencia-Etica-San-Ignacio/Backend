@@ -25,6 +25,8 @@ export class UserRepository implements IUserRepository {
       password: user.password,
       email: user.email,
       type: user.type,
+      modelo: user.modelo,
+      provider: user.provider,
     } as UserResponseDto;
   }
 
@@ -38,6 +40,8 @@ export class UserRepository implements IUserRepository {
       email: user.email,
       password: user.password,
       type: user.type,
+      modelo: user.modelo,
+      provider: user.provider,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
     };
@@ -62,6 +66,8 @@ export class UserRepository implements IUserRepository {
       last_name: user.last_name,
       email: user.email,
       type: user.type,
+      modelo: user.modelo,
+      provider: user.provider,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
     } as UserResponseDto;
