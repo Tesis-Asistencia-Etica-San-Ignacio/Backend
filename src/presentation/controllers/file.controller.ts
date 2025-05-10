@@ -6,6 +6,8 @@ import {
   CreateEvaluacionUseCase,
 } from "../../application";
 import { EvaluacionRepository } from "../../infrastructure";
+import dotenv from 'dotenv';
+dotenv.config();
 
 export const uploadFileController = async (req: Request, res: Response) => {
   console.log("Archivo recibido:", req.file);
