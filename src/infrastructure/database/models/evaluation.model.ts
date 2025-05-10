@@ -11,6 +11,7 @@ export interface EvaluationDocument extends Document {
   tipo_error: string;
   aprobado: boolean;
   correo_estudiante: string;
+  version: number;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -26,6 +27,7 @@ const EvaluationSchema = new Schema<EvaluationDocument>(
     tipo_error: { type: String, required: true },
     aprobado: { type: Boolean, required: true },
     correo_estudiante: { type: String, required: true },
+    version: { type: Number, required: false, default: 1 },
   },
   {
     timestamps: true, // Maneja createdAt y updatedAt automáticamente

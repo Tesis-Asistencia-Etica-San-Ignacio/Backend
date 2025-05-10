@@ -22,6 +22,7 @@ export class EvaluacionRepository implements IEvaluacionRepository {
       tipo_error: doc.tipo_error,
       aprobado: doc.aprobado,
       correo_estudiante: doc.correo_estudiante,
+      version: doc.version,
       createdAt: doc.createdAt.toISOString(),
       updatedAt: doc.updatedAt.toISOString(),
     }));
@@ -41,6 +42,7 @@ export class EvaluacionRepository implements IEvaluacionRepository {
       tipo_error: doc.tipo_error,
       aprobado: doc.aprobado,
       correo_estudiante: doc.correo_estudiante,
+      version: doc.version,
       createdAt: doc.createdAt.toISOString(),
       updatedAt: doc.updatedAt.toISOString(),
     };
@@ -61,6 +63,7 @@ export class EvaluacionRepository implements IEvaluacionRepository {
       tipo_error: doc.tipo_error,
       aprobado: doc.aprobado,
       correo_estudiante: doc.correo_estudiante,
+      version: doc.version,
       createdAt: doc.createdAt.toISOString(),
       updatedAt: doc.updatedAt.toISOString(),
     };
@@ -85,6 +88,7 @@ export class EvaluacionRepository implements IEvaluacionRepository {
       tipo_error: doc.tipo_error,
       aprobado: doc.aprobado,
       correo_estudiante: doc.correo_estudiante,
+      version: doc.version,
       createdAt: doc.createdAt.toISOString(),
       updatedAt: doc.updatedAt.toISOString(),
     };
@@ -108,8 +112,21 @@ export class EvaluacionRepository implements IEvaluacionRepository {
       tipo_error: doc.tipo_error,
       aprobado: doc.aprobado,
       correo_estudiante: doc.correo_estudiante,
+      version: doc.version,
       createdAt: doc.createdAt.toISOString(),
       updatedAt: doc.updatedAt.toISOString(),
     }));
+  }
+
+  public async findMaxVersionByFundaNet(idFundanet: string): Promise<number> {
+    // Busca la evaluación con mayor versión
+    const docs = await EvaluationModel
+      .find({ id_fundanet: idFundanet })
+      .sort({ version: -1 })
+      .limit(1)
+      .select('version')
+      .lean();
+    if (docs.length === 0) return 0;
+    return docs[0].version;
   }
 }

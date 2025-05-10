@@ -7,4 +7,5 @@ export interface IEvaluacionRepository {
   update(id: string, data: UpdateEvaluacionDto): Promise<EvaluacionResponseDto | null>;
   delete(id: string): Promise<boolean>;
   findByUserId(userId: string): Promise<EvaluacionResponseDto[]>;
+  findMaxVersionByFundaNet(idFundanet: string): Promise<number>;
 }

@@ -9,6 +9,7 @@ export interface Evaluacion {
     tipo_error: string;
     aprobado: boolean;
     correo_estudiante: string;
+    version: number;         // Para manejar versiones de la entidad
     createdAt: Date;           // Manejado por timestamps de Mongoose
     updatedAt: Date;           // Manejado por timestamps de Mongoose
   }

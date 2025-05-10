@@ -20,6 +20,7 @@ export const CreateEvaluacionSchema = Type.Object({
   tipo_error: Type.String(),
   aprobado: Type.Boolean(),
   correo_estudiante: Type.String(),
+  version: Type.Optional(Type.Number()),
 });
 
 export type CreateEvaluacionDto = Static<typeof CreateEvaluacionSchema>;
@@ -40,6 +41,7 @@ export const EvaluacionResponseSchema = Type.Object({
   tipo_error: Type.String(),
   aprobado: Type.Boolean(),
   correo_estudiante: Type.String(),
+  version: Type.Number(),
   createdAt: Type.String({ format: 'date-time' }),
   updatedAt: Type.String({ format: 'date-time' }),
 });
