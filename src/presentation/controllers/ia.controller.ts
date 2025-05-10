@@ -8,7 +8,8 @@ import {
   UpdateEvaluacionUseCase,
   deleteEthicalRulesByEvaluationIdUseCase,
   ObtainModelsUseCase,
-  ModifyProviderApiKeyUseCase
+  ModifyProviderApiKeyUseCase,
+  GetUserByIdUseCase
 } from '../../application';
 import { EvaluatePipelineUseCase } from '../../application/useCases/ia/evaluatePipeline.useCase';
 
@@ -24,7 +25,8 @@ export class IAController {
     updateEvalUC: UpdateEvaluacionUseCase,
     deleteNormsUC: deleteEthicalRulesByEvaluationIdUseCase,
     private readonly obtainModelsUC: ObtainModelsUseCase,
-    private readonly  modifyProviderApiKeyUC: ModifyProviderApiKeyUseCase
+    private readonly  modifyProviderApiKeyUC: ModifyProviderApiKeyUseCase,
+    private readonly getUserByIdUC: GetUserByIdUseCase
 
     /* updateApiKey: UpdateEvaluacionUseCase, */
   ) {
@@ -42,8 +44,22 @@ export class IAController {
   /** Primera evaluación */
   public evaluate = async (req: Request, res: Response) => {
     try {
+      const evaluador = await this.getUserByIdUC.execute(req.user!.id);
+
+      if (!evaluador) {
+        res.status(404).json({ success: false, message: 'Evaluador no encontrado' });
+        return;
+      }
+
+      if (!evaluador.modelo || !evaluador.provider) {
+        res.status(400).json({ success: false, message: 'Evaluador sin modelo o proveedor' });
+        return;
+      }
+  
       await this.pipelineUC.execute({
         evaluatorId: req.user!.id,
+        model: evaluador.modelo,
+        provider: evaluador.provider,
         evaluationId: req.body.evaluationId,
         cleanNormsBefore: false,
       });
@@ -58,6 +74,8 @@ export class IAController {
     try {
       await this.pipelineUC.execute({
         evaluatorId: req.user!.id,
+        model: req.user!.model,
+        provider: req.user!.provider,
         evaluationId: req.body.evaluationId,
         cleanNormsBefore: true,
       });
