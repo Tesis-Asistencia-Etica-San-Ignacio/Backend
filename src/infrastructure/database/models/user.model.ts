@@ -9,6 +9,8 @@ export interface UserDocument extends Document {
   email: string;
   password: string;
   type: UserType;
+  modelo: string;
+  provider: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -24,6 +26,8 @@ const UserSchema = new Schema<UserDocument>(
       enum: ["EVALUADOR", "INVESTIGADOR"],
       required: true,
     },
+    modelo: { type: String },
+    provider: { type: String },
   },
   {
     timestamps: true, // crea createdAt, updatedAt
