@@ -12,3 +12,6 @@ export const minioClient = new Client({
   accessKey: process.env.MINIO_ROOT_USER ?? '',
   secretKey: process.env.MINIO_ROOT_PASSWORD ?? ''
 });
+
+export const minioPublicUrl =
+  process.env.MINIO_PUBLIC_URL ?? `${process.env.MINIO_URL}:9000/uploads`;
