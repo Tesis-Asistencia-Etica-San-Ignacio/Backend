@@ -8,11 +8,17 @@ import { CreateCaseUseCase } from "../../application/useCases/case/createCase.us
 import { CaseRepository } from "../../infrastructure/database/repositories/case.repository.impl";
 import { uploadFileToMinio } from "../../application";
 import { minioPublicUrl } from "../../infrastructure/config/minioClient";
+import { EvaluacionRepository } from "../../infrastructure/database/repositories/evaluation.repository.impl";
+import { GetEvaluacionByIdUseCase } from "../../application/useCases/evaluation/getEvaluationsById.useCase";
+
 
 export class PdfController {
   private readonly genPdf = new GeneratePdfUseCase(new PDFService());
   private readonly getNorms = new GetEthicalRulesByEvaluationUseCase(
     new EthicalNormRepository()
+  );
+  private readonly getEvaluation = new GetEvaluacionByIdUseCase(
+    new EvaluacionRepository()
   );
 
   public async generateEvaluatorPdf(
@@ -27,9 +33,13 @@ export class PdfController {
       }
 
       const norms = await this.getNorms.execute(evaluationId);
+      const evaluation = await this.getEvaluation.execute(evaluationId);
+      const version = evaluation?.version ?? 1;
+
       const buf = await this.genPdf.execute("ethicalNormsReport", {
         norms,
         date: new Date().toLocaleDateString("es-CO"),
+        version,
       });
 
       res
