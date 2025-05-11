@@ -181,24 +181,21 @@
       </div>
 
       <% 
-        // Inicializamos un contador para las preguntas
-        let preguntaCounter = 11; 
+      // Inicializamos un contador para las preguntas
+      let preguntaCounter = 11; // Asumiendo que la primera pregunta aquí es la 12
       %>
 
       <% if (data.tipo_poblacion === 'menores' || data.tipo_poblacion === 'discapasitados') { 
         preguntaCounter++; // Incrementamos el contador si esta condición se cumple
       %>
       <div class="content">
-        <strong><%= preguntaCounter %>. Al menor de edad o la persona que usted representa se le solicitará informar su 
-          aceptación para ingresar al estudio a través de un Asentimiento Informado.  De acuerdo a la Resolución 8430 de 1993, 
-          el proceso de asentimiento debe estar precedido de una valoración de razonamiento entendimiento y lógica realizada por un 
-          psicólogo, neurólogo o psiquiatra.  A través de este documento se solicita su autorización para realizar la valoración. </strong><br>
+        <strong><%= preguntaCounter %>. Al menor de edad o la persona que usted representa se le solicitará informar su aceptación para ingresar al estudio a través de un Asentimiento Informado.  De acuerdo a la Resolución 8430 de 1993, el proceso de asentimiento debe estar precedido de una valoración de razonamiento entendimiento y lógica realizada por un psicólogo, neurólogo o psiquiatra.  A través de este documento se solicita su autorización para realizar la valoración. </strong><br>
         <%= data.asentimiento_informado %>
       </div>
       <% } %>
 
-      <% if (data.clasificacion_riesgo === 'riesgo_mayor' || data.tipo_estudio === 'intervencion_muestras' 
-      || data.tipo_estudio === 'intervencion_medica') { 
+      <% if (data.clasificacion_riesgo === 'riesgo_mayor' || data.tipo_estudio === 'intervencion_muestras' || data.tipo_estudio === 'intervencion_medica') { 
+        preguntaCounter++; // Incrementamos el contador para esta pregunta
       %>
       <div class="content">
         <strong><%= preguntaCounter %>. ¿Qué sucede si esta investigación afecta directamente mi salud?</strong><br>
