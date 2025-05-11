@@ -3,6 +3,7 @@ import path from 'path';
 
 interface EmailTemplateData {
     userName: string;
+    modelo: string;
     infoMail: {
         subject: string;
         mensajeAdicional?: string;
@@ -14,7 +15,7 @@ interface EmailTemplateData {
     };
 }
 
-export async function generateEmailHtml({ userName, infoMail }: EmailTemplateData): Promise<string> {
+export async function generateEmailHtml({ userName, modelo, infoMail }: EmailTemplateData): Promise<string> {
     const defaultInfo = {
         telefono: "(601) 594 6161",
         emailContacto: "investigacion@husi.org.co",
@@ -34,5 +35,5 @@ export async function generateEmailHtml({ userName, infoMail }: EmailTemplateDat
     };
 
     const templatePath = path.join(process.cwd(), 'src', 'templates', 'emails', completeInfoMail.template);
-    return ejs.renderFile(templatePath, { userName, infoMail: completeInfoMail });
+    return ejs.renderFile(templatePath, { userName, modelo, infoMail: completeInfoMail });
 }
