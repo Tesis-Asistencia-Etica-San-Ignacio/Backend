@@ -98,7 +98,6 @@
       <strong>CÓDIGO:</strong> <%= data.codigo %><br>
       <strong>VERSIÓN:</strong> <%= data.version %><br>
       <strong>APROBADO:</strong> <%= data.fecha %><br>
-      <strong>PÁGINA:</strong> 1 DE 1
     </td>
   </tr>
   <tr>
@@ -180,14 +179,19 @@
         <strong>11. ¿Qué sucede si no deseo participa o me retiro del estudio? Usted puede decidir no participar o retirarse en cualquier momento del estudio, sin que esto afecte de manera alguna el tratamiento médico que necesita. </strong><br>
         <%= data.afectaciones %>
       </div>
+      <% if (data.tipo_poblacion === 'menores' || data.tipo_poblacion === 'discapasitados') { %>
       <div class="content">
         <strong>12. Al menor de edad o la persona que usted representa se le solicitará informar su aceptación para ingresar al estudio a través de un Asentimiento Informado.  De acuerdo a la Resolución 8430 de 1993, el proceso de asentimiento debe estar precedido de una valoración de razonamiento entendimiento y lógica realizada por un psicólogo, neurólogo o psiquiatra.  A través de este documento se solicita su autorización para realizar la valoración. </strong><br>
         <%= data.asentimiento_informado %>
       </div>
+      <% } %>
+
+      <% if (data.clasificacion_riesgo === 'riesgo_mayor' || data.tipo_estudio === 'intervencion_muestras' || data.tipo_estudio === 'intervencion_medica') { %>
       <div class="content">
         <strong>13. ¿Qué sucede si esta investigación afecta directamente mi salud?</strong><br>
         <%= data.riesgo_salud_poliza %>
       </div>
+      <% } %>
       <div class="content">
         Si bien es poco probable que se produzca una lesión, el/la <%= data.patrocinador %> realizará el
          pago de los gastos médicos relacionados con una lesión directamente causada por los medicamentos administrados/los procedimientos
@@ -236,6 +240,7 @@
         <%= data.nombre_presidente %>, Calle 42 N° 4-49, oficina 507. Teléfono 5946161 ext. 2470. 
       </div>
 
+      
       <table class="signature-table">
         <tr>
           <td class="signature-table-cell1">Nombre del participante</td>
@@ -258,7 +263,9 @@
           <td class="signature-table-cell2"></td>
         </tr>
       </table>
-
+      
+      <% if (data.clasificacion_riesgo === 'riesgo_mayor' || data.clasificacion_riesgo === 'riesgo_minimo' ||
+        data.tipo_estudio === 'intervencion_muestras' || data.clasificacion_riesgo === 'intervencion_medica') { %>
       <table class="signature-table">
         <tr>
           <td class="signature-table-cell1">Nombre del Testigo Imparcial 1</td>
@@ -285,7 +292,10 @@
           <td class="signature-table-cell2"></td>
         </tr>
       </table>
+      <% } %>
 
+      <% if (data.clasificacion_riesgo === 'riesgo_mayor' || 
+        data.tipo_estudio === 'intervencion_muestras' || data.clasificacion_riesgo === 'intervencion_medica') { %>
       <table class="signature-table">
         <tr>
           <td class="signature-table-cell1">Nombre del Testigo Imparcial 2</td>
@@ -312,6 +322,7 @@
           <td class="signature-table-cell2"></td>
         </tr>
         </table>
+        <% } %>
 
         <table class="signature-table">
           <tr>
@@ -393,6 +404,30 @@
         </tr>
           <tr>
             <td class="signature-table-cell1">Fecha</td>
+            <td class="signature-table-cell2"></td>
+        </tr>
+        </table>
+        
+        <table class="signature-table">
+          <tr>
+            <td class="signature-table-cell1">Nombre del miembro del equipo de investigación que realiza el proceso de consentimiento</td>
+            <td class="signature-table-cell2"></td>
+        </tr>
+          <tr>
+            <td class="signature-table-cell1">Firma</td>
+            <td class="signature-table-cell2"></td>
+        </tr>
+          <tr>
+            <td class="signature-table-cell1">Número de documento de identidad</td>
+            <td class="signature-table-cell2"></td>
+        </tr>
+
+          <tr>
+            <td class="signature-table-cell1">Fecha</td>
+            <td class="signature-table-cell2"></td>
+        </tr>
+          <tr>
+            <td class="signature-table-cell1">Rol en el Proyecto</td>
             <td class="signature-table-cell2"></td>
         </tr>
         </table>
