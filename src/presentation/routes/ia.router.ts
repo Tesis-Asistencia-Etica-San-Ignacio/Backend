@@ -9,17 +9,20 @@ import {
   UpdateEvaluacionUseCase,
   deleteEthicalRulesByEvaluationIdUseCase,
   ObtainModelsUseCase,
-  ModifyProviderApiKeyUseCase
+  ModifyProviderApiKeyUseCase,
+  GetUserByIdUseCase
 } from '../../application';
 import {
   EthicalNormRepository,
   EvaluacionRepository,
   PromptRepository,
+  UserRepository
 } from '../../infrastructure';
 import { validateRoleMiddleware } from '../middleware/jwtMiddleware';
 
 const router = Router();
 
+const userRepo = new UserRepository();
 const evaluacionRepo = new EvaluacionRepository();
 const ethicalRepo = new EthicalNormRepository();
 const promptRepo = new PromptRepository();
@@ -33,6 +36,7 @@ const updateEvalUC = new UpdateEvaluacionUseCase(evaluacionRepo);
 const deleteNormsUC = new deleteEthicalRulesByEvaluationIdUseCase(ethicalRepo);
 const ObtainModelsUC = new ObtainModelsUseCase();
 const modifyProviderApiKeyUC = new ModifyProviderApiKeyUseCase();
+const getUserByIdUC = new GetUserByIdUseCase(userRepo); 
 /* const updateApiKey = new UpdateEvaluacionUseCase(); */
 
 
@@ -45,7 +49,8 @@ const iaController = new IAController(
   updateEvalUC,
   deleteNormsUC,
   ObtainModelsUC,
-  modifyProviderApiKeyUC
+  modifyProviderApiKeyUC,
+  getUserByIdUC
 );
 
 /* Rutas */

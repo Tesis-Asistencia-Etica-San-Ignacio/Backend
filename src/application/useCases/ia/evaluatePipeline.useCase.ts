@@ -18,6 +18,8 @@ interface EvaluatePipelineDto {
     evaluatorId: string;
     evaluationId: string;
     cleanNormsBefore: boolean;
+    model: string;
+    provider: string;
     // false → primera evaluación
 }
 
@@ -35,7 +37,7 @@ export class EvaluatePipelineUseCase {
     public async execute(dto: EvaluatePipelineDto): Promise<void> {
         try {
 
-            const { evaluatorId, evaluationId, cleanNormsBefore } = dto;
+            const { evaluatorId, evaluationId, cleanNormsBefore, model, provider } = dto;
             console.log("Info contolador IA", dto);
 
             /* 1 ─ Verificar que la evaluación pertenece al usuario */
@@ -65,6 +67,7 @@ export class EvaluatePipelineUseCase {
 
             const { system, user } = getAnalysisPrompt(fileContent, prompts);
             const IaMessage: IaOptionsDto = {
+                model: model,
                 systemInstruction: system,
                 contents: user,
                 responseType: { type: 'json_object' },
@@ -72,9 +75,8 @@ export class EvaluatePipelineUseCase {
             }
 
             /* 5 ─ Ejecutar modelo LLM */
-            const completion = await this.generateLLM.execute(IaMessage, 'groq');
+            const completion = await this.generateLLM.execute(IaMessage, provider);
             const raw = completion;
-            console.log('raw', raw);
             if (!raw) throw new Error('Sin respuesta del modelo');
             const parsed = parseJson(raw);
             if (typeof parsed !== 'object' || !parsed.analysis)

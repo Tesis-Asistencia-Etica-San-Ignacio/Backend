@@ -6,8 +6,11 @@ import {
   CreateEvaluacionUseCase,
 } from "../../application";
 import { EvaluacionRepository } from "../../infrastructure";
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
+import { minioClient } from "../../infrastructure/config/minioClient";
 dotenv.config();
+
+const BUCKET = process.env.MINIO_BUCKET ?? "uploads";
 
 export const uploadFileController = async (req: Request, res: Response) => {
   console.log("Archivo recibido:", req.file);
@@ -47,7 +50,7 @@ export const uploadFileController = async (req: Request, res: Response) => {
     // 5. Crear la evaluación utilizando el use case
     const evaluacionRepository = new EvaluacionRepository();
     const createEvaluacionUseCase = new CreateEvaluacionUseCase(
-      evaluacionRepository,
+      evaluacionRepository
     );
     const nuevaEvaluacion = await createEvaluacionUseCase.execute(
       evaluacionData
@@ -84,5 +87,33 @@ export const getAllFilesController = async (req: Request, res: Response) => {
   } catch (error) {
     console.error(error);
     return res.status(500).send("Error al obtener la lista de archivos");
+  }
+};
+
+export const downloadPdfController = async (req: Request, res: Response) => {
+  const { fileName } = req.params;
+  if (!fileName) {
+    return res.status(400).send("fileName es requerido");
+  }
+
+  try {
+    // 1. Obtener el stream del objeto desde MinIO
+    const objectStream = await minioClient.getObject(BUCKET, fileName);
+
+    // 2. Fijar cabeceras para que el navegador muestre inline el PDF
+    res.status(200).set({
+      "Content-Type": "application/pdf",
+      "Content-Disposition": `inline; filename="${fileName}"`,
+      "Cache-Control": "no-cache",
+    });
+
+    // 3. Pipe del stream de MinIO al response de Express
+    objectStream.pipe(res);
+  } catch (err: any) {
+    console.error("Error descargando PDF:", err);
+    if (err.code === "NoSuchKey") {
+      return res.status(404).send("Archivo no encontrado");
+    }
+    return res.status(500).send("Error al descargar el archivo");
   }
 };

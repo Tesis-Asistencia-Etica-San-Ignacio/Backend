@@ -8,11 +8,17 @@ import { CreateCaseUseCase } from "../../application/useCases/case/createCase.us
 import { CaseRepository } from "../../infrastructure/database/repositories/case.repository.impl";
 import { uploadFileToMinio } from "../../application";
 import { minioPublicUrl } from "../../infrastructure/config/minioClient";
+import { EvaluacionRepository } from "../../infrastructure/database/repositories/evaluation.repository.impl";
+import { GetEvaluacionByIdUseCase } from "../../application/useCases/evaluation/getEvaluationsById.useCase";
+
 
 export class PdfController {
   private readonly genPdf = new GeneratePdfUseCase(new PDFService());
   private readonly getNorms = new GetEthicalRulesByEvaluationUseCase(
     new EthicalNormRepository()
+  );
+  private readonly getEvaluation = new GetEvaluacionByIdUseCase(
+    new EvaluacionRepository()
   );
 
   public async generateEvaluatorPdf(
@@ -27,9 +33,13 @@ export class PdfController {
       }
 
       const norms = await this.getNorms.execute(evaluationId);
+      const evaluation = await this.getEvaluation.execute(evaluationId);
+      const version = evaluation?.version ?? 1;
+
       const buf = await this.genPdf.execute("ethicalNormsReport", {
         norms,
         date: new Date().toLocaleDateString("es-CO"),
+        version,
       });
 
       res
@@ -47,7 +57,7 @@ export class PdfController {
     }
   }
 
-  public async generateInvestigatorPdf(
+  public async saveInvestigatorPdf(
     req: Request,
     res: Response
   ): Promise<void> {
@@ -101,6 +111,42 @@ export class PdfController {
       const createCase = new CreateCaseUseCase(new CaseRepository());
       await createCase.execute(caseDto);
 
+      // 6. Enviar el PDF (manteniendo la cabecera para previsualizar)
+      // res
+      //   .status(200)
+      //   .set({
+      //     "Content-Type": "application/pdf",
+      //     "Content-Length": buf.length,
+      //     "Cache-Hit": "false",
+      //   })
+      //   .send(buf);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Error generando PDF o creando el caso");
+    }
+  }
+
+  public async generateInvestigatorPdf(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    try {
+      const data = req.body;
+      console.log("En el controlador ---------------------->", data);
+
+      // 3. Validar que ninguno esté ausente
+      if (!data.nombre_proyecto || !data.fecha || !data.version || !data.codigo) {
+        res
+          .status(400)
+          .send("Faltan campos obligatorios en los datos del caso");
+        return;
+      }
+
+      // 1. Generar el PDF
+      const buf = await this.genPdf.execute("pdfConsentTemplate", {
+        data,
+        date: new Date().toLocaleDateString("es-CO"),
+      });
       // 6. Enviar el PDF (manteniendo la cabecera para previsualizar)
       res
         .status(200)
