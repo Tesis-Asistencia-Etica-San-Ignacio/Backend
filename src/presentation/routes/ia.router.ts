@@ -49,11 +49,6 @@ const iaController = new IAController(
 );
 
 /* Rutas */
-router.get(
-  '/models',
-  validateRoleMiddleware(['EVALUADOR']),
-  iaController.getModels,
-);
 
 router.post(
   '/evaluate',
@@ -67,6 +62,11 @@ router.post(
   iaController.reEvaluate,
 );
 
+router.get(
+  '/models',
+  validateRoleMiddleware(['EVALUADOR']),
+  iaController.getModels,
+);
 router.post(
   '/config/apikey',
   validateRoleMiddleware(['EVALUADOR']),
