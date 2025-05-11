@@ -5,8 +5,6 @@ export interface EvaluationDocument extends Document {
   uid: Types.ObjectId;
   id_fundanet: string;
   file: string;
-  fecha_inicial: Date;
-  fecha_final: Date;
   estado: string;
   tipo_error: string;
   aprobado: boolean;
@@ -21,8 +19,6 @@ const EvaluationSchema = new Schema<EvaluationDocument>(
     uid: { type: Schema.Types.ObjectId, ref: 'Usuarios', required: true },
     id_fundanet: { type: String, required: true },
     file: { type: String, required: true },
-    fecha_inicial: { type: Date, required: true },
-    fecha_final: { type: Date, required: true },
     estado: { type: String, required: true },
     tipo_error: { type: String, required: true },
     aprobado: { type: Boolean, required: true },

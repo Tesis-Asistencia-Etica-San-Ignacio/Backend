@@ -3,8 +3,6 @@ export interface Evaluacion {
     uid: string;               // ObjectId en la BD, pero string en la capa de dominio
     id_fundanet: string;
     file: string;
-    fecha_inicial: Date;
-    fecha_final: Date;
     estado: string;
     tipo_error: string;
     aprobado: boolean;

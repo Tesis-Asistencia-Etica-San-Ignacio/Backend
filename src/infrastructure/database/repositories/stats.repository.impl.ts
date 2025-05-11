@@ -22,7 +22,7 @@ export class StatsRepositoryImpl implements IStatsRepository {
             const [agg] = await EvaluationModel.aggregate([
                 {
                     $match: {
-                        fecha_inicial: { $gte: f, $lt: t }
+                        createdAt: { $gte: f, $lt: t }
                     }
                 },
                 {
@@ -59,7 +59,7 @@ export class StatsRepositoryImpl implements IStatsRepository {
         const lineSeriesAgg = await EvaluationModel.aggregate([
             {
                 $match: {
-                    fecha_final: { $gte: from, $lt: to },
+                    updatedAt: { $gte: from, $lt: to },
                     estado: 'EVALUADO',
                 }
             },
@@ -75,17 +75,14 @@ export class StatsRepositoryImpl implements IStatsRepository {
         return {
             cards: {
                 total: {
-                    title: 'Total de consentimientos evaluados',
                     value: nowStats.total,
                     previousValue: prevStats.total,
                 },
                 aprobados: {
-                    title: 'Consentimientos aprobados',
                     value: nowStats.aprobados,
                     previousValue: prevStats.aprobados,
                 },
                 rechazados: {
-                    title: 'Consentimientos devueltos',
                     value: nowStats.rechazados,
                     previousValue: prevStats.rechazados,
                 },

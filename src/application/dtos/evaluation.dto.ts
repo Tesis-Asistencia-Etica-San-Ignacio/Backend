@@ -14,8 +14,6 @@ export const CreateEvaluacionSchema = Type.Object({
   uid: Type.String({ pattern: '^[0-9a-fA-F]{24}$' }), // Representa un ObjectId como string
   id_fundanet: Type.String(),
   file: Type.String(),
-  fecha_inicial: Type.String({ format: 'date-time' }),
-  fecha_final: Type.String({ format: 'date-time' }),
   estado: ESTADO_EVALUACION,
   tipo_error: Type.String(),
   aprobado: Type.Boolean(),
@@ -35,8 +33,6 @@ export const EvaluacionResponseSchema = Type.Object({
   uid: Type.String(),
   id_fundanet: Type.String(),
   file: Type.String(),
-  fecha_inicial: Type.String({ format: 'date-time' }),
-  fecha_final: Type.String({ format: 'date-time' }),
   estado: ESTADO_EVALUACION,
   tipo_error: Type.String(),
   aprobado: Type.Boolean(),

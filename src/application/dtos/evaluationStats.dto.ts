@@ -1,5 +1,4 @@
 export interface CardStatsDto {
-    title: string
     value: number
     previousValue: number
 }
