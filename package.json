@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "bun src/server.ts",
     "build": "tsc",
+    "prod": "pm2 start src/server.ts --name backend-app --watch --ignore-watch \"node_modules\" --watch-delay 1000 --restart-delay 1000",
     "start": "node dist/server.js"
   },
   "keywords": [],
