@@ -77,7 +77,6 @@ export class EvaluatePipelineUseCase {
             /* 5 ─ Ejecutar modelo LLM */
             const completion = await this.generateLLM.execute(IaMessage, provider);
             const raw = completion;
-            console.log('raw', raw);
             if (!raw) throw new Error('Sin respuesta del modelo');
             const parsed = parseJson(raw);
             if (typeof parsed !== 'object' || !parsed.analysis)

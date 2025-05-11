@@ -92,7 +92,6 @@ export class EvaluacionController {
         return;
       }
       const evaluaciones = await this.getEvaluacionesByUserUseCase.execute(userId);
-      console.log('Evaluaciones obtenidas:', evaluaciones); // Para depuración
       res.status(200).json(evaluaciones);
     } catch (error) {
       next(error);

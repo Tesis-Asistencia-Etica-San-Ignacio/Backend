@@ -3,37 +3,56 @@ import config from "../../../infrastructure/config";
 import { GeminiModel, GeminiApiResponse } from "../../../infrastructure/config/geminiClient";
 import { GroqModel, GroqApiResponse } from "../../../infrastructure/config/groqClient";
 
-
 export class ObtainModelsUseCase {
     constructor() { }
     async execute() {
-        try {
+        let geminiModelNames: string[] = [];
+        let groqModelIds: string[] = [];
 
-            const gemini = await axios.get<GeminiApiResponse>(`https://generativelanguage.googleapis.com/v1/models?key=${config.gemini.apiKey}`);
-            const groq = await axios.get<GroqApiResponse>("https://api.groq.com/openai/v1/models", {
-                headers: {
-                    'Authorization': `Bearer ${config.groq.apiKey}`,
-                    'Content-Type': 'application/json'
-                  }
-            });
-    
-            const filteredGemini = gemini.data.models.filter((model: GeminiModel) => 
-                model.inputTokenLimit > 8192 && 
-                model.outputTokenLimit >= 8192 && 
-                !model.name.toLowerCase().includes('vision')
-            );
-            const geminiModelNames = filteredGemini.map(model => model.name.replace('models/', ''));
-    
-            const filteredGroqModels = groq.data.data.filter((model: GroqModel) => 
-                model.context_window > 8192 && 
-                model.max_completion_tokens >= 8192 && 
-                !model.id.toLowerCase().includes('vision')
-            );
-            const groqModelIds = filteredGroqModels.map(model => model.id);
-    
+        try {
+            // Intenta obtener modelos de Gemini
+            try {
+                const gemini = await axios.get<GeminiApiResponse>(`https://generativelanguage.googleapis.com/v1/models?key=${config.gemini.apiKey}`);
+                
+                const filteredGemini = gemini.data.models.filter((model: GeminiModel) => 
+                    model.inputTokenLimit > 8192 && 
+                    model.outputTokenLimit >= 8192 && 
+                    !model.name.toLowerCase().includes('vision') &&
+                    !model.name.toLowerCase().includes('pro') &&
+                    !model.name.toLowerCase().includes('image')
+                );
+                geminiModelNames = filteredGemini.map(model => model.name.replace('models/', ''));
+            } catch (error) {
+                console.error(`Error al obtener modelos de Gemini: ${error instanceof Error ? error.message : "Unknown error"}`);
+                geminiModelNames = []; // Array vacío en caso de error
+            }
+
+            // Intenta obtener modelos de Groq
+            try {
+                const groq = await axios.get<GroqApiResponse>("https://api.groq.com/openai/v1/models", {
+                    headers: {
+                        'Authorization': `Bearer ${config.groq.apiKey}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const filteredGroqModels = groq.data.data.filter((model: GroqModel) => 
+                    model.context_window > 8192 && 
+                    model.max_completion_tokens >= 8192 && 
+                    !model.id.toLowerCase().includes('vision') &&
+                    !model.id.toLowerCase().includes('qwen')
+                );
+                groqModelIds = filteredGroqModels.map(model => model.id);
+            } catch (error) {
+                console.error(`Error al obtener modelos de Groq: ${error instanceof Error ? error.message : "Unknown error"}`);
+                groqModelIds = []; // Array vacío en caso de error
+            }
+
             return [{ "provider": "gemini", "models": geminiModelNames }, { "provider": "groq", "models": groqModelIds }];
         } catch (error) {
-            throw new Error(`Error al obtener los modelos: ${error instanceof Error ? error.message : "Unknown error"}`);
+            // Este bloque maneja errores generales no capturados por los try-catch específicos
+            console.error(`Error general en el caso de uso: ${error instanceof Error ? error.message : "Unknown error"}`);
+            return [{ "provider": "gemini", "models": [] }, { "provider": "groq", "models": [] }];
         }
     }
 }

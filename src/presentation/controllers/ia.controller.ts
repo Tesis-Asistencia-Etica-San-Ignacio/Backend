@@ -72,15 +72,28 @@ export class IAController {
   /** Re-evaluación */
   public reEvaluate = async (req: Request, res: Response) => {
     try {
+      const evaluador = await this.getUserByIdUC.execute(req.user!.id);
+
+      if (!evaluador) {
+        res.status(404).json({ success: false, message: 'Evaluador no encontrado' });
+        return;
+      }
+
+      if (!evaluador.modelo || !evaluador.provider) {
+        res.status(400).json({ success: false, message: 'Evaluador sin modelo o proveedor' });
+        return;
+      }
+
       await this.pipelineUC.execute({
         evaluatorId: req.user!.id,
-        model: req.user!.model,
-        provider: req.user!.provider,
+        model: evaluador.modelo,
+        provider: evaluador.provider,
         evaluationId: req.body.evaluationId,
         cleanNormsBefore: true,
       });
       res.json({ success: true, message: 'Re-evaluación exitosa' });
     } catch (e: any) {
+      
       res.status(500).json({ success: false, error: e.message ?? 'Error' });
     }
   };
