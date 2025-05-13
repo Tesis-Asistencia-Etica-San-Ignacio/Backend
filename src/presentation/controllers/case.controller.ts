@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 
-import { GetAllCasesUseCase, GetCaseByIdUseCase, UpdateCaseUseCase, DeleteCaseUseCase, CreateCaseUseCase } from "../../application/useCases/case";
+import { GetAllCasesUseCase, GetCaseByIdUseCase, UpdateCaseUseCase, DeleteCaseUseCase, CreateCaseUseCase, GetCasesByUserIdUseCase } from "../../application/useCases/case";
 import { Types } from "mongoose";
 
 export class CaseController {
@@ -9,7 +9,8 @@ export class CaseController {
     private readonly getAllCasesUseCase: GetAllCasesUseCase,
     private readonly getCaseByIdUseCase: GetCaseByIdUseCase,
     private readonly updateCaseUseCase: UpdateCaseUseCase,
-    private readonly deleteCaseUseCase: DeleteCaseUseCase
+    private readonly deleteCaseUseCase: DeleteCaseUseCase,
+    private readonly getCasesByUserIdUseCase: GetCasesByUserIdUseCase,
   ) {}
 
   public getAll = async (
@@ -102,6 +103,24 @@ export class CaseController {
       } else {
         res.status(200).json({ message: "Caso eliminado correctamente" });
       }
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public getMyCases = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      if (!req.user) {
+        res.status(401).json({ message: "Usuario no autenticado" });
+        return;
+      }
+      const userId = req.user.id;          
+      const cases = await this.getCasesByUserIdUseCase.execute(userId);
+      res.status(200).json({ cases });        
     } catch (error) {
       next(error);
     }
