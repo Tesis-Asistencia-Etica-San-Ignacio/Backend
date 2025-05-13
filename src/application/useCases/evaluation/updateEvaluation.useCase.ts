@@ -26,8 +26,6 @@ export class UpdateEvaluacionUseCase {
     // 4. Convierte fechas y retorna el dominio
     return {
       ...updatedDto,
-      fecha_inicial: new Date(updatedDto.fecha_inicial),
-      fecha_final:   new Date(updatedDto.fecha_final),
       createdAt:     new Date(updatedDto.createdAt),
       updatedAt:     new Date(updatedDto.updatedAt),
     };

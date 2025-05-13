@@ -1,8 +1,8 @@
 
-export * from './createUser.useCase';
-export * from './deleteUser.useCase';
-export * from './getAllUsers.useCase';
-export * from './getUserByEmail.useCase';
-export * from './updateUser.useCase';
-export * from './getUserById.useCase';
-export * from './updatePassword.useCase';
+export { CreateEvaluatorUseCase, CreateInvestigatorUseCase } from './createUser.useCase';
+export { DeleteUserUseCase } from './deleteUser.useCase';
+export { GetAllUsersUseCase } from './getAllUsers.useCase';
+export { GetUserByEmailUseCase } from './getUserByEmail.useCase';
+export { UpdateUserUseCase } from './updateUser.useCase';
+export { GetUserByIdUseCase } from './getUserById.useCase';
+export { UpdatePasswordUseCase } from './updatePassword.useCase';

@@ -22,7 +22,7 @@ export const uploadFileController = async (req: Request, res: Response) => {
 
     // 2. Construir la URL del archivo
     // Ajusta "config.minio.publicUrl" según tu configuración
-    const fileUrl = `http://localhost:9000/uploads/${req.file.originalname}`;
+    const fileUrl = `http://minio:9000/uploads/${req.file.originalname}`;
 
     // 3. Obtener el ID del evaluador desde req.user (asegúrate de que esté presente)
     const evaluatorId = req.user?.id;

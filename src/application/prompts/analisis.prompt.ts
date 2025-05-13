@@ -21,7 +21,7 @@ export const getAnalysisPrompt = (documentContent: string, prompts : PromptRespo
           description: "",
           codeNumber: q.codigo, 
           status: "",
-          justification: "",
+          justification: "No puede ser un texto pegado o sin espacios a pesar de que el texto original lo sea",
           cita: ""
         })),
       }, null, 2)}

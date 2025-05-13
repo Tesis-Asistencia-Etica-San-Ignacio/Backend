@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import config from '../config';
+import { seedAdminUser } from './seed/adminSeeder';
 
 class Database {
   private static instance: Database;
@@ -19,7 +20,8 @@ class Database {
   public async connect(): Promise<void> {
     try {
       await mongoose.connect(this.dbUri);
-      console.log('Database connected successfully');
+      console.log('✅ Database connected successfully')
+      await seedAdminUser()
     } catch (error) {
       console.error('Database connection error:', error);
       process.exit(1);

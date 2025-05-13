@@ -54,7 +54,7 @@ const startServer = async () => {
   try {
     await database.connect(); // Ensure DB is connected before starting the server
     await initMinioBucket('uploads');
-    const server = app.listen(config.server.port, () => {
+    const server = app.listen(config.server.port, '0.0.0.0' ,() => {
       console.log(`🚀 Servidor corriendo en el puerto ${config.server.port}`);
     });
     server.setTimeout(10 * 1000); 
@@ -67,10 +67,10 @@ const startServer = async () => {
 
 // Iniciar la aplicación
 startServer();
-function cors(arg0: {
-  origin: string; // o '*' para permitir todos los orígenes
-  methods: string[]; allowedHeaders: string[];
-}): any {
-  throw new Error('Function not implemented.');
-}
+// function cors(arg0: {
+//   origin: string; // o '*' para permitir todos los orígenes
+//   methods: string[]; allowedHeaders: string[];
+// }): any {
+//   throw new Error('Function not implemented.');
+// }
 

@@ -64,8 +64,10 @@ export class EvaluatePipelineUseCase {
             /* 4 ─ Obtener prompts personalizados del evaluador */
             const prompts = await this.getPrompts.execute(evaluatorId);
             if (!prompts) throw new Error('Prompts no encontrados para el evaluador');
+            console.log('Prompts:', prompts);
 
             const { system, user } = getAnalysisPrompt(fileContent, prompts);
+            console.log('SYSTEM:', system, '\nUSER:', user);
             const IaMessage: IaOptionsDto = {
                 model: model,
                 systemInstruction: system,
@@ -77,6 +79,9 @@ export class EvaluatePipelineUseCase {
             /* 5 ─ Ejecutar modelo LLM */
             const completion = await this.generateLLM.execute(IaMessage, provider);
             const raw = completion;
+            console.log('Respuesta del modelo:', raw);
+            console.log('Modelo:', model);
+            console.log('Proveedor:', provider);
             if (!raw) throw new Error('Sin respuesta del modelo');
             const parsed = parseJson(raw);
             if (typeof parsed !== 'object' || !parsed.analysis)
