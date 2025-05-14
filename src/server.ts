@@ -57,8 +57,8 @@ const startServer = async () => {
     const server = app.listen(config.server.port, () => {
       console.log(`🚀 Servidor corriendo en el puerto ${config.server.port}`);
     });
-    server.setTimeout(10 * 1000); 
-    
+    server.setTimeout(10 * 1000);
+
   } catch (error) {
     console.error('❌ Error al iniciar la aplicación:', error);
     process.exit(1);
@@ -74,3 +74,4 @@ function cors(arg0: {
   throw new Error('Function not implemented.');
 }
 
+export { app };

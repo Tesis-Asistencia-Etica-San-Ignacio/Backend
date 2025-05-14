@@ -64,7 +64,7 @@ export class StatsRepositoryImpl implements IStatsRepository {
             },
             {
                 $group: {
-                    _id: { bucket: { $dateToString: { format: unit, date: '$fecha_final' } } },
+                    _id: { bucket: { $dateToString: { format: unit, date: '$updatedAt' } } },
                     evaluadas: { $sum: 1 }
                 }
             },
