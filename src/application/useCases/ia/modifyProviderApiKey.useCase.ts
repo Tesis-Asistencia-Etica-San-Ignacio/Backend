@@ -1,52 +1,68 @@
 import config from "../../../infrastructure/config";
+import { updateGeminiClient } from "../../../infrastructure/config/geminiClient";
+import { updateGroqClient } from "../../../infrastructure/config/groqClient"; // Asumiendo que implementarás lo mismo para Groq
 import fs from 'fs/promises';
 import path from 'path';
+import dotenv from 'dotenv';
 
 export class ModifyProviderApiKeyUseCase {
-    async execute(provider: string, apiKey: string){
-        const envFilePath = path.resolve(process.cwd(), '.env');
+     async execute(provider: string, apiKey: string){
         try {
-            // Leer el contenido actual del archivo .env
-            const currentEnvContent = await fs.readFile(envFilePath, 'utf-8');
-            let updatedEnvContent: string;
-            let envVarName: string;
-
-            // Determinar qué variable modificar según el proveedor
+            // Actualizar la configuración en memoria y regenerar cliente
             if (provider.toLowerCase() === 'gemini') {
-                envVarName = 'GEMINI_API_KEY';
+                // Actualiza el cliente de Gemini directamente
+                updateGeminiClient(apiKey);
+                // También actualiza la variable de entorno para futuras referencias
+                process.env.GEMINI_API_KEY = apiKey;
             } else if (provider.toLowerCase() === 'groq') {
-                envVarName = 'GROQ_API_KEY';
+                // Actualiza el cliente de Groq directamente
+                updateGroqClient(apiKey);
+                // También actualiza la variable de entorno para futuras referencias
+                process.env.GROQ_API_KEY = apiKey;
             } else {
                 throw new Error(`Proveedor no soportado: ${provider}`);
             }
-
-            // Verificar si la variable ya existe en el archivo
-            const regexPattern = new RegExp(`^${envVarName}\\s*=.*$`, 'm');
             
-            if (regexPattern.test(currentEnvContent)) {
-                // Si existe, reemplazar el valor
-                updatedEnvContent = currentEnvContent.replace(
-                    regexPattern,
-                    `${envVarName} = ${apiKey}`
-                );
-            } else {
-                // Si no existe, añadirla al final del archivo
-                updatedEnvContent = `${currentEnvContent}\n${envVarName} = ${apiKey}`;
-            }
-
-            // Escribir el contenido actualizado de vuelta al archivo
-            await fs.writeFile(envFilePath, updatedEnvContent, 'utf-8');
-            
-            // Actualizar la configuración en memoria
-            if (provider.toLowerCase() === 'gemini') {
-                config.gemini.apiKey = apiKey;
-            } else if (provider.toLowerCase() === 'groq') {
-                config.groq.apiKey = apiKey;
+            // Opcionalmente, si quieres seguir intentando persistir en .env
+            // pero sin que sea crítico para el funcionamiento:
+            try {
+                const envFilePath = path.resolve(process.cwd(), '.env');
+                let envVarName = provider.toLowerCase() === 'gemini' ? 'GEMINI_API_KEY' : 'GROQ_API_KEY';
+                
+                let currentEnvContent = '';
+                try {
+                    currentEnvContent = await fs.readFile(envFilePath, 'utf-8');
+                } catch (err) {
+                    if ((err as NodeJS.ErrnoException).code !== 'ENOENT')
+                    console.log('Archivo .env no encontrado. No se persistirán los cambios.');
+                    // No hacemos nada si el archivo no existe, ya que no es crítico
+                    return provider;
+                }
+                
+                // Si llegamos aquí, el archivo existe y podemos actualizarlo
+                const regexPattern = new RegExp(`^${envVarName}\\s*=.*$`, 'm');
+                let updatedEnvContent;
+                
+                if (regexPattern.test(currentEnvContent)) {
+                    updatedEnvContent = currentEnvContent.replace(
+                        regexPattern,
+                        `${envVarName}=${apiKey}`
+                    );
+                } else {
+                    updatedEnvContent = `${currentEnvContent}${currentEnvContent ? '\n' : ''}${envVarName}=${apiKey}`;
+                }
+                
+                await fs.writeFile(envFilePath, updatedEnvContent, 'utf-8');
+                console.log(`API key para ${provider} actualizada y persistida en .env`);
+            } catch (error) {
+                console.warn(`No se pudo persistir la API key en .env, pero el cliente fue actualizado:`, error);
+                // No propagamos el error porque el cliente ya fue actualizado,
+                // que es lo más importante para el funcionamiento
             }
 
             return provider;
         } catch (error) {
-            console.error(`Error al actualizar la API key para ${provider}:`, error);
+            console.error(`Error al actualizar la API key para hpta ${provider}:`, error);
             throw error;
         }
     }
