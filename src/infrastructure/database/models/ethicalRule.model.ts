@@ -4,7 +4,7 @@ export interface EthicalNormDocument extends Document {
   _id: Types.ObjectId;
   evaluationId: Types.ObjectId;
   description: string;
-  status: "APROBADO" | "NO_APROBADO";
+  status: "APROBADO" | "NO_APROBADO" | "NO_APLICA";
   justification: string;
   cita: string;
   codeNumber: string;
@@ -27,7 +27,7 @@ const EthicalNormSchema = new Schema<EthicalNormDocument>(
     status: {
       type: String,
       enum: {
-        values: ["APROBADO", "NO_APROBADO"],
+        values: ["APROBADO", "NO_APROBADO", "NO_APLICA"],
         message: "Estado inválido. Valores permitidos: APROBADO, NO_APROBADO"
       },
       required: [true, "El estado es requerido"]

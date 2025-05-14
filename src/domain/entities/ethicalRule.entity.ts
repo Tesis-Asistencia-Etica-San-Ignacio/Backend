@@ -1,4 +1,4 @@
-export type EthicalNormStatus = "APROBADO" | "NO_APROBADO";
+export type EthicalNormStatus = "APROBADO" | "NO_APROBADO" | "NO_APLICA";
 
 export interface EthicalNorm {
   id: string;

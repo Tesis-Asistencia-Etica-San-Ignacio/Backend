@@ -75,6 +75,13 @@
       padding: 4px 8px;
       border-radius: 4px;
     }
+    .status-no-aplica {
+      color: #664d03;
+      background-color: #fff3cd;
+      font-weight: bold;
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
     .extract {
       line-height: 1.4;
     }
@@ -124,7 +131,15 @@
           <td class="extract"><%= norm.description %></td>
           <td class="extract"><%= norm.justification %></td>
           <td>
-            <span class="status-<%= norm.status === 'APROBADO' ? 'aprobado' : 'no-aprobado' %>">
+            <% let statusClass = ''; %>
+            <% if (norm.status === 'APROBADO') { %>
+              <% statusClass = 'status-aprobado'; %>
+            <% } else if (norm.status === 'NO_APLICA') { %>
+              <% statusClass = 'status-no-aplica'; %>
+            <% } else { %>
+              <% statusClass = 'status-no-aprobado'; %>
+            <% } %>
+            <span class="<%= statusClass %>">
               <%= norm.status %>
             </span>
           </td>
