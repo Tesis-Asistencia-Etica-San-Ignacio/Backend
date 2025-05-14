@@ -1,9 +1,10 @@
-import { gemini } from "../../infrastructure/config/geminiClient";
+import { getGeminiClient } from "../../infrastructure/config/geminiClient";
 import { IaOptionsDto } from "../dtos";
 
 export async function sendGeminiCompletion( ia : IaOptionsDto
 ) {
   try {
+    const gemini = getGeminiClient();
     const response = await gemini.models.generateContent({
       model: ia.model || "gemini-2.0-flash", //Experimental: gemini-2.5-pro-exp-03-25
       contents: ia.contents,

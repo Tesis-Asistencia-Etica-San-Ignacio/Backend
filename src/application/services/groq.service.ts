@@ -1,10 +1,11 @@
-import { groq } from "../../infrastructure/config/groqClient";
+import { getGroqClient } from "../../infrastructure/config/groqClient";
 import { IaOptionsDto } from "../dtos";
 
   export async function createGroqChatCompletion(
     ia : IaOptionsDto,
   ) {
     try {
+      const groq = getGroqClient();
       const response = await groq.chat.completions.create({
         messages : [{ role: "system", content: ia.systemInstruction }, { role: "user", content: ia.contents }],
         model: ia.model || "deepseek-r1-distill-llama-70b",

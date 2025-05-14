@@ -7,7 +7,6 @@
     "dev": "bun src/server.ts",
     "build": "tsc",
     "postbuild": "cp -R src/application/assets dist/assets && cp -R src/infrastructure/data dist/infrastructure/data",
-    "prod": "pm2 start src/server.ts --name backend-app --watch --ignore-watch \"node_modules\" --watch-delay 1000 --restart-delay 1000",
     "start": "node dist/server.js"
   },
   "keywords": [],
