@@ -54,11 +54,11 @@ const startServer = async () => {
   try {
     await database.connect(); // Ensure DB is connected before starting the server
     await initMinioBucket('uploads');
-    const server = app.listen(config.server.port, '0.0.0.0' ,() => {
+    const server = app.listen(config.server.port, '0.0.0.0', () => {
       console.log(`🚀 Servidor corriendo en el puerto ${config.server.port}`);
     });
-    server.setTimeout(10 * 1000); 
-    
+    server.setTimeout(10 * 1000);
+
   } catch (error) {
     console.error('❌ Error al iniciar la aplicación:', error);
     process.exit(1);
@@ -73,4 +73,4 @@ startServer();
 // }): any {
 //   throw new Error('Function not implemented.');
 // }
-
+export { app };
