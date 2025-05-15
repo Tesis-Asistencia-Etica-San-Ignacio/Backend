@@ -1,8 +1,7 @@
-// src/infrastructure/database/repositories/stats.repository.impl.ts
 import { EvaluationModel } from '../models/evaluation.model'
 import { IStatsRepository } from '../../../domain/repositories/stats.repository'
 import { EvaluationStatsDto } from '../../../application'
-import { differenceInCalendarDays, subMonths } from 'date-fns'
+import { differenceInCalendarDays, subMonths, differenceInMilliseconds } from 'date-fns'
 
 export class StatsRepositoryImpl implements IStatsRepository {
     async aggregateEvaluationStats(from: Date, to: Date): Promise<EvaluationStatsDto> {
@@ -72,6 +71,30 @@ export class StatsRepositoryImpl implements IStatsRepository {
             { $sort: { '_id.bucket': 1 } }
         ])
 
+        // Cálculo del tiempo promedio de evaluación (de todos los tiempos)
+        const tiempoPromedioAgg = await EvaluationModel.aggregate([
+            {
+                $match: {
+                    estado: 'EVALUADO' // Aseguramos que solo consideramos evaluaciones completadas
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    tiempoPromedioMs: {
+                        $avg: { $subtract: ['$updatedAt', '$createdAt'] }
+                    }
+                }
+            }
+        ])
+
+        // Convertir milisegundos a formato de horas y minutos
+        const tiempoPromedioMs = tiempoPromedioAgg[0]?.tiempoPromedioMs ?? 0
+        const tiempoPromedioHoras = Math.floor(tiempoPromedioMs / (1000 * 60 * 60))
+        const tiempoPromedioMinutos = Math.floor((tiempoPromedioMs % (1000 * 60 * 60)) / (1000 * 60))
+        const tiempoPromedioFormateado = `${tiempoPromedioHoras}h ${tiempoPromedioMinutos}m`
+        console.log("tiempo promedio:", tiempoPromedioFormateado)
+
         return {
             cards: {
                 total: {
@@ -90,6 +113,9 @@ export class StatsRepositoryImpl implements IStatsRepository {
                     value: tasaNow,
                     previousValue: tasaPrev,
                 },
+                tiempoPromedio: {
+                    value: tiempoPromedioFormateado,
+                }
             },
             lineSeries: lineSeriesAgg.map(d => ({
                 date: d._id.bucket as string,

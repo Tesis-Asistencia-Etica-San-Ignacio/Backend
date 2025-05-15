@@ -11,6 +11,9 @@ export interface EvaluationStatsDto {
             value: number
             previousValue: number
         }
+        tiempoPromedio: {
+            value: string
+        }   
     }
     lineSeries: { date: string; evaluadas: number }[]
     pieSeries: { label: string; value: number }[]

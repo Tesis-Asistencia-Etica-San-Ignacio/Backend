@@ -67,10 +67,12 @@ const startServer = async () => {
 
 // Iniciar la aplicación
 startServer();
-// function cors(arg0: {
-//   origin: string; // o '*' para permitir todos los orígenes
-//   methods: string[]; allowedHeaders: string[];
-// }): any {
-//   throw new Error('Function not implemented.');
-// }
+
+function cors(arg0: {
+  origin: string; // o '*' para permitir todos los orígenes
+  methods: string[]; allowedHeaders: string[];
+}): any {
+  throw new Error('Function not implemented.');
+}
+
 export { app };

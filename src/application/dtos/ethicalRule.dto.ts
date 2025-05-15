@@ -3,6 +3,7 @@ import { Type, Static } from "@sinclair/typebox";
 export const EthicalNormStatusEnum = Type.Union([
   Type.Literal("APROBADO"),
   Type.Literal("NO_APROBADO"),
+  Type.Literal("NO_APLICA"),
 ]);
 
 export const CreateEthicalNormSchema = Type.Object({
