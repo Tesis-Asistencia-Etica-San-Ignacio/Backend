@@ -23,6 +23,7 @@ export class CreateEvaluatorUseCase {
       ...data,
       type: 'EVALUADOR',
       password: hashedPassword,
+      
     };
 
     // 3. Crear el usuario en la BD

@@ -23,7 +23,7 @@ export const errorHandlerMiddleware = (
   if (err.code === 11000 && err.keyValue) {
     statusCode = 409;
     const duplicatedFields = Object.keys(err.keyValue).join(', ');
-    message = `Valor duplicado en campo(s): ${duplicatedFields}.`;
+    message = `Ya existe un registro con el mismo valor en el/los campo(s): ${duplicatedFields}.`
   }
   // 2) Error de validación de Mongoose
   else if (err.name === 'ValidationError' && err.errors) {
