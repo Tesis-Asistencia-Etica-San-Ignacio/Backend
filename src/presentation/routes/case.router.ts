@@ -1,4 +1,4 @@
-import express from "express";
+import { Router } from "express";
 import { CaseController } from "../controllers/case.controller";
 import { CreateCaseUseCase } from "../../application/useCases/case/createCase.useCase";
 import { GetAllCasesUseCase } from "../../application/useCases/case/getAllCases.useCase";
@@ -6,7 +6,7 @@ import { DeleteCaseUseCase, GetCaseByIdUseCase, UpdateCaseUseCase, GetCasesByUse
 import { CaseRepository } from "../../infrastructure/database/repositories/case.repository.impl";
 import { validateRoleMiddleware } from "../middleware/jwtMiddleware";
 
-const router = express.Router();
+const router = Router();
 
 const caseRepository = new CaseRepository();
 

@@ -8,6 +8,8 @@ import { EthicalNormRepository } from '../../infrastructure/database/repositorie
 import { generateEmailHtml } from '../../shared/utils/emailTemplate'
 import { GetUserByIdUseCase } from '../../application/useCases/user/getUserById.useCase'
 import { UserRepository } from '../../infrastructure/database/repositories/user.repository.impl'
+import { GetEvaluacionByIdUseCase } from "../../application/useCases/evaluation/getEvaluationsById.useCase";
+import { EvaluacionRepository } from '../../infrastructure/database/repositories/evaluation.repository.impl'
 
 export class SmtpController {
   private readonly sendEmailUseCase = new SendEmailUseCase(new SmtpService())
@@ -15,6 +17,9 @@ export class SmtpController {
   private readonly getNormsUseCase = new GetEthicalRulesByEvaluationUseCase(
     new EthicalNormRepository()
   )
+  private readonly getEvaluation = new GetEvaluacionByIdUseCase(
+    new EvaluacionRepository()
+  );
 
   public async sendEmail(req: Request, res: Response): Promise<void> {
     try {
@@ -77,9 +82,12 @@ export class SmtpController {
 
       // 4. Generar el PDF
       const norms = await this.getNormsUseCase.execute(evaluationId)
+      const evaluation = await this.getEvaluation.execute(evaluationId);
+      const version = evaluation?.version ?? 1;
       const pdfBuffer = await this.generatePdfUseCase.execute('ethicalNormsReport', {
         norms,
         date: new Date().toLocaleDateString('es-CO'),
+        version,
       })
 
       // 5. Generar el HTML del correo incluyendo el modelo

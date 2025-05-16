@@ -12,6 +12,7 @@ export class GeneratePdfUseCase {
     templateName: string,
     data: T
   ): Promise<Buffer> {
+    console.log('executeexecuteexecuteexecuteexecuteexecuteexecute', data);
     return this.pdfService.generatePdf(templateName, data);
   }
 }

@@ -11,6 +11,7 @@ export class PDFService {
    */
   public async generatePdf<T>(templateName: string, data: T): Promise<Buffer> {
     // 1) Ruta al EJS (asegúrate de copiar src/templates al contenedor)
+    console.log('datadatadatadatadatadatadatadatadata', data);
     const templatePath = path.resolve(
       process.cwd(),
       'src', 'templates', 'pdf',

@@ -11,7 +11,7 @@ export class CaseController {
     private readonly updateCaseUseCase: UpdateCaseUseCase,
     private readonly deleteCaseUseCase: DeleteCaseUseCase,
     private readonly getCasesByUserIdUseCase: GetCasesByUserIdUseCase,
-  ) {}
+  ) { }
 
   public getAll = async (
     req: Request,
@@ -19,15 +19,15 @@ export class CaseController {
     next: NextFunction
   ): Promise<void> => {
     try {
-        const cases = await this.getAllCasesUseCase.execute();
-        res.status(200).json(cases);
-      } catch (error) {
-        if (error instanceof Error) {
-          res.status(500).json({ error: error.message });
-        } else {
-          res.status(500).json({ error: "Unknown error occurred" });
-        }
+      const cases = await this.getAllCasesUseCase.execute();
+      res.status(200).json(cases);
+    } catch (error) {
+      if (error instanceof Error) {
+        res.status(500).json({ error: error.message });
+      } else {
+        res.status(500).json({ error: "Unknown error occurred" });
       }
+    }
   };
 
   public getById = async (
@@ -47,7 +47,7 @@ export class CaseController {
       next(error);
     }
   };
-  
+
   public create = async (
     req: Request,
     res: Response,
@@ -55,17 +55,17 @@ export class CaseController {
   ): Promise<void> => {
     try {
       const { uid, ...rest } = req.body;
-  
+
       if (!Types.ObjectId.isValid(uid)) {
         res.status(400).json({ success: false, message: "UID no válido" });
         return;
       }
-  
+
       const newCase = await this.createCaseUseCase.execute({
         uid: new Types.ObjectId(uid), // Convertimos uid a ObjectId
         ...rest,
       });
-  
+
       res.status(201).json({ success: true, data: newCase });
     } catch (error) {
       next(error);
@@ -118,9 +118,9 @@ export class CaseController {
         res.status(401).json({ message: "Usuario no autenticado" });
         return;
       }
-      const userId = req.user.id;          
+      const userId = req.user.id;
       const cases = await this.getCasesByUserIdUseCase.execute(userId);
-      res.status(200).json({ cases });        
+      res.status(200).json(cases);
     } catch (error) {
       next(error);
     }
