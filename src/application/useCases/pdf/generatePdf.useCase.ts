@@ -2,7 +2,7 @@
 import { PDFService } from '../../services/pdf.service';
 
 export class GeneratePdfUseCase {
-  constructor(private readonly pdfService: PDFService) {}
+  constructor(private readonly pdfService: PDFService) { }
 
   /**
    * @param templateName nombre de la plantilla EJS en src/templates/pdf
@@ -12,7 +12,6 @@ export class GeneratePdfUseCase {
     templateName: string,
     data: T
   ): Promise<Buffer> {
-    console.log('executeexecuteexecuteexecuteexecuteexecuteexecute', data);
     return this.pdfService.generatePdf(templateName, data);
   }
 }

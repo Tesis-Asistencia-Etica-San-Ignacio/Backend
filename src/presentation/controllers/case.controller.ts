@@ -1,7 +1,9 @@
 import { Request, Response, NextFunction } from "express";
 
 import { GetAllCasesUseCase, GetCaseByIdUseCase, UpdateCaseUseCase, DeleteCaseUseCase, CreateCaseUseCase, GetCasesByUserIdUseCase } from "../../application/useCases/case";
-import { Types } from "mongoose";
+import { sharedPreviewPdf } from "../../application/useCases/pdf/previewPdf.useCase";
+import { uploadFileToMinio } from "../../application";
+import { minioPublicUrl } from "../../infrastructure/config/minioClient";
 
 export class CaseController {
   constructor(
@@ -48,27 +50,60 @@ export class CaseController {
     }
   };
 
-  public create = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<void> => {
+  public create = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const { uid, ...rest } = req.body;
-
-      if (!Types.ObjectId.isValid(uid)) {
-        res.status(400).json({ success: false, message: "UID no válido" });
+      // 1) Cabecera PDF
+      const pdfId = req.header("X-Pdf-Id");
+      if (!pdfId) {
+        res.status(400).json({ success: false, message: "Falta el identificador del PDF (X-Pdf-Id)" });
         return;
       }
 
-      const newCase = await this.createCaseUseCase.execute({
-        uid: new Types.ObjectId(uid), // Convertimos uid a ObjectId
-        ...rest,
-      });
+      // 2) Buffer cacheado
+      const buf = sharedPreviewPdf.getBuffer(pdfId);
+      if (!buf) {
+        res.status(410).json({ success: false, message: "PDF expirado o no encontrado" });
+        return;
+      }
 
+      // 3) Subir a MinIO
+      const { nombre_proyecto, fecha, version, codigo } = req.body;
+      const filename = `case_${codigo}_${Date.now()}.pdf`;
+      const fileForMinio = {
+        fieldname: "pdf",
+        originalname: filename,
+        encoding: "7bit",
+        mimetype: "application/pdf",
+        buffer: buf,
+        size: buf.length,
+      } as Express.Multer.File;
+
+      await uploadFileToMinio(fileForMinio);
+      const fileUrl = `${minioPublicUrl}/${filename}`;
+
+      // 4) Crear el DTO usando req.user!.id directamente
+      const nowIso = new Date().toISOString();
+      const dto = {
+        uid: req.user!.id,
+        nombre_proyecto,
+        fecha,
+        version,
+        codigo,
+        pdf: fileUrl,
+        createdAt: nowIso,
+        updatedAt: nowIso,
+      };
+
+      // 5) Llamar al caso de uso
+      const newCase = await this.createCaseUseCase.execute(dto);
+
+      // 6) Limpiar caché
+      sharedPreviewPdf.clear(pdfId);
+
+      // 7) Responder
       res.status(201).json({ success: true, data: newCase });
-    } catch (error) {
-      next(error);
+    } catch (err) {
+      next(err);
     }
   };
 

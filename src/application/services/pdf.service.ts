@@ -5,69 +5,45 @@ import path from 'path';
 import fs from 'fs';
 
 export class PDFService {
-  /**
-   * @param templateName nombre de la plantilla EJS (sin extensión)
-   * @param data objeto con los datos que inyectarás en la plantilla
-   */
   public async generatePdf<T>(templateName: string, data: T): Promise<Buffer> {
-    // 1) Ruta al EJS (asegúrate de copiar src/templates al contenedor)
-    console.log('datadatadatadatadatadatadatadatadata', data);
-    const templatePath = path.resolve(
-      process.cwd(),
-      'src', 'templates', 'pdf',
-      `${templateName}.ejs`
+    // … tu render EJS previo …
+
+    // ───────── Ajuste de carga de assets ─────────
+    // 1) Calcula la ruta absoluta a src/application/assets
+    const assetsDir = path.resolve(
+      process.cwd(),               // apunta a la raíz del proyecto
+      'src', 'application', 'assets'
     );
 
-    // 2) Carga de logos desde dist/assets (relativo a dist/application/services)
-    const logoHusiPath = path.resolve(
-      __dirname,
-      '..',  // /app/dist/application
-      '..',  // /app/dist
-      'assets',
-      'logo-HUSI-ajustado-nuevo.png'
-    );
-    const logoPujPath = path.resolve(
-      __dirname,
-      '..',
-      '..',
-      'assets',
-      'pontificia_universidad_javeriana_logo-320x130.jpg'
-    );
+    // 2) Construye las rutas de los logos
+    const logoHusiPath = path.join(assetsDir, 'logo-HUSI-ajustado-nuevo.png');
+    const logoPujPath  = path.join(assetsDir, 'pontificia_universidad_javeriana_logo-320x130.jpg');
+
+    // 3) Léalos y codifícalos
     const logoHusiBase64 = fs.readFileSync(logoHusiPath).toString('base64');
-    const logoPujBase64 = fs.readFileSync(logoPujPath).toString('base64');
+    const logoPujBase64  = fs.readFileSync(logoPujPath).toString('base64');
 
-    // 3) Render del HTML con EJS
-    const htmlContent = await ejs.renderFile(templatePath, {
-      ...data,
-      logoHusiUri: `data:image/png;base64,${logoHusiBase64}`,
-      logoPujUri: `data:image/jpeg;base64,${logoPujBase64}`,
-    });
+    // 4) Inyecta en el contexto de tu plantilla
+    const htmlContent = await ejs.renderFile(
+      path.resolve(process.cwd(), 'src', 'templates', 'pdf', `${templateName}.ejs`),
+      {
+        ...data,
+        logoHusiUri: `data:image/png;base64,${logoHusiBase64}`,
+        logoPujUri:  `data:image/jpeg;base64,${logoPujBase64}`,
+      }
+    );
+    // ───────── fin ajuste ─────────
 
-    // 4) Ruta al binario de Chromium del sistema (instalado vía apt)
-    const chromePath = process.env.CHROME_PATH ?? '/usr/bin/chromium';
-
-    // 5) Lanzamos Puppeteer usando ese Chromium
+    // … tu código de Puppeteer igual que antes …
     const browser = await puppeteer.launch({
       headless: true,
-      executablePath: chromePath,
-      args: [
-        '--no-sandbox',
-        '--disable-setuid-sandbox',
-        '--disable-dev-shm-usage',
-      ],
+      args: ['--no-sandbox','--disable-setuid-sandbox','--disable-dev-shm-usage'],
     });
-
-    // 6) Generamos el PDF
     const page = await browser.newPage();
     await page.setContent(htmlContent, { waitUntil: 'load' });
-    const pdfBuffer = await Promise.race([
-      page.pdf({ format: 'A4', printBackground: true }),
-      new Promise<Buffer>((_, reject) =>
-        setTimeout(() => reject(new Error('timeout')), 60000)
-      ),
-    ]);
-
+    const pdfBuffer = await page.pdf({ format: 'A4', printBackground: true });
     await browser.close();
-    return Buffer.from(pdfBuffer as Uint8Array);
+
+    return Buffer.from(pdfBuffer);
   }
 }

@@ -16,7 +16,8 @@ export const configureMiddlewares = (app: express.Application) => {
     origin: process.env.FRONTEND_URL,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    allowedHeaders: ['Content-Type', 'Authorization','X-Pdf-Id'],
+    exposedHeaders: ['X-Pdf-Id']
   }));
 
   // 2) Aumentar límite de tamaño de los bodies JSON y URL–encoded
