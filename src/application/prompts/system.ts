@@ -26,4 +26,5 @@ Eres un experto analista de documentos. Analiza el siguiente texto y responde en
 - Ademas si las preguntas no vienen en orden igual responde en orden
 - Si no hay cita para alguna pregunta debes poner "No se encontraron citas" en el campo cita
 - Si no hay justificacion para alguna pregunta debes poner "No se encontraron justificaciones" en el campo justificacion
+- Si la justificacion es demasiado extensa solo agrega un parrafo y en el final di que el resto de la justuficacion se encontrara citada en la cita
 `;

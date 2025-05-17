@@ -19,8 +19,8 @@ export async function seedAdminUser() {
     email,
     password: passwordHash,
     type: 'EVALUADOR',
-    modelo: 'local',      // valor por defecto que tú decidas
-    provider: 'local',     // idem
+    modelo: '',      // valor por defecto que tú decidas
+    provider: '',     // idem
     // createdAt/updatedAt vienen solos si tu schema tiene timestamps:true
   })
 
