@@ -69,17 +69,6 @@ export const uploadFileController = async (req: Request, res: Response) => {
   }
 };
 
-export const getFileByNameController = async (req: Request, res: Response) => {
-  try {
-    const { fileName } = req.params;
-    const fileStat = await getFileByName(fileName);
-    return res.status(200).json(fileStat);
-  } catch (err) {
-    console.error(err);
-    return res.status(500).send("Error al obtener la metadata del archivo");
-  }
-};
-
 export const getAllFilesController = async (req: Request, res: Response) => {
   try {
     const files = await getAllFilesFromMinio();

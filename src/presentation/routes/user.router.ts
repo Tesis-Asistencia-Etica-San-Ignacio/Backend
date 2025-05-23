@@ -72,7 +72,7 @@ router.delete(
 );
 router.post(
   "/update-password",
-  validateRoleMiddleware(["EVALUADOR", "INVESTIGADOR", "ADMIN"]),
+  validateRoleMiddleware(["EVALUADOR", "INVESTIGADOR"]),
   userController.updatePassword
 );
 
