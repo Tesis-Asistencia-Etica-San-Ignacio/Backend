@@ -1,7 +1,7 @@
 import { EvaluationModel } from '../models/evaluation.model'
 import { IStatsRepository } from '../../../domain/repositories/stats.repository'
 import { EvaluationStatsDto } from '../../../application'
-import { differenceInCalendarDays, subMonths, differenceInMilliseconds } from 'date-fns'
+import { differenceInCalendarDays, subMonths } from 'date-fns'
 
 export class StatsRepositoryImpl implements IStatsRepository {
     async aggregateEvaluationStats(from: Date, to: Date): Promise<EvaluationStatsDto> {
@@ -21,7 +21,8 @@ export class StatsRepositoryImpl implements IStatsRepository {
             const [agg] = await EvaluationModel.aggregate([
                 {
                     $match: {
-                        createdAt: { $gte: f, $lt: t }
+                        createdAt: { $gte: f, $lt: t },
+                        estado: 'EVALUADO',
                     }
                 },
                 {
