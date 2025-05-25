@@ -7,4 +7,5 @@ export type IaOptionsDto = {
     responseType? : { 
         type: "text" | "json_object"; // Solo estos valores permitidos
       };
+    pdfBuffer?: Buffer;
   };

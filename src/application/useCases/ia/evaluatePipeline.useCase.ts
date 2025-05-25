@@ -66,24 +66,24 @@ export class EvaluatePipelineUseCase {
             if (!prompts) throw new Error('Prompts no encontrados para el evaluador');
             console.log('Prompts:', prompts);
 
-            const { system, user } = getAnalysisPrompt(fileContent, prompts);
+            const { system, user } = getAnalysisPrompt(fileContent, prompts, provider);
             console.log('SYSTEM:', system, '\nUSER:', user);
             const IaMessage: IaOptionsDto = {
                 model: model,
                 systemInstruction: system,
                 contents: user,
                 responseType: { type: 'json_object' },
-                temperature: 0.2,
+                temperature: 0.1,
+                pdfBuffer: fileBuffer
             }
 
             /* 5 ─ Ejecutar modelo LLM */
             const completion = await this.generateLLM.execute(IaMessage, provider);
-            const raw = completion;
-            console.log('Respuesta del modelo:', raw);
+            console.log('Respuesta del modelo:', completion);
             console.log('Modelo:', model);
             console.log('Proveedor:', provider);
-            if (!raw) throw new Error('Sin respuesta del modelo');
-            const parsed = parseJson(raw);
+            if (!completion) throw new Error('Sin respuesta del modelo');
+            const parsed = parseJson(completion);
             if (typeof parsed !== 'object' || !parsed.analysis)
                 throw new Error('Formato JSON inválido');
 
