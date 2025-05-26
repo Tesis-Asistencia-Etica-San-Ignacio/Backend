@@ -26,3 +26,5 @@ export async function seedAdminUser() {
 
   console.log('✅ Admin creado correctamente')
 }
+
+//Contiene versión y fecha del FCI. Ignora la fecha ubicada en el encabezado y solo ten en cuenta las fechas del pie de pagina

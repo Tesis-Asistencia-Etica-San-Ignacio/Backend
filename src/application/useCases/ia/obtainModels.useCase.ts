@@ -13,13 +13,14 @@ export class ObtainModelsUseCase {
             // Intenta obtener modelos de Gemini
             try {
                 const gemini = await axios.get<GeminiApiResponse>(`https://generativelanguage.googleapis.com/v1/models?key=${config.gemini.apiKey}`);
-                
-                const filteredGemini = gemini.data.models.filter((model: GeminiModel) => 
-                    model.inputTokenLimit > 8192 && 
-                    model.outputTokenLimit >= 8192 && 
+
+                const filteredGemini = gemini.data.models.filter((model: GeminiModel) =>
+                    model.inputTokenLimit > 8192 &&
+                    model.outputTokenLimit >= 8192 &&
                     !model.name.toLowerCase().includes('vision') &&
                     !model.name.toLowerCase().includes('pro') &&
-                    !model.name.toLowerCase().includes('image')
+                    !model.name.toLowerCase().includes('image') &&
+                    !model.name.toLowerCase().includes('8b')
                 );
                 geminiModelNames = filteredGemini.map(model => model.name.replace('models/', ''));
             } catch (error) {
@@ -35,12 +36,14 @@ export class ObtainModelsUseCase {
                         'Content-Type': 'application/json'
                     }
                 });
-                
-                const filteredGroqModels = groq.data.data.filter((model: GroqModel) => 
-                    model.context_window > 8192 && 
-                    model.max_completion_tokens >= 8192 && 
+
+                const filteredGroqModels = groq.data.data.filter((model: GroqModel) =>
+                    model.context_window > 8192 &&
+                    model.max_completion_tokens >= 8192 &&
                     !model.id.toLowerCase().includes('vision') &&
-                    !model.id.toLowerCase().includes('qwen')
+                    !model.id.toLowerCase().includes('qwen') &&
+                    !model.id.toLowerCase().includes('instant') &&
+                    !model.id.toLowerCase().includes('mistral')
                 );
                 groqModelIds = filteredGroqModels.map(model => model.id);
             } catch (error) {

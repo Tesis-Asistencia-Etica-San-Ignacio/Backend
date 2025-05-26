@@ -34,7 +34,7 @@ function parseTime(timeStr: string): number {
 }
 
 // Se leen las variables de entorno o se asignan los valores por defecto
-const jwtExpiresInEnv = process.env.JWT_EXPIRES_IN ?? '30m';
+const jwtExpiresInEnv = process.env.JWT_EXPIRES_IN ?? '60m';
 const jwtRefreshExpiresInEnv = process.env.JWT_REFRESH_EXPIRES_IN ?? '7d';
 
 const config = {

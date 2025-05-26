@@ -29,7 +29,7 @@ export class SmtpService {
             const toList = to.join(", ");
 
             await this.transporter.sendMail({
-                from: "Acme <no-reply@acme.com>",
+                from: "HUSI <no-reply@acme.com>",
                 to: toList,
                 subject,
                 html,
