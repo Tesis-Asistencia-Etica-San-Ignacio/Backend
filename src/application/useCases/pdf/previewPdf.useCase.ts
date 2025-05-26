@@ -1,4 +1,3 @@
-// src/application/useCases/pdf/previewPdf.useCase.ts
 import { v4 as uuidv4 } from 'uuid';
 import { GeneratePdfUseCase } from './generatePdf.useCase';
 import { PDFService } from '../../services/pdf.service';
@@ -49,13 +48,4 @@ export class PreviewPdfUseCase {
 /* ------------------------------------------------------------------ */
 
 const internalPdfGenerator = new GeneratePdfUseCase(new PDFService());
-
-/**
- * Instancia singleton de PreviewPdfUseCase.
- * Importa `sharedPreviewPdf` en tus controladores en vez de crear
- * una nueva — así todos comparten el mismo caché.
- *
- *   import { sharedPreviewPdf } from
- *          '../../application/useCases/pdf/previewPdf.useCase';
- */
 export const sharedPreviewPdf = new PreviewPdfUseCase(internalPdfGenerator);

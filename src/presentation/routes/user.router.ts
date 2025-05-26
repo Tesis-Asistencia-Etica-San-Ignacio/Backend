@@ -18,7 +18,7 @@ import { validateRoleMiddleware } from "../middleware/jwtMiddleware";
 const router = Router();
 
 const userRepository = new UserRepository();
-const promptRepository = new PromptRepository(); // Asegúrate de que este repositorio esté definido y exportado correctamente
+const promptRepository = new PromptRepository();
 
 const createEvaluatorUseCase = new CreateEvaluatorUseCase(
   userRepository,

@@ -1,12 +1,10 @@
-import config from "../../../infrastructure/config";
 import { updateGeminiClient } from "../../../infrastructure/config/geminiClient";
-import { updateGroqClient } from "../../../infrastructure/config/groqClient"; // Asumiendo que implementarás lo mismo para Groq
+import { updateGroqClient } from "../../../infrastructure/config/groqClient";
 import fs from 'fs/promises';
 import path from 'path';
-import dotenv from 'dotenv';
 
 export class ModifyProviderApiKeyUseCase {
-     async execute(provider: string, apiKey: string){
+    async execute(provider: string, apiKey: string) {
         try {
             // Actualizar la configuración en memoria y regenerar cliente
             if (provider.toLowerCase() === 'gemini') {
@@ -22,27 +20,27 @@ export class ModifyProviderApiKeyUseCase {
             } else {
                 throw new Error(`Proveedor no soportado: ${provider}`);
             }
-            
-            // Opcionalmente, si quieres seguir intentando persistir en .env
+
+            // seguir intentando persistir en .env
             // pero sin que sea crítico para el funcionamiento:
             try {
                 const envFilePath = path.resolve(process.cwd(), '.env');
                 let envVarName = provider.toLowerCase() === 'gemini' ? 'GEMINI_API_KEY' : 'GROQ_API_KEY';
-                
+
                 let currentEnvContent = '';
                 try {
                     currentEnvContent = await fs.readFile(envFilePath, 'utf-8');
                 } catch (err) {
                     if ((err as NodeJS.ErrnoException).code !== 'ENOENT')
-                    console.log('Archivo .env no encontrado. No se persistirán los cambios.');
+                        console.log('Archivo .env no encontrado. No se persistirán los cambios.');
                     // No hacemos nada si el archivo no existe, ya que no es crítico
                     return provider;
                 }
-                
+
                 // Si llegamos aquí, el archivo existe y podemos actualizarlo
                 const regexPattern = new RegExp(`^${envVarName}\\s*=.*$`, 'm');
                 let updatedEnvContent;
-                
+
                 if (regexPattern.test(currentEnvContent)) {
                     updatedEnvContent = currentEnvContent.replace(
                         regexPattern,
@@ -51,7 +49,7 @@ export class ModifyProviderApiKeyUseCase {
                 } else {
                     updatedEnvContent = `${currentEnvContent}${currentEnvContent ? '\n' : ''}${envVarName}=${apiKey}`;
                 }
-                
+
                 await fs.writeFile(envFilePath, updatedEnvContent, 'utf-8');
                 console.log(`API key para ${provider} actualizada y persistida en .env`);
             } catch (error) {

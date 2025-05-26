@@ -1,4 +1,3 @@
-// src/presentation/routes/prompt.router.ts
 import { Router } from "express";
 import { PromptController } from "../../presentation";
 import { PromptRepository } from "../../infrastructure/database/repositories";

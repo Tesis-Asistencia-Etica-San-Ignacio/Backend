@@ -1,10 +1,8 @@
-// application/usecases/UpdateEvaluacionUseCase.ts
-
 import { IEvaluacionRepository, Evaluacion } from '../../../domain';
 import { UpdateEvaluacionDto } from '../..';
 
 export class UpdateEvaluacionUseCase {
-  constructor(private readonly evaluacionRepository: IEvaluacionRepository) {}
+  constructor(private readonly evaluacionRepository: IEvaluacionRepository) { }
 
   public async execute(id: string, data: UpdateEvaluacionDto): Promise<Evaluacion | null> {
     // 1. Carga la evaluación actual
@@ -26,8 +24,8 @@ export class UpdateEvaluacionUseCase {
     // 4. Convierte fechas y retorna el dominio
     return {
       ...updatedDto,
-      createdAt:     new Date(updatedDto.createdAt),
-      updatedAt:     new Date(updatedDto.updatedAt),
+      createdAt: new Date(updatedDto.createdAt),
+      updatedAt: new Date(updatedDto.updatedAt),
     };
   }
 }

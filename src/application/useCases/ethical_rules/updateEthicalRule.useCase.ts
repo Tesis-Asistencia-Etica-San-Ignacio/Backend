@@ -1,4 +1,3 @@
-// application/usecases/ethicalRules/updateEthicalRule.useCase.ts
 import { IEthicalNormRepository } from "../../../domain";
 import { UpdateEthicalNormDto, EthicalNormResponseDto } from "../../dtos";
 

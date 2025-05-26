@@ -1,4 +1,3 @@
-// src/types/promptSeed.ts
 export interface PromptSeed {
     nombre: string;
     texto: string;

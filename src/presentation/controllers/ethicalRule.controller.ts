@@ -1,4 +1,3 @@
-// presentation/controllers/ethicalNorm.controller.ts
 import { Request, Response, NextFunction } from "express";
 import {
   CreateEthicalRuleUseCase,
@@ -19,7 +18,7 @@ export class EthicalNormController {
     private readonly getByEvaluationUseCase: GetEthicalRulesByEvaluationUseCase,
     private readonly updateUseCase: UpdateEthicalRuleUseCase,
     private readonly deleteUseCase: DeleteEthicalRuleUseCase
-  ) {}
+  ) { }
 
   public create = async (
     req: Request,

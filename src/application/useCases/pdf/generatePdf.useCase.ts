@@ -1,4 +1,3 @@
-// src/application/useCases/pdf/generatePdf.useCase.ts
 import { PDFService } from '../../services/pdf.service';
 
 export class GeneratePdfUseCase {

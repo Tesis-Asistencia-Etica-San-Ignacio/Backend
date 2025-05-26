@@ -7,7 +7,7 @@ import { validateTextFormattingStrict } from "../prompts/analisis.prompt";
 export async function sendGeminiCompletion(ia: IaOptionsDto) {
   const maxAttempts = 5;
   let attempts = 0;
-  
+
   while (attempts < maxAttempts) {
     try {
       const gemini = getGeminiClient();
@@ -15,10 +15,10 @@ export async function sendGeminiCompletion(ia: IaOptionsDto) {
         model: ia.model || "gemini-2.0-flash",
         contents: [
           {
-             inlineData: {
-                mimeType: 'application/pdf',
-                data: ia.pdfBuffer?.toString('base64')
-             }
+            inlineData: {
+              mimeType: 'application/pdf',
+              data: ia.pdfBuffer?.toString('base64')
+            }
           },
           { text: ia.contents }
         ],
@@ -34,11 +34,11 @@ export async function sendGeminiCompletion(ia: IaOptionsDto) {
       });
 
       console.log("Respuesta de Gemini:", response.text);
-      
+
       try {
         // ✅ CORRECTO: Parsear el JSON primero
         const jsonResponse = JSON.parse(response.text!);
-        
+
         if (validateTextFormattingStrict(jsonResponse)) {
           return response.text;
         } else {
@@ -49,21 +49,21 @@ export async function sendGeminiCompletion(ia: IaOptionsDto) {
         attempts++;
         console.log(`Intento ${attempts}: Error al parsear JSON: ${parseError}`);
       }
-      
+
     } catch (error) {
       attempts++;
       console.log(`Intento ${attempts}: Error en la llamada a Gemini: ${error}`);
-      
+
       if (attempts >= maxAttempts) {
         throw new Error(`Error después de ${maxAttempts} intentos: ${error}`);
       }
     }
   }
-  
+
   throw new Error("No se pudo obtener respuesta con formato correcto");
 }
 
-  
+
 
 const responseSchema = {
   type: Type.OBJECT,
@@ -73,17 +73,17 @@ const responseSchema = {
       items: {
         type: Type.OBJECT,
         properties: {
-          description: { 
+          description: {
             type: Type.STRING,
             description: "Pregunta del usuario, bien formateada con espacios"
           },
           codeNumber: { type: Type.STRING },
           status: { type: Type.BOOLEAN },
-          justification: { 
+          justification: {
             type: Type.STRING,
             description: "Justificación clara y legible con espacios entre palabras y puntuación apropiada"
           },
-          cita: { 
+          cita: {
             type: Type.STRING,
             description: "Ubicación específica en el documento"
           }

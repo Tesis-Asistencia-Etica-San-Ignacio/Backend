@@ -19,8 +19,8 @@ const getCasesByUserIdUseCase = new GetCasesByUserIdUseCase(caseRepository);
 
 const caseController = new CaseController(createCaseUseCase, getAllCasesUseCase, getCaseByIdUseCase, updateCaseUseCase, deleteCaseUseCase, getCasesByUserIdUseCase);
 
-router.post("/", validateRoleMiddleware(['INVESTIGADOR']),caseController.create);
-router.get('/my', validateRoleMiddleware(['INVESTIGADOR']), caseController.getMyCases); // ← aquí
+router.post("/", validateRoleMiddleware(['INVESTIGADOR']), caseController.create);
+router.get('/my', validateRoleMiddleware(['INVESTIGADOR']), caseController.getMyCases);
 router.get("/:id", validateRoleMiddleware(['INVESTIGADOR']), caseController.getById);
 router.patch("/:id", validateRoleMiddleware(['INVESTIGADOR']), caseController.update);
 router.delete("/:id", validateRoleMiddleware(['INVESTIGADOR']), caseController.delete);

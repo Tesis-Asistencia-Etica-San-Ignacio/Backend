@@ -1,6 +1,5 @@
-// src/infrastructure/database/seed/adminSeeder.ts
 import bcrypt from 'bcryptjs'
-import { User } from '../../../infrastructure/database/models/user.model' 
+import { User } from '../../../infrastructure/database/models/user.model'
 
 export async function seedAdminUser() {
   const email = 'admin-husi@gmail.com'

@@ -1,4 +1,3 @@
-// src/application/services/pdf.service.ts
 import ejs from 'ejs';
 import puppeteer from 'puppeteer';
 import path from 'path';

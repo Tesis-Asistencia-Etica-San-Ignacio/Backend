@@ -1,4 +1,3 @@
-// presentation/routes/ethicalNorm.router.ts
 import { Router } from "express";
 import { EthicalNormController } from "../controllers";
 import { EthicalNormRepository } from "../../infrastructure/database/repositories";
